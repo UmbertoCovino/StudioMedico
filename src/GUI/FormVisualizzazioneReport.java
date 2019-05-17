@@ -1,4 +1,4 @@
-package Amministrazione;
+package GUI;
 
 public class FormVisualizzazioneReport {
 

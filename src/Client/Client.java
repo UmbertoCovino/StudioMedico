@@ -1,11 +1,10 @@
+package Client;
 
-import GUI.
+import GUI.FrameLogin;
 
 public class Client {
 
 	public static void main(String[] args) {
-		Fnew FrameLogin("Autenticazione");
-		
-		GUI.
+		new FrameLogin("Autenticazione");
 	}
 }

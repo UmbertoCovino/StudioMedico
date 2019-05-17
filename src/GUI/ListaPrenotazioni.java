@@ -1,4 +1,4 @@
-package Visite;
+package GUI;
 
 public class ListaPrenotazioni {
 
