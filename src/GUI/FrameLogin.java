@@ -4,25 +4,27 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import Utility.Frame;
-
 public class FrameLogin extends Frame {
 	
-	FrameLogin() {
+	public FrameLogin(String title) {
 		// 2 edittext e 2 button
-		Frame();
-		
-		JTextField emailTextField = new JTextField();
-		JTextField passwordTextField = new JTextField();
+		super(title);
 		
 		JLabel emailLabel = new JLabel();
 		JLabel passwordLabel = new JLabel();
 		
+		JTextField emailTextField = new JTextField();
+		JTextField passwordTextField = new JTextField();
+		
 		JButton loginButton = new JButton();
 		JButton signUpButton = new JButton();
 		
-		get
-		
+		JButton 
+
+		//setVisible(true);
+	}
+	
+	public void show() {
 		setVisible(true);
 	}
 }
