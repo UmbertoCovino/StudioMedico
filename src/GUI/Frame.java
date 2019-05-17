@@ -8,7 +8,7 @@ public class Frame extends JFrame {
 		super(title);
 		
 		setSize(400, 500);
-	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(null);
+	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 }

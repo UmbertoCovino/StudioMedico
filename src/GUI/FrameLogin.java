@@ -2,6 +2,7 @@ package GUI;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class FrameLogin extends Frame {
@@ -15,20 +16,20 @@ public class FrameLogin extends Frame {
 		JTextField emailTextField = new JTextField();
 		JTextField passwordTextField = new JTextField();
 		
-		JButton loginButton = new JButton();
-		JButton signUpButton = new JButton();
+		JButton loginButton = new JButton("Login");
+		JButton signUpButton = new JButton("Registrati");
 		
-		add(emailLabel);
-		add(passwordLabel);
-		add(emailTextField);
-		add(passwordTextField);
-		add(loginButton);
-		add(signUpButton);
-
-		setVisible(true);
+		JPanel panel = new JPanel();
+		
+		emailLabel.setBounds(40, 40, 50, 50);
+		
+		panel.add(emailLabel);
+		panel.add(passwordLabel);
+		panel.add(emailTextField);
+		panel.add(passwordTextField);
+		panel.add(loginButton);
+		panel.add(signUpButton);
+		
+		add(panel);
 	}
-	
-//	public void show() {
-//		setVisible(true);
-//	}
 }
