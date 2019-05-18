@@ -12,18 +12,20 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 public class FrameLogin extends Frame {
-	static final int MINIMUM_FRAME_WIDTH = 350,
-			 		 MINIMUM_FRAME_HEIGHT = 150,
-			 		 FIRST_ROW_Y = 10, SECOND_ROW_Y = 40, THIRD_ROW_Y = 60,
-					 FIRST_COLUMN_X = 10, SECOND_COLUMN_X = 140;
+	static final int 		 			FIRST_COLUMN_WIDTH = 60, SECOND_COLUMN_WIDTH = 150,
+									 	FIRST_COLUMN_X = 10, 	SECOND_COLUMN_X = FIRST_COLUMN_WIDTH + 15,
+			 		 FIRST_ROW_Y  = 10,
+			 		 SECOND_ROW_Y = 40,
+			 		 THIRD_ROW_Y  = 80,
+			 		 MINIMUM_FRAME_WIDTH = FIRST_COLUMN_WIDTH + SECOND_COLUMN_WIDTH + 20,
+					 MINIMUM_FRAME_HEIGHT = THIRD_ROW_Y + 60;
 	
 	public FrameLogin() {
 		super("Autenticazione", MINIMUM_FRAME_WIDTH, MINIMUM_FRAME_HEIGHT);
 		
-		int frameCenterX = getWidth() / 2; 
-
+		int frameCenterX = getWidth() / 2;
+		
 		JPanel formPanel = new JPanel();
-		formPanel.setLayout(null);
 		
 		JLabel emailLabel = new JLabel("Email", SwingConstants.RIGHT);
 		JLabel passwordLabel = new JLabel("Password", SwingConstants.RIGHT);
@@ -50,16 +52,14 @@ public class FrameLogin extends Frame {
 		
 		// posizionamento elementi
 		
-		formPanel.setBounds(frameCenterX - 100, FIRST_ROW_Y, 300, 75);
+		emailLabel.setBounds(FIRST_COLUMN_X, FIRST_ROW_Y + 5, FIRST_COLUMN_WIDTH, emailLabel.getPreferredSize().height);
+		emailTextField.setBounds(SECOND_COLUMN_X, FIRST_ROW_Y, SECOND_COLUMN_WIDTH, emailTextField.getPreferredSize().height);
 		
-		emailLabel.setBounds(FIRST_COLUMN_X, FIRST_ROW_Y, emailLabel.getPreferredSize().width, emailLabel.getPreferredSize().height);
-		emailTextField.setBounds(SECOND_COLUMN_X, FIRST_ROW_Y, 80, emailTextField.getPreferredSize().height);
-		
-		passwordLabel.setBounds(FIRST_COLUMN_X, SECOND_ROW_Y, passwordLabel.getPreferredSize().width, passwordLabel.getPreferredSize().height);
-		passwordTextField.setBounds(SECOND_COLUMN_X, SECOND_ROW_Y, 80, passwordTextField.getPreferredSize().height);
-		
-		loginButton.setBounds((getWidth() / 2) - (loginButton.getPreferredSize().width / 2), 100, loginButton.getPreferredSize().width, loginButton.getPreferredSize().height);
-		signUpButton.setBounds(FIRST_COLUMN_X, 100, signUpButton.getPreferredSize().width, signUpButton.getPreferredSize().height);
+		passwordLabel.setBounds(FIRST_COLUMN_X, SECOND_ROW_Y + 5, FIRST_COLUMN_WIDTH, passwordLabel.getPreferredSize().height);
+		passwordTextField.setBounds(SECOND_COLUMN_X, SECOND_ROW_Y, SECOND_COLUMN_WIDTH, passwordTextField.getPreferredSize().height);
+
+		signUpButton.setBounds(frameCenterX - (loginButton.getPreferredSize().width / 2) - (signUpButton.getPreferredSize().width / 2), THIRD_ROW_Y, signUpButton.getPreferredSize().width, signUpButton.getPreferredSize().height);
+		loginButton.setBounds(frameCenterX - (loginButton.getPreferredSize().width / 2) + (signUpButton.getPreferredSize().width / 2), THIRD_ROW_Y, loginButton.getPreferredSize().width, loginButton.getPreferredSize().height);
 		
 		// aggiunta al frame
 		
@@ -72,6 +72,7 @@ public class FrameLogin extends Frame {
 		getContentPane().add(loginButton);
 		getContentPane().add(signUpButton);
 		
+		pack();
 		setVisible(true);
 	}
 }
