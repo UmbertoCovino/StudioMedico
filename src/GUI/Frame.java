@@ -8,11 +8,11 @@ import javax.swing.JFrame;
 
 public class Frame extends JFrame {
 	
-	public Frame(String title, int initialWidth, int initialHeight) {
+	public Frame(String title, int minimumWidth, int minimumHeight) {
 		super(title);
 		
 		setLocation(50, 50);
-		setMinimumSize(new Dimension(initialWidth, initialHeight));
+		setMinimumSize(new Dimension(minimumWidth, minimumHeight));
 		
 		setLayout(null);
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
