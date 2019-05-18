@@ -11,7 +11,7 @@ public class Frame extends JFrame {
 	public Frame(String title, int minimumWidth, int minimumHeight) {
 		super(title);
 		
-		setLocation(50, 50);
+		setLocation(50, 50); 
 		setMinimumSize(new Dimension(minimumWidth, minimumHeight));
 		
 		setLayout(null);

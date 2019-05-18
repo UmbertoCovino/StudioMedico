@@ -20,7 +20,7 @@ public class FrameLogin extends Frame {
 	public FrameLogin() {
 		super("Autenticazione", MINIMUM_FRAME_WIDTH, MINIMUM_FRAME_HEIGHT);
 		
-		int frameCenterX = getWidth() / 2;
+		int frameCenterX = getWidth() / 2; 
 
 		JPanel formPanel = new JPanel();
 		formPanel.setLayout(null);
