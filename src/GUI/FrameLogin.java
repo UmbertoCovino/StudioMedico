@@ -1,34 +1,26 @@
 package GUI;
 
-import java.awt.Component;
-import java.awt.Rectangle;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 
 public class FrameLogin extends Frame {
-	static final int 		 			FIRST_COLUMN_WIDTH = 60, SECOND_COLUMN_WIDTH = 150,
-									 	FIRST_COLUMN_X = 10, 	SECOND_COLUMN_X = FIRST_COLUMN_WIDTH + 15,
-			 		 FIRST_ROW_Y  = 10,
-			 		 SECOND_ROW_Y = 40,
-			 		 THIRD_ROW_Y  = 80,
-			 		 MINIMUM_FRAME_WIDTH = FIRST_COLUMN_WIDTH + SECOND_COLUMN_WIDTH + 20,
-					 MINIMUM_FRAME_HEIGHT = THIRD_ROW_Y + 60;
-	
+	private static final int MAX_FRAME_WIDTH = 99999,
+			 				 EXTRA_FRAME_WIDTH = 100,
+							 BUTTONS_GAP = 15;
+
 	public FrameLogin() {
-		super("Autenticazione", MINIMUM_FRAME_WIDTH, MINIMUM_FRAME_HEIGHT);
+		super("Autenticazione", true);
 		
-		int frameCenterX = getWidth() / 2;
-		
-		JPanel formPanel = new JPanel();
-		
-		JLabel emailLabel = new JLabel("Email", SwingConstants.RIGHT);
-		JLabel passwordLabel = new JLabel("Password", SwingConstants.RIGHT);
+		// dichiarazione elementi
+						
+		JLabel emailLabel = new JLabel("Email");
+		JLabel passwordLabel = new JLabel("Password");
 		
 		JTextField emailTextField = new JTextField();
 		JTextField passwordTextField = new JTextField();
@@ -41,6 +33,7 @@ public class FrameLogin extends Frame {
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// 
+				//JOptionPane.showMessageDialog(frame, "Messaggio.", "Attenzione", JOptionPane.WARNING_MESSAGE);
 			}
 		});
 		
@@ -52,27 +45,44 @@ public class FrameLogin extends Frame {
 		
 		// posizionamento elementi
 		
-		emailLabel.setBounds(FIRST_COLUMN_X, FIRST_ROW_Y + 5, FIRST_COLUMN_WIDTH, emailLabel.getPreferredSize().height);
-		emailTextField.setBounds(SECOND_COLUMN_X, FIRST_ROW_Y, SECOND_COLUMN_WIDTH, emailTextField.getPreferredSize().height);
+		GroupLayout layout = new GroupLayout(getContentPane());
+		getContentPane().setLayout(layout);
+		layout.setAutoCreateGaps(true);
+		layout.setAutoCreateContainerGaps(true);
 		
-		passwordLabel.setBounds(FIRST_COLUMN_X, SECOND_ROW_Y + 5, FIRST_COLUMN_WIDTH, passwordLabel.getPreferredSize().height);
-		passwordTextField.setBounds(SECOND_COLUMN_X, SECOND_ROW_Y, SECOND_COLUMN_WIDTH, passwordTextField.getPreferredSize().height);
-
-		signUpButton.setBounds(frameCenterX - (loginButton.getPreferredSize().width / 2) - (signUpButton.getPreferredSize().width / 2), THIRD_ROW_Y, signUpButton.getPreferredSize().width, signUpButton.getPreferredSize().height);
-		loginButton.setBounds(frameCenterX - (loginButton.getPreferredSize().width / 2) + (signUpButton.getPreferredSize().width / 2), THIRD_ROW_Y, loginButton.getPreferredSize().width, loginButton.getPreferredSize().height);
+		layout.setHorizontalGroup(
+			layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+		   		.addGroup(layout.createSequentialGroup()
+		   			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+		   				.addComponent(emailLabel)
+		   				.addComponent(passwordLabel))
+		   			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+		   				.addComponent(emailTextField)
+		   				.addComponent(passwordTextField)))
+		   		.addGroup(layout.createSequentialGroup()
+		   			.addComponent(signUpButton)
+		   			.addComponent(loginButton))
+		);
 		
-		// aggiunta al frame
+		layout.setVerticalGroup(
+			layout.createSequentialGroup()
+				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+					.addComponent(emailLabel)
+					.addComponent(emailTextField))
+				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+					.addComponent(passwordLabel)
+					.addComponent(passwordTextField))
+				.addGap(BUTTONS_GAP)
+				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+					.addComponent(signUpButton)
+					.addComponent(loginButton))
+		);
 		
-		formPanel.add(emailLabel);
-		formPanel.add(emailTextField);
-		formPanel.add(passwordLabel);
-		formPanel.add(passwordTextField);
-		
-		getContentPane().add(formPanel);
-		getContentPane().add(loginButton);
-		getContentPane().add(signUpButton);
+		// operazioni finali
 		
 		pack();
+		setMinimumSize(new Dimension(getWidth(), getHeight()));
+		setSize(new Dimension(getWidth() + EXTRA_FRAME_WIDTH, getHeight()));
 		setVisible(true);
 	}
 }
