@@ -1,8 +1,5 @@
 package Client;
 
-import javax.swing.JFrame;
-
-import GUI.Frame;
 import GUI.FrameLogin;
 
 public class Client {
