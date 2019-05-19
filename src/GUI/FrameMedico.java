@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 
-public class FrameMedico extends Frame {
+public class FrameMedico extends Frame { 
 	private static final int MAX_FRAME_WIDTH = 99999,
 			 				 EXTRA_FRAME_WIDTH = 50,
 							 BUTTONS_GAP = 15;
