@@ -3,7 +3,7 @@ package GUI;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-public class Frame extends JFrame {
+public class Frame extends JFrame { 
 	
 	public Frame(String title, boolean isRootWindow) {
 		super(title);
