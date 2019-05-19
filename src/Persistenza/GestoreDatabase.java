@@ -14,15 +14,14 @@ import Visite.Pagamento;
 import Amministrazione.Report;
 
 public class GestoreDatabase {
-
 	private static GestoreDatabase instance;
 
-	private GestoreDatabase() {
-
-	}
+	private GestoreDatabase() {	}
 
 	public static GestoreDatabase getInstance() {
-		return null;
+		if(instance == null)
+			instance = new GestoreDatabase();
+		return instance;
 	}
 
 	public Utente getUtente(String email) {
@@ -156,5 +155,4 @@ public class GestoreDatabase {
 	public ArrayList<Prenotazione> getPrenotazioniFromDate(String codiceFiscalePaziente, Date date) {
 		return null;
 	}
-
 }

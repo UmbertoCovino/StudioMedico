@@ -5,35 +5,85 @@ import Utenti.Medico;
 import Utenti.Paziente;
 
 public class Visita extends Prenotazione {
-
 	private int id;
-
 	private Date giorno;
-
 	private Date ora;
-
 	private String diagnosi;
-
 	private String terapia;
-
 	private TipologiaVisita tipologiaVisita;
-
 	private Medico medico;
-
 	private Paziente paziente;
-
 	private Prenotazione prenotazione;
+	
+	public int getId() {
+		return id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public Date getGiorno() {
+		return giorno;
+	}
+	
+	public void setGiorno(Date giorno) {
+		this.giorno = giorno;
+	}
+	
+	public Date getOra() {
+		return ora;
+	}
+	
+	public void setOra(Date ora) {
+		this.ora = ora;
+	}
+	
+	public String getDiagnosi() {
+		return diagnosi;
+	}
+	
+	public void setDiagnosi(String diagnosi) {
+		this.diagnosi = diagnosi;
+	}
+	
+	public String getTerapia() {
+		return terapia;
+	}
+	
+	public void setTerapia(String terapia) {
+		this.terapia = terapia;
+	}
+	
+	public TipologiaVisita getTipologiaVisita() {
+		return tipologiaVisita;
+	}
+	
+	public void setTipologiaVisita(TipologiaVisita tipologiaVisita) {
+		this.tipologiaVisita = tipologiaVisita;
+	}
+	
+	public Medico getMedico() {
+		return medico;
+	}
+	
+	public void setMedico(Medico medico) {
+		this.medico = medico;
+	}
+	
+	public Paziente getPaziente() {
+		return paziente;
+	}
+	
+	public void setPaziente(Paziente paziente) {
+		this.paziente = paziente;
+	}
+	
+	public Prenotazione getPrenotazione() {
+		return prenotazione;
+	}
 
-	private Prenotazione prenotazione;
-
-	private Prenotazione prenotazione;
-
-	private Paziente paziente;
-
-	private Paziente paziente;
-
-	private Medico medico;
-
-	private TipologiaVisita tipologiaVisita;
-
+	public void setPrenotazione(Prenotazione prenotazione) {
+		this.prenotazione = prenotazione;
+	}
 }

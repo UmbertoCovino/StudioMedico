@@ -5,17 +5,23 @@ import java.util.ArrayList;
 import Utenti.Medico;
 
 public class GestoreAmministrazione {
-
 	private static GestoreAmministrazione instance;
-
 	private GestoreDatabase gestoreDB;
 
-	private GestoreAmministrazione() {
-
-	}
+	private GestoreAmministrazione() { }
 
 	public static GestoreAmministrazione getInstance() {
-		return null;
+		if(instance == null)
+			instance = new GestoreAmministrazione();
+		return instance;
+	}
+
+	public GestoreDatabase getGestoreDB() {
+		return gestoreDB;
+	}
+
+	public void setGestoreDB(GestoreDatabase gestoreDB) {
+		this.gestoreDB = gestoreDB;
 	}
 
 	public Report createReport(String tipologia) {
@@ -29,5 +35,4 @@ public class GestoreAmministrazione {
 	public void createReport(String tipologia, Medico medico) {
 
 	}
-
 }

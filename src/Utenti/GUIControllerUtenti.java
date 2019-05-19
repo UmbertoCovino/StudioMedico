@@ -1,19 +1,23 @@
 package Utenti;
 
 public class GUIControllerUtenti {
-
 	private static GUIControllerUtenti instance;
-
 	private GestoreUtenti gestoreUtenti;
 
-	private GestoreUtenti gestoreUtenti;
-
-	private GUIControllerUtenti() {
-
-	}
+	private GUIControllerUtenti() { }
 
 	public static GUIControllerUtenti getInstance() {
-		return null;
+		if(instance == null)
+			instance = new GUIControllerUtenti();
+		return instance;
+	}
+
+	public GestoreUtenti getGestoreUtenti() {
+		return gestoreUtenti;
+	}
+
+	public void setGestoreUtenti(GestoreUtenti gestoreUtenti) {
+		this.gestoreUtenti = gestoreUtenti;
 	}
 
 	public void createFormRegistrazionePaziente() {

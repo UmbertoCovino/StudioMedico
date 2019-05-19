@@ -1,19 +1,23 @@
 package Visite;
 
 public class GUIControllerVisite {
-
 	private static GUIControllerVisite instance;
-
 	private GestoreVisite gestoreVisite;
 
-	private GestoreVisite gestoreVisite;
-
-	private GUIControllerVisite() {
-
-	}
+	private GUIControllerVisite() { }
 
 	public static GUIControllerVisite getInstance() {
-		return null;
+		if(instance == null)
+			instance = new GUIControllerVisite();
+		return instance;
+	}
+	
+	public GestoreVisite getGestoreVisite() {
+		return gestoreVisite;
+	}
+
+	public void setGestoreVisite(GestoreVisite gestoreVisite) {
+		this.gestoreVisite = gestoreVisite;
 	}
 
 	public void createFormStoricoVisite() {
