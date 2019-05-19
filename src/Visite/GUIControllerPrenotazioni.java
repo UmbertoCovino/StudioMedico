@@ -7,19 +7,23 @@ import Amministrazione.CalendarioDisponibilita;
 import java.util.ArrayList;
 
 public class GUIControllerPrenotazioni {
-
 	private static GUIControllerPrenotazioni instance;
-
 	private GestorePrenotazioni gestorePrenotazioni;
 
-	private GestorePrenotazioni gestorePrenotazioni;
-
-	private GUIControllerPrenotazioni() {
-
-	}
+	private GUIControllerPrenotazioni() { }
 
 	public static GUIControllerPrenotazioni getInstance() {
-		return null;
+		if(instance == null)
+			instance = new GUIControllerPrenotazioni();
+		return instance;
+	}
+
+	public GestorePrenotazioni getGestorePrenotazioni() {
+		return gestorePrenotazioni;
+	}
+
+	public void setGestorePrenotazioni(GestorePrenotazioni gestorePrenotazioni) {
+		this.gestorePrenotazioni = gestorePrenotazioni;
 	}
 
 	public void createFormPrenotazioneVisita(Paziente paziente) {
