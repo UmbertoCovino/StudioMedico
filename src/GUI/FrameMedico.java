@@ -87,9 +87,6 @@ public class FrameMedico extends Frame {
 		
 		// operazioni finali
 		
-		pack();
-		setMinimumSize(new Dimension(getWidth(), getHeight()));
-		setSize(new Dimension(getWidth() + EXTRA_FRAME_WIDTH, getHeight()));
-		setVisible(true);
+		show(EXTRA_FRAME_WIDTH);
 	}
 }

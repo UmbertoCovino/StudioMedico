@@ -8,8 +8,8 @@ public class Client {
 		new FrameLogin();
 		
 		// TEST
-		new GUI.FrameMedico();
+//		new GUI.FrameMedico();
 		new GUI.FramePaziente();
-		new GUI.FrameProprietario();
+//		new GUI.FrameProprietario();
 	}
 }

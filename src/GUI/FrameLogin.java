@@ -30,6 +30,8 @@ public class FrameLogin extends Frame {
 		
 		// event handlers
 		
+		Frame thisFrame = this;
+		
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// 
@@ -39,7 +41,7 @@ public class FrameLogin extends Frame {
 		
 		signUpButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// 
+				new FormRegistrazionePaziente(thisFrame);
 			}
 		});
 		
@@ -80,9 +82,6 @@ public class FrameLogin extends Frame {
 		
 		// operazioni finali
 		
-		pack();
-		setMinimumSize(new Dimension(getWidth(), getHeight()));
-		setSize(new Dimension(getWidth() + EXTRA_FRAME_WIDTH, getHeight()));
-		setVisible(true);
+		show(EXTRA_FRAME_WIDTH);
 	}
 }
