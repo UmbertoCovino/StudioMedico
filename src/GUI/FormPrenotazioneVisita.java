@@ -28,7 +28,7 @@ public class FormPrenotazioneVisita extends Frame {
 	private JLabel orarioLabel;
 	private JComboBox<TipologiaVisita> tipologiaVisitaComboBox;
 	private JComboBox<Medico> medicoComboBox;
-	private /*JCalendar calendarioCalendar = new JCalendar();*/ JButton calendarioCalendar;
+	private JComboBox<Date> calendarioComboBox;
 	private JComboBox<Date> orarioComboBox;
 	private JButton confirmButton;
 	private JButton cancelButton;
@@ -44,7 +44,7 @@ public class FormPrenotazioneVisita extends Frame {
 		
 		tipologiaVisitaComboBox = new JComboBox<>();
 		medicoComboBox = new JComboBox<>();
-	  /*calendarioCalendar = new JCalendar();*/	calendarioCalendar = new JButton(); calendarioCalendar.setSize(100, 100);
+		calendarioComboBox = new JComboBox<Date>();
 		orarioComboBox = new JComboBox<>();
 		
 		confirmButton = new JButton("Conferma");
@@ -64,7 +64,7 @@ public class FormPrenotazioneVisita extends Frame {
 	}
 
 	private void updateTipologieVisite(ArrayList<TipologiaVisita> tipologieVisite) {
-//		tipologiaVisitaComboBox.setModel(new DefaultComboBoxModel<TipologiaVisita>((TipologiaVisita[]) tipologieVisite.toArray()));
+//		tipologiaVisitaComboBox.setModel(new DefaultComboBoxModel<TipologiaVisita>(tipologieVisite.toArray(new TipologiaVisita[tipologieVisite.size()])));
 	}
 
 	@Override
@@ -122,11 +122,11 @@ public class FormPrenotazioneVisita extends Frame {
 	}
 
 	protected void updateMedici(ArrayList<Medico> medici) {
-//		medicoComboBox.setModel(new DefaultComboBoxModel<Medico>((Medico[]) medici.toArray()));
+//		medicoComboBox.setModel(new DefaultComboBoxModel<Medico>(medici.toArray(new Medico[medici.size()])));
 	}
 
 	protected void updateCalendarioDisponibilita(CalendarioDisponibilita calendarioDisponibilita) {
-		// aggiornare il calendarioCalendar
+//		calendarioComboBox.setModel(new DefaultComboBoxModel<Date>((calendarioDisponibilita.getOrari().toArray(new Date[calendarioDisponibilita.getOrari().size()])));
 	}
 
 	@Override
@@ -147,7 +147,7 @@ public class FormPrenotazioneVisita extends Frame {
 		   			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
 		   				.addComponent(tipologiaVisitaComboBox)
 		   				.addComponent(medicoComboBox)
-		   				.addComponent(calendarioCalendar)
+		   				.addComponent(calendarioComboBox)
 		   				.addComponent(orarioComboBox)))
 		   		.addGroup(layout.createSequentialGroup()
 		   			.addComponent(cancelButton)
@@ -164,7 +164,7 @@ public class FormPrenotazioneVisita extends Frame {
 					.addComponent(medicoComboBox))
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 					.addComponent(calendarioLabel)
-					.addComponent(calendarioCalendar))
+					.addComponent(calendarioComboBox))
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 					.addComponent(orarioLabel)
 					.addComponent(orarioComboBox))

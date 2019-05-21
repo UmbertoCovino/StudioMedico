@@ -3,14 +3,19 @@ package GUI;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import java.util.Date;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
+import Amministrazione.CalendarioDisponibilita;
 import Utenti.Medico;
+import Visite.GUIControllerPrenotazioni;
 import Visite.TipologiaVisita;
 
 public class FormModificaPrenotazione extends Frame { 
@@ -23,12 +28,12 @@ public class FormModificaPrenotazione extends Frame {
 	private JLabel orarioLabel;
 	private JComboBox<TipologiaVisita> tipologiaVisitaComboBox;
 	private JComboBox<Medico> medicoComboBox;
-	private /*JCalendar calendarioCalendar = new JCalendar();*/ JButton calendarioCalendar;
+	private JComboBox<Date> calendarioComboBox;
 	private JComboBox<Date> orarioComboBox;
 	private JButton confirmButton;
 	private JButton cancelButton;
 
-	public FormModificaPrenotazione(Frame parentFrame) {
+	public FormModificaPrenotazione(Frame parentFrame, TipologiaVisita tipologiaVisita, Medico medico, Date giorno, Date ora) {
 		super("Modifica prenotazione", parentFrame, "Sei sicuro di voler annullare la modifica alla prenotazione?");
 		
 		// dichiarazione elementi
@@ -39,11 +44,14 @@ public class FormModificaPrenotazione extends Frame {
 		
 		tipologiaVisitaComboBox = new JComboBox<>();
 		medicoComboBox = new JComboBox<>();
-	  /*calendarioCalendar = new JCalendar();*/	calendarioCalendar = new JButton(); calendarioCalendar.setSize(100, 100);
+		calendarioComboBox = new JComboBox<Date>();
 		orarioComboBox = new JComboBox<>();
 		
 		confirmButton = new JButton("Conferma");
 		cancelButton = new JButton("Annulla");
+		
+		// caricamento dati in tipologiaVisitaComboBox
+//		updateTipologieVisite(GUIControllerPrenotazioni.getInstance().getTipologieVisite());
 		
 		// aggiunta event handlers
 		addingEventHandlers();
@@ -55,14 +63,39 @@ public class FormModificaPrenotazione extends Frame {
 		showFrame(EXTRA_FRAME_WIDTH);
 	}
 
+	private void updateTipologieVisite(ArrayList<TipologiaVisita> tipologieVisite) {
+//		tipologiaVisitaComboBox.setModel(new DefaultComboBoxModel<TipologiaVisita>(tipologieVisite.toArray(new TipologiaVisita[tipologieVisite.size()])));
+	}
+
 	@Override
 	protected void addingEventHandlers() {
 		Frame thisFrame = this;
 		
+		tipologiaVisitaComboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+//				ArrayList<Medico> medici = GUIControllerPrenotazioni.getInstance().getMedici(((TipologiaVisita) tipologiaVisitaComboBox.getSelectedItem()).getNome());
+//				updateMedici(medici);
+			}
+		});
+		
+		medicoComboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+//				CalendarioDisponibilita calendarioDisponibilita = GUIControllerPrenotazioni.getInstance().getCalendarioDisponibilita(
+//						((Medico) medicoComboBox.getSelectedItem()).getCodice(),
+//						((TipologiaVisita) tipologiaVisitaComboBox.getSelectedItem()).getNome());
+//				updateCalendarioDisponibilita(calendarioDisponibilita);
+			}
+		});
+		
 		confirmButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// 
-				//JOptionPane.showMessageDialog(frame, "Messaggio.", "Attenzione", JOptionPane.WARNING_MESSAGE);
+				if (dataIsValid()) {
+//					GUIControllerPrenotazioni.getInstance().notifyData(
+//							giorno,
+//							ora,
+//							tipologiaVisita,
+//							medico);
+				}
 			}
 		});
 		
@@ -71,6 +104,29 @@ public class FormModificaPrenotazione extends Frame {
 				thisFrame.dispatchEvent(new WindowEvent(thisFrame, WindowEvent.WINDOW_CLOSING));
 			}
 		});
+	}
+
+	protected boolean dataIsValid() {
+//		if (tipologiaVisitaComboBox.getText().isEmpty()) {
+//			JOptionPane.showMessageDialog(this, "Il campo nome non può essere vuoto.", "Attenzione", JOptionPane.WARNING_MESSAGE);
+//		} else if (medicoComboBox.getText().isEmpty()) {
+//			JOptionPane.showMessageDialog(this, "Il campo cognome non può essere vuoto.", "Attenzione", JOptionPane.WARNING_MESSAGE);
+//		} else if (calendarioCalendar.getText().isEmpty()) {
+//			JOptionPane.showMessageDialog(this, "Il campo email non può essere vuoto.", "Attenzione", JOptionPane.WARNING_MESSAGE);
+//		} else if (orarioComboBox.getText().isEmpty()) {
+//			JOptionPane.showMessageDialog(this, "Il campo codice fiscale non può essere vuoto.", "Attenzione", JOptionPane.WARNING_MESSAGE);
+//		} else
+//			return true;
+//		
+		return false;
+	}
+
+	protected void updateMedici(ArrayList<Medico> medici) {
+//		medicoComboBox.setModel(new DefaultComboBoxModel<Medico>(medici.toArray(new Medico[medici.size()])));
+	}
+
+	protected void updateCalendarioDisponibilita(CalendarioDisponibilita calendarioDisponibilita) {
+//		calendarioComboBox.setModel(new DefaultComboBoxModel<Date>((calendarioDisponibilita.getOrari().toArray(new Date[calendarioDisponibilita.getOrari().size()])));
 	}
 
 	@Override
@@ -91,7 +147,7 @@ public class FormModificaPrenotazione extends Frame {
 		   			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
 		   				.addComponent(tipologiaVisitaComboBox)
 		   				.addComponent(medicoComboBox)
-		   				.addComponent(calendarioCalendar)
+		   				.addComponent(calendarioComboBox)
 		   				.addComponent(orarioComboBox)))
 		   		.addGroup(layout.createSequentialGroup()
 		   			.addComponent(cancelButton)
@@ -108,7 +164,7 @@ public class FormModificaPrenotazione extends Frame {
 					.addComponent(medicoComboBox))
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 					.addComponent(calendarioLabel)
-					.addComponent(calendarioCalendar))
+					.addComponent(calendarioComboBox))
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 					.addComponent(orarioLabel)
 					.addComponent(orarioComboBox))

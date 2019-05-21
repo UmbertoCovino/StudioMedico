@@ -2,6 +2,7 @@ package GUI;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -9,7 +10,10 @@ import javax.swing.JButton;
 import Utenti.Paziente;
 import Visite.GUIControllerPrenotazioni;
 
-public class FramePaziente extends Frame { 
+public class FramePaziente extends Frame {
+	public static final SimpleDateFormat DATE_SDF = new SimpleDateFormat("EEEEEEEEEE d MMMMMMMMMMMMM yyyy");
+	public static final SimpleDateFormat TIME_SDF = new SimpleDateFormat("HH:mm");
+	
 	private static final int MAX_FRAME_WIDTH = 99999,
 			 				 EXTRA_FRAME_WIDTH = 50;
 	private Paziente paziente;

@@ -2,6 +2,7 @@ package GUI;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -15,7 +16,7 @@ import Utenti.Medico;
 import Utenti.Paziente;
 import Utenti.Utente;
 
-public class FrameLogin extends Frame { 
+public class FrameLogin extends Frame {
 	private static final int MAX_FRAME_WIDTH = 99999,
 			 				 EXTRA_FRAME_WIDTH = 100,
 							 BUTTONS_GAP = 15;

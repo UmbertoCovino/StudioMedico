@@ -31,6 +31,8 @@ public class ListaPrenotazioni extends Frame {
 	public ListaPrenotazioni(Frame parentFrame, int operationType, ArrayList<Prenotazione> prenotazioni) {
 		super("Lista prenotazioni effettuate", parentFrame);
 		
+		this.operationType = operationType;
+		
 		// dichiarazione elementi
 		prenotazioniLabel = new JLabel("Prenotazioni");
 		
@@ -40,8 +42,6 @@ public class ListaPrenotazioni extends Frame {
 		cancelButton = new JButton("Annulla");
 		
 		modifyOrDeleteButton.setEnabled(false);
-		
-		this.operationType = operationType;
 		
 		// aggiunta event handlers
 		addingEventHandlers();
