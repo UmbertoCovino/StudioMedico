@@ -5,7 +5,7 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-public class Frame extends JFrame { 
+public abstract class Frame extends JFrame { 
 	
 	public Frame(String title, boolean isRootWindow) {
 		super(title);
@@ -30,7 +30,7 @@ public class Frame extends JFrame {
 	    	setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
 	
-	// has parent frame dependency
+	// has parent frame dependency without message on close
 	public Frame(String title, Frame parentFrame) {
 		super(title);
 		
@@ -49,7 +49,7 @@ public class Frame extends JFrame {
 	    });
 	}
 	
-	// has parent frame dependency with message
+	// has parent frame dependency with message on close
 	public Frame(String title, Frame parentFrame, String dialogMessage) {
 		super(title);
 		
@@ -74,11 +74,15 @@ public class Frame extends JFrame {
 	    });
 	}
 
-	protected void show(final int EXTRA_FRAME_WIDTH) {
+	protected void showFrame(final int EXTRA_FRAME_WIDTH) {
 		pack();
 		setMinimumSize(new Dimension(getWidth(), getHeight()));
 		setSize(new Dimension(getWidth() + EXTRA_FRAME_WIDTH, getHeight()));
 		setLocationRelativeTo(null);
 		setVisible(true);
 	}
+
+	protected abstract void addingEventHandlers();
+
+	protected abstract void elementsPositioning();
 }

@@ -10,25 +10,36 @@ import javax.swing.JButton;
 public class FrameProprietario extends Frame { 
 	private static final int MAX_FRAME_WIDTH = 99999,
 			 				 EXTRA_FRAME_WIDTH = 150;
+	private JButton creaReportButton;
 
 	public FrameProprietario() {
 		super("Area proprietario", true);
 		
 		// dichiarazione elementi
-						
-		JButton creaReportButton = new JButton("Crea report");
+		creaReportButton = new JButton("Crea report");
 		
-		// event handlers
+		// aggiunta event handlers
+		addingEventHandlers();
 		
+		// posizionamento elementi
+		elementsPositioning();
+		
+		// visualizzazione frame
+		showFrame(EXTRA_FRAME_WIDTH);
+	}
+
+	@Override
+	protected void addingEventHandlers() {
 		creaReportButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// 
 				//JOptionPane.showMessageDialog(frame, "Messaggio.", "Attenzione", JOptionPane.WARNING_MESSAGE);
 			}
 		});
-		
-		// posizionamento elementi
-		
+	}
+
+	@Override
+	protected void elementsPositioning() {
 		GroupLayout layout = new GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);
 		layout.setAutoCreateGaps(true);
@@ -49,9 +60,5 @@ public class FrameProprietario extends Frame {
 					.addComponent(creaReportButton)
 					.addGap(0))
 		);
-		
-		// operazioni finali
-		
-		show(EXTRA_FRAME_WIDTH);
 	}
 }

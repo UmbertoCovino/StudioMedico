@@ -7,41 +7,71 @@ import java.awt.event.WindowEvent;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import Utenti.GUIControllerUtenti;
 
 public class FormRegistrazionePaziente extends Frame { 
 	private static final int MAX_FRAME_WIDTH = 99999,
 			 				 EXTRA_FRAME_WIDTH = 100,
 							 BUTTONS_GAP = 15;
+	private JLabel nomeLabel;
+	private JLabel cognomeLabel;
+	private JLabel emailLabel;
+	private JLabel passwordLabel;
+	private JLabel codiceFiscaleLabel;
+	private JTextField nomeTextField;
+	private JTextField cognomeTextField;
+	private JTextField emailTextField;
+	private JPasswordField passwordTextField;
+	private JTextField codiceFiscaleTextField;
+	private JButton confirmButton;
+	private JButton cancelButton;
 
 	public FormRegistrazionePaziente(Frame parentFrame) {
 		super("Registrazione paziente", parentFrame, "Sei sicuro di voler annullare la registrazione?");
 		
 		// dichiarazione elementi
+		nomeLabel = new JLabel("Nome");
+		cognomeLabel = new JLabel("Cognome");
+		emailLabel = new JLabel("Email");
+		passwordLabel = new JLabel("Password");
+		codiceFiscaleLabel = new JLabel("Codice fiscale");
 		
-		JLabel nomeLabel = new JLabel("Nome");
-		JLabel cognomeLabel = new JLabel("Cognome");
-		JLabel emailLabel = new JLabel("Email");
-		JLabel passwordLabel = new JLabel("Password");
-		JLabel codiceFiscaleLabel = new JLabel("Codice fiscale");
+		nomeTextField = new JTextField();
+		cognomeTextField = new JTextField();
+		emailTextField = new JTextField();
+		passwordTextField = new JPasswordField();
+		codiceFiscaleTextField = new JTextField();
 		
-		JTextField nomeTextField = new JTextField();
-		JTextField cognomeTextField = new JTextField();
-		JTextField emailTextField = new JTextField();
-		JTextField passwordTextField = new JTextField();
-		JTextField codiceFiscaleTextField = new JTextField();
+		confirmButton = new JButton("Conferma");
+		cancelButton = new JButton("Annulla");
 		
-		JButton confirmButton = new JButton("Conferma");
-		JButton cancelButton = new JButton("Annulla");
+		// aggiunta event handlers
+		addingEventHandlers();
 		
-		// event handlers
+		// posizionamento elementi
+		elementsPositioning();
 		
+		// visualizzazione frame
+		showFrame(EXTRA_FRAME_WIDTH);
+	}
+
+	@Override
+	protected void addingEventHandlers() {
 		Frame thisFrame = this;
 		
 		confirmButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// 
-				//JOptionPane.showMessageDialog(frame, "Messaggio.", "Attenzione", JOptionPane.WARNING_MESSAGE);
+				if (dataIsValid()) {
+//					GUIControllerUtenti.getInstance().notifyData(nomeTextField.getText().trim(),
+//							cognomeTextField.getText().trim(),
+//							emailTextField.getText().trim(),
+//							String.valueOf(passwordTextField.getPassword()),
+//							codiceFiscaleTextField.getText().trim());
+				}
 			}
 		});
 		
@@ -50,9 +80,27 @@ public class FormRegistrazionePaziente extends Frame {
 				thisFrame.dispatchEvent(new WindowEvent(thisFrame, WindowEvent.WINDOW_CLOSING));
 			}
 		});
+	}
+
+	protected boolean dataIsValid() {
+		if (nomeTextField.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(this, "Il campo nome non può essere vuoto.", "Attenzione", JOptionPane.WARNING_MESSAGE);
+		} else if (cognomeTextField.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(this, "Il campo cognome non può essere vuoto.", "Attenzione", JOptionPane.WARNING_MESSAGE);
+		} else if (emailTextField.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(this, "Il campo email non può essere vuoto.", "Attenzione", JOptionPane.WARNING_MESSAGE);
+		} else if (String.valueOf(passwordTextField.getPassword()).isEmpty()) {
+			JOptionPane.showMessageDialog(this, "Il campo password non può essere vuoto.", "Attenzione", JOptionPane.WARNING_MESSAGE);
+		} else if (codiceFiscaleTextField.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(this, "Il campo codice fiscale non può essere vuoto.", "Attenzione", JOptionPane.WARNING_MESSAGE);
+		} else
+			return true;
 		
-		// posizionamento elementi
-		
+		return false;
+	}
+
+	@Override
+	protected void elementsPositioning() {
 		GroupLayout layout = new GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);
 		layout.setAutoCreateGaps(true);
@@ -100,9 +148,5 @@ public class FormRegistrazionePaziente extends Frame {
 					.addComponent(cancelButton)
 					.addComponent(confirmButton))
 		);
-		
-		// operazioni finali
-		
-		show(EXTRA_FRAME_WIDTH);
 	}
 }

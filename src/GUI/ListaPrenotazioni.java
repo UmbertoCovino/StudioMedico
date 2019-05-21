@@ -20,23 +20,39 @@ public class ListaPrenotazioni extends Frame {
 							 BUTTONS_GAP = 15;
 	protected static final int MODIFY_OPERATION = 1,
 							   DELETE_OPERATION = 2;
+	private JLabel prenotazioniLabel;
+	private JList<Prenotazione> prenotazioniList;
+	private JButton modifyOrDeleteButton;
+	private JButton cancelButton;
+	private int operationType;
 
 	public ListaPrenotazioni(Frame parentFrame, int operationType) {
 		super("Lista prenotazioni effettuate", parentFrame);
 		
 		// dichiarazione elementi
+		prenotazioniLabel = new JLabel("Prenotazioni");
 		
-		JLabel prenotazioniLabel = new JLabel("Prenotazioni");
+		prenotazioniList = new JList<>();
 		
-		JList<Prenotazione> prenotazioniList = new JList<>();
-		
-		JButton modifyOrDeleteButton = new JButton();
-		JButton cancelButton = new JButton("Annulla");
+		modifyOrDeleteButton = new JButton();
+		cancelButton = new JButton("Annulla");
 		
 		modifyOrDeleteButton.setEnabled(false);
 		
-		// event handlers
+		this.operationType = operationType;
 		
+		// aggiunta event handlers
+		addingEventHandlers();
+		
+		// posizionamento elementi
+		elementsPositioning();
+		
+		// visualizzazione frame
+		showFrame(EXTRA_FRAME_WIDTH);
+	}
+
+	@Override
+	protected void addingEventHandlers() {
 		Frame thisFrame = this;
 		
 		prenotazioniList.addListSelectionListener(new ListSelectionListener() {
@@ -72,9 +88,10 @@ public class ListaPrenotazioni extends Frame {
 				thisFrame.dispatchEvent(new WindowEvent(thisFrame, WindowEvent.WINDOW_CLOSING));
 			}
 		});
-		
-		// posizionamento elementi
-		
+	}
+
+	@Override
+	protected void elementsPositioning() {
 		GroupLayout layout = new GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);
 		layout.setAutoCreateGaps(true);
@@ -98,9 +115,5 @@ public class ListaPrenotazioni extends Frame {
 					.addComponent(cancelButton)
 					.addComponent(modifyOrDeleteButton))
 		);
-		
-		// operazioni finali
-		
-		show(EXTRA_FRAME_WIDTH);
 	}
 }

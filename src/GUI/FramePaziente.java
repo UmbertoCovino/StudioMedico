@@ -9,19 +9,32 @@ import javax.swing.JButton;
 public class FramePaziente extends Frame { 
 	private static final int MAX_FRAME_WIDTH = 99999,
 			 				 EXTRA_FRAME_WIDTH = 50;
+	private JButton prenotaVisitaButton;
+	private JButton modificaPrenotazioneVisitaButton;
+	private JButton eliminaPrenotazioneVisitaButton;
+	private JButton visualizzaStoricoVisiteButton;
 
 	public FramePaziente() {
 		super("Area paziente", true);
 		
 		// dichiarazione elementi
-						
-		JButton prenotaVisitaButton = new JButton("Prenota visita");
-		JButton modificaPrenotazioneVisitaButton = new JButton("Modifica prenotazione visita");
-		JButton eliminaPrenotazioneVisitaButton = new JButton("Elimina prenotazione visita");
-		JButton visualizzaStoricoVisiteButton = new JButton("Visualizza storico visite");
+		prenotaVisitaButton = new JButton("Prenota visita");
+		modificaPrenotazioneVisitaButton = new JButton("Modifica prenotazione visita");
+		eliminaPrenotazioneVisitaButton = new JButton("Elimina prenotazione visita");
+		visualizzaStoricoVisiteButton = new JButton("Visualizza storico visite");
 		
-		// event handlers
+		// aggiunta event handlers
+		addingEventHandlers();
 		
+		// posizionamento elementi
+		elementsPositioning();
+		
+		// visualizzazione frame
+		showFrame(EXTRA_FRAME_WIDTH);
+	}
+
+	@Override
+	protected void addingEventHandlers() {
 		Frame thisFrame = this;
 		
 		prenotaVisitaButton.addActionListener(new ActionListener() {
@@ -48,9 +61,10 @@ public class FramePaziente extends Frame {
 				//new ListaVisite(thisFrame);
 			}
 		});
-		
-		// posizionamento elementi
-		
+	}
+
+	@Override
+	protected void elementsPositioning() {
 		GroupLayout layout = new GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);
 		layout.setAutoCreateGaps(true);
@@ -77,9 +91,5 @@ public class FramePaziente extends Frame {
 	   			.addComponent(eliminaPrenotazioneVisitaButton)
 	   			.addComponent(visualizzaStoricoVisiteButton)
 		);
-		
-		// operazioni finali
-		
-		show(EXTRA_FRAME_WIDTH);
 	}
 }

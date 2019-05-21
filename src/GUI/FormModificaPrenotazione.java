@@ -17,28 +17,46 @@ public class FormModificaPrenotazione extends Frame {
 	private static final int MAX_FRAME_WIDTH = 99999,
 			 				 EXTRA_FRAME_WIDTH = 100,
 							 BUTTONS_GAP = 15;
+	private JLabel tipologiaVisitaLabel;
+	private JLabel medicoLabel;
+	private JLabel calendarioLabel;
+	private JLabel orarioLabel;
+	private JComboBox<TipologiaVisita> tipologiaVisitaComboBox;
+	private JComboBox<Medico> medicoComboBox;
+	private /*JCalendar calendarioCalendar = new JCalendar();*/ JButton calendarioCalendar;
+	private JComboBox<Date> orarioComboBox;
+	private JButton confirmButton;
+	private JButton cancelButton;
 
 	public FormModificaPrenotazione(Frame parentFrame) {
 		super("Modifica prenotazione", parentFrame, "Sei sicuro di voler annullare la modifica alla prenotazione?");
 		
 		// dichiarazione elementi
+		tipologiaVisitaLabel = new JLabel("Tipologia visita");
+		medicoLabel = new JLabel("Medico");
+		calendarioLabel = new JLabel("Calendario disponibilità");
+		orarioLabel = new JLabel("Orari disponibili per il giorno selezionato");
 		
-		JLabel tipologiaVisitaLabel = new JLabel("Tipologia visita");
-		JLabel medicoLabel = new JLabel("Medico");
-		JLabel calendarioLabel = new JLabel("Calendario disponibilità");
-		JLabel orarioLabel = new JLabel("Orari disponibili per il giorno selezionato");
+		tipologiaVisitaComboBox = new JComboBox<>();
+		medicoComboBox = new JComboBox<>();
+	  /*calendarioCalendar = new JCalendar();*/	calendarioCalendar = new JButton(); calendarioCalendar.setSize(100, 100);
+		orarioComboBox = new JComboBox<>();
 		
-		JComboBox<TipologiaVisita> tipologiaVisitaComboBox = new JComboBox<>();
-		JComboBox<Medico> medicoComboBox = new JComboBox<>();
-//		JCalendar calendarioCalendar = new JCalendar();
-		JButton calendarioCalendar = new JButton(); calendarioCalendar.setSize(100, 100);
-		JComboBox<Date> orarioComboBox = new JComboBox<>();
+		confirmButton = new JButton("Conferma");
+		cancelButton = new JButton("Annulla");
 		
-		JButton confirmButton = new JButton("Conferma");
-		JButton cancelButton = new JButton("Annulla");
+		// aggiunta event handlers
+		addingEventHandlers();
 		
-		// event handlers
+		// posizionamento elementi
+		elementsPositioning();
 		
+		// visualizzazione frame
+		showFrame(EXTRA_FRAME_WIDTH);
+	}
+
+	@Override
+	protected void addingEventHandlers() {
 		Frame thisFrame = this;
 		
 		confirmButton.addActionListener(new ActionListener() {
@@ -53,9 +71,10 @@ public class FormModificaPrenotazione extends Frame {
 				thisFrame.dispatchEvent(new WindowEvent(thisFrame, WindowEvent.WINDOW_CLOSING));
 			}
 		});
-		
-		// posizionamento elementi
-		
+	}
+
+	@Override
+	protected void elementsPositioning() {
 		GroupLayout layout = new GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);
 		layout.setAutoCreateGaps(true);
@@ -98,9 +117,5 @@ public class FormModificaPrenotazione extends Frame {
 					.addComponent(cancelButton)
 					.addComponent(confirmButton))
 		);
-		
-		// operazioni finali
-		
-		show(EXTRA_FRAME_WIDTH);
 	}
 }

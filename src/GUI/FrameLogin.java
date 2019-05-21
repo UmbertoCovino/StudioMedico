@@ -1,52 +1,96 @@
 package GUI;
 
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import Utenti.GUIControllerUtenti;
+import Utenti.Medico;
+import Utenti.Paziente;
+import Utenti.Utente;
 
 public class FrameLogin extends Frame { 
 	private static final int MAX_FRAME_WIDTH = 99999,
 			 				 EXTRA_FRAME_WIDTH = 100,
 							 BUTTONS_GAP = 15;
+	private JLabel emailLabel;
+	private JLabel passwordLabel;
+	private JTextField emailTextField;
+	private JPasswordField passwordTextField;
+	private JButton loginButton;
+	private JButton signUpButton;
 
 	public FrameLogin() {
 		super("Autenticazione", true);
 		
 		// dichiarazione elementi
+		emailLabel = new JLabel("Email");
+		passwordLabel = new JLabel("Password");
 		
-		JLabel emailLabel = new JLabel("Email");
-		JLabel passwordLabel = new JLabel("Password");
+		emailTextField = new JTextField();
+		passwordTextField = new JPasswordField();
 		
-		JTextField emailTextField = new JTextField();
-		JTextField passwordTextField = new JTextField();
+		loginButton = new JButton("Login");
+		signUpButton = new JButton("Registrati");
 		
-		JButton loginButton = new JButton("Login");
-		JButton signUpButton = new JButton("Registrati");
+		// aggiunta event handlers
+		addingEventHandlers();
 		
-		// event handlers
+		// posizionamento elementi
+		elementsPositioning();
 		
+		// visualizzazione frame
+		showFrame(EXTRA_FRAME_WIDTH);
+	}
+
+	protected void addingEventHandlers() {
 		Frame thisFrame = this;
 		
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// 
-				//JOptionPane.showMessageDialog(frame, "Messaggio.", "Attenzione", JOptionPane.WARNING_MESSAGE);
+				if (dataIsValid()) {
+//					Utente utente = GUIControllerUtenti.getInstance().notifyCredentials(emailTextField.getText().trim(), String.valueOf(passwordTextField.getPassword()));
+//					
+//					if (utente != null) {
+//						if (utente instanceof Medico) {
+//							GUIControllerUtenti.getInstance().createFrameMedico((Medico) utente);
+//						} else if (utente instanceof Medico) {
+//							GUIControllerUtenti.getInstance().createFramePaziente((Paziente) utente);
+//						} else if (utente.isAdmin()) {
+//							GUIControllerUtenti.getInstance().createFrameProprietario(utente);
+//						}
+//					} else {
+//						JOptionPane.showMessageDialog(thisFrame, "Le credenziali immesse non sono corrette.", "Attenzione", JOptionPane.WARNING_MESSAGE);
+//					}
+				}
 			}
 		});
 		
 		signUpButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new FormRegistrazionePaziente(thisFrame);
+//				GUIControllerUtenti.getInstance().createFormRegistrazionePaziente(thisFrame);
 			}
 		});
+	}
+
+	protected boolean dataIsValid() {
+		if (emailTextField.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(this, "Il campo email non può essere vuoto.", "Attenzione", JOptionPane.WARNING_MESSAGE);
+		} else if (String.valueOf(passwordTextField.getPassword()).isEmpty()) {
+			JOptionPane.showMessageDialog(this, "Il campo password non può essere vuoto.", "Attenzione", JOptionPane.WARNING_MESSAGE);
+		} else
+			return true;
 		
-		// posizionamento elementi
-		
+		return false;
+	}
+
+	protected void elementsPositioning() {
 		GroupLayout layout = new GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);
 		layout.setAutoCreateGaps(true);
@@ -79,9 +123,5 @@ public class FrameLogin extends Frame {
 					.addComponent(signUpButton)
 					.addComponent(loginButton))
 		);
-		
-		// operazioni finali
-		
-		show(EXTRA_FRAME_WIDTH);
 	}
 }

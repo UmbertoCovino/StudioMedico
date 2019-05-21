@@ -1,6 +1,5 @@
 package GUI;
 
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -11,23 +10,36 @@ public class FrameMedico extends Frame {
 	private static final int MAX_FRAME_WIDTH = 99999,
 			 				 EXTRA_FRAME_WIDTH = 50,
 							 BUTTONS_GAP = 15;
+	private JButton ricercaPazienteButton;
+	private JButton registraVisitaButton;
+	private JButton generaFatturaButton;
+	private JButton registraPagamentoVisitaButton;
 
 	public FrameMedico() {
 		super("Area medico", true);
 		
 		// dichiarazione elementi
-						
-		JButton ricercaPazienteButton = new JButton("Ricerca paziente");
-		JButton registraVisitaButton = new JButton("Registra visita");
-		JButton generaFatturaButton = new JButton("Genera fattura");
-		JButton registraPagamentoVisitaButton = new JButton("Registra pagamento visita");
+		ricercaPazienteButton = new JButton("Ricerca paziente");
+		registraVisitaButton = new JButton("Registra visita");
+		generaFatturaButton = new JButton("Genera fattura");
+		registraPagamentoVisitaButton = new JButton("Registra pagamento visita");
 		
 		registraVisitaButton.setEnabled(false);
 		generaFatturaButton.setEnabled(false);
 		registraPagamentoVisitaButton.setEnabled(false);
 		
-		// event handlers
+		// aggiunta event handlers
+		addingEventHandlers();
 		
+		// posizionamento elementi
+		elementsPositioning();
+		
+		// visualizzazione frame
+		showFrame(EXTRA_FRAME_WIDTH);
+	}
+
+	@Override
+	protected void addingEventHandlers() {
 		ricercaPazienteButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// 
@@ -52,9 +64,10 @@ public class FrameMedico extends Frame {
 				// 
 			}
 		});
-		
-		// posizionamento elementi
-		
+	}
+
+	@Override
+	protected void elementsPositioning() {
 		GroupLayout layout = new GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);
 		layout.setAutoCreateGaps(true);
@@ -84,9 +97,5 @@ public class FrameMedico extends Frame {
 	   			.addComponent(generaFatturaButton)
 	   			.addComponent(registraPagamentoVisitaButton)
 		);
-		
-		// operazioni finali
-		
-		show(EXTRA_FRAME_WIDTH);
 	}
 }
