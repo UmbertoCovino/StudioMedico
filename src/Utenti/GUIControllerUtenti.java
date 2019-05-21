@@ -40,7 +40,7 @@ public class GUIControllerUtenti {
 	}
 
 	public void createFramePaziente(Paziente paziente) {
-		new FramePaziente();
+		new FramePaziente(paziente);
 	}
 
 	public void createFrameProprietario(Utente utente) {

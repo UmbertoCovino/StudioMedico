@@ -34,7 +34,7 @@ public class GUIControllerPrenotazioni {
 
 	public void createFormPrenotazioneVisita(Paziente paziente) {
 		this.paziente = paziente;
-		new FormPrenotazioneVisita(new GUI.FramePaziente());
+		new FormPrenotazioneVisita(new GUI.FramePaziente(paziente));
 	}
 
 	public void createListaPrenotazioni(String codiceFiscalePaziente) {
@@ -43,7 +43,7 @@ public class GUIControllerPrenotazioni {
 	}
 
 	public void createFormModificaPrenotazione(Prenotazione prenotazione) {
-		new FormModificaPrenotazione(new GUI.FramePaziente());
+		new FormModificaPrenotazione(new GUI.FramePaziente(prenotazione.getPaziente()));
 	}
 
 	public void createFormRisultatoVisita(Prenotazione prenotazione) {
