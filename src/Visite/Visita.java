@@ -4,7 +4,7 @@ import java.util.Date;
 import Utenti.Medico;
 import Utenti.Paziente;
 
-public class Visita extends Prenotazione {
+public class Visita {
 	private int id;
 	private Date giorno;
 	private Date ora;
@@ -15,6 +15,17 @@ public class Visita extends Prenotazione {
 	private Paziente paziente;
 	private Prenotazione prenotazione;
 	
+	public Visita(Prenotazione prenotazione, String diagnosi, String terapia) {
+		this.id = prenotazione.getId();
+		this.giorno = prenotazione.getGiorno();
+		this.ora = prenotazione.getOra();
+		this.diagnosi = diagnosi;
+		this.terapia = terapia;
+		this.tipologiaVisita = prenotazione.getTipologiaVisita();
+		this.medico = prenotazione.getMedico();
+		this.paziente = prenotazione.getPaziente();
+	}
+
 	public int getId() {
 		return id;
 	}

@@ -41,14 +41,31 @@ public class GestoreUtenti {
 	}
 
 	public void registerPaziente(String nome, String cognome, String email, String password, String codiceFiscale) {
-
+		if(gestoreDB.isUtenteGiaPresente(email)) {
+			//popup "email gia registrata"
+		} else if(gestoreDB.isPazienteGiaPresente(codiceFiscale)) {
+			//popup "email gia registrata"
+		} else {			
+			PazienteHandler handler = new PazienteHandler();
+			Paziente paziente = (Paziente) handler.createElement();
+			
+			//valutare se fare tutti questi set o modificare il metodo createElement()
+			paziente.setNome(nome);
+			paziente.setCognome(cognome);
+			paziente.setEmail(email);
+			paziente.setPassword(password);
+			paziente.setCodiceFiscale(codiceFiscale);
+			
+			gestoreDB.insertPaziente(paziente);
+			//popup "registrazione avvenuta con successo"
+		}
 	}
 
 	public Utente authentication(String email, String password) {
-		return null;
+		return gestoreDB.getUtente(email, password);
 	}
 
 	public Paziente getPaziente(String codiceFiscale) {
-		return null;
+		return gestoreDB.getPaziente(codiceFiscale);
 	}
 }

@@ -7,6 +7,12 @@ public class Pagamento {
 	private String metodoPagamento;
 	private Fattura fattura;
 	
+	public Pagamento(Fattura fattura, String metodoPagamento, Date dataPagamento) {
+		this.dataPagamento = dataPagamento;
+		this.metodoPagamento = metodoPagamento;
+		this.fattura = fattura;
+	}
+
 	public Date getDataPagamento() {
 		return dataPagamento;
 	}
