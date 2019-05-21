@@ -37,39 +37,41 @@ public class GestorePrenotazioni {
 	}
 
 	public void createPrenotazione(Date giorno, Date ora, TipologiaVisita tipologiaVisita, Medico medico, Paziente paziente) {
-
+		//gestire l'id della prenotazione
+		Prenotazione prenotazione = new Prenotazione(0, giorno, ora, tipologiaVisita, medico, paziente);
+		gestoreDB.insertPrenotazione(prenotazione);
 	}
 
 	public void modifyPrenotazione(int id, Date giorno, Date ora, TipologiaVisita tipologiaVisita, Medico medico) {
-
+		gestoreDB.updatePrenotazione(id, giorno, ora, tipologiaVisita, medico);
 	}
 
 	public void deletePrenotazione(int id) {
-
+		gestoreDB.deletePrenotazione(id);
 	}
 
 	public ArrayList<Prenotazione> getPrenotazioni(String codiceFiscalePaziente) {
-		return null;
+		return gestoreDB.getPrenotazioni(codiceFiscalePaziente);
 	}
 
 	public void createVisita(Prenotazione prenotazione, String diagnosi, String terapia) {
-
+		Visita visita = new Visita(prenotazione, diagnosi, terapia);
+		gestoreDB.insertVisita(visita);
 	}
 
 	public CalendarioDisponibilita getCalendarioDisponibilita(int codiceMedico, String nomeTipologiaVisita) {
-		return null;
+		return gestoreDB.getCalendarioDisponibilita(codiceMedico, nomeTipologiaVisita);
 	}
 
 	public ArrayList<Medico> getMedici(String nomeTipologiaVisita) {
-		return null;
+		return gestoreDB.getMedici(nomeTipologiaVisita);
 	}
 
 	public ArrayList<TipologiaVisita> getTipologieVisite() {
-		return null;
+		return gestoreDB.getTipologieVisite();
 	}
 
 	public ArrayList<Prenotazione> getPrenotazioniFromDate(String codiceFiscalePaziente, Date date) {
-		return null;
+		return gestoreDB.getPrenotazioniFromDate(codiceFiscalePaziente, date);
 	}
-
 }

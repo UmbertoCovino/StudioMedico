@@ -27,6 +27,10 @@ public class GestoreDatabase {
 	public Utente getUtente(String email) {
 		return null;
 	}
+	
+	public Utente getUtente(String email, String password) {
+		return null;
+	}
 
 	public void insertPaziente(Paziente paziente) {
 

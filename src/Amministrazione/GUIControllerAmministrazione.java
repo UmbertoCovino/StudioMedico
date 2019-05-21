@@ -1,6 +1,9 @@
 package Amministrazione;
 
 import java.util.ArrayList;
+
+import GUI.FormCreazioneReport;
+import GUI.FormVisualizzazioneReport;
 import Utenti.Medico;
 
 public class GUIControllerAmministrazione {
@@ -24,22 +27,22 @@ public class GUIControllerAmministrazione {
 	}
 
 	public void createFormCreazioneReport() {
-
+		new FormCreazioneReport();
 	}
 
 	public void createFormVisualizzazioneReport() {
-
+		new FormVisualizzazioneReport();
 	}
 
 	public void createReport(String tipologia) {
-
+		gestoreAmministrazione.createReport(tipologia);
 	}
 
 	public ArrayList<Medico> getMedici() {
-		return null;
+		return gestoreAmministrazione.getMedici();
 	}
 
 	public void createReport(String tipologia, Medico medico) {
-
+		gestoreAmministrazione.createReport(tipologia, medico);
 	}
 }

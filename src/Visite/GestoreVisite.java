@@ -34,23 +34,27 @@ public class GestoreVisite {
 	}
 
 	public ArrayList<Visita> getVisite(String codiceFiscalePaziente) {
-		return null;
+		return gestoreDB.getVisite(codiceFiscalePaziente);
 	}
 
 	public void printFattura(Visita visita) {
-
+		Fattura fattura = new Fattura(visita);
+		gestoreDB.insertFattura(fattura);
+	
+		// stampa fattura
 	}
 
 	public ArrayList<Fattura> getFatture(String codiceFiscalePaziente) {
-		return null;
+		return gestoreDB.getFatture(codiceFiscalePaziente);
 	}
 
 	public void createPagamento(Fattura fattura, String metodoPagamento, Date dataPagamento) {
-
+		Pagamento pagamento = new Pagamento(fattura, metodoPagamento, dataPagamento);
+		gestoreDB.insertPagamento(pagamento);
 	}
 
 	public ArrayList<Pagamento> getPagamentiFatture(ArrayList<Integer> idFatture) {
-		return null;
+		return gestoreDB.getPagamentiFatture(idFatture);
 	}
 
 }
