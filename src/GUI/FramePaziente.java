@@ -6,16 +6,22 @@ import java.awt.event.ActionListener;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 
+import Utenti.Paziente;
+import Visite.GUIControllerPrenotazioni;
+
 public class FramePaziente extends Frame { 
 	private static final int MAX_FRAME_WIDTH = 99999,
 			 				 EXTRA_FRAME_WIDTH = 50;
+	private Paziente paziente;
 	private JButton prenotaVisitaButton;
 	private JButton modificaPrenotazioneVisitaButton;
 	private JButton eliminaPrenotazioneVisitaButton;
 	private JButton visualizzaStoricoVisiteButton;
 
-	public FramePaziente() {
+	public FramePaziente(Paziente paziente) {
 		super("Area paziente", true);
+		
+		this.paziente = paziente;
 		
 		// dichiarazione elementi
 		prenotaVisitaButton = new JButton("Prenota visita");
@@ -39,26 +45,25 @@ public class FramePaziente extends Frame {
 		
 		prenotaVisitaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new FormPrenotazioneVisita(thisFrame);
+//				GUIControllerPrenotazioni.getInstance().createFormPrenotazioneVisita(paziente, thisFrame);
 			}
 		});
 		
 		modificaPrenotazioneVisitaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new ListaPrenotazioni(thisFrame, ListaPrenotazioni.MODIFY_OPERATION);
-				//new FormModificaPrenotazione(thisFrame); 
+//				GUIControllerPrenotazioni.getInstance().createListaPrenotazioni(paziente.getCodiceFiscale(), thisFrame);
 			}
 		});
 		
 		eliminaPrenotazioneVisitaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new ListaPrenotazioni(thisFrame, ListaPrenotazioni.DELETE_OPERATION);
+//				GUIControllerPrenotazioni.getInstance().createListaPrenotazioni(paziente.getCodiceFiscale(), thisFrame);
 			}
 		});
 		
 		visualizzaStoricoVisiteButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//new ListaVisite(thisFrame);
+//				GUIControllerPrenotazioni.getInstance().createListaPrenotazioni(paziente.getCodiceFiscale(), thisFrame);
 			}
 		});
 	}

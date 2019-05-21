@@ -3,6 +3,7 @@ package GUI;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -12,6 +13,7 @@ import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import Visite.GUIControllerPrenotazioni;
 import Visite.Prenotazione;
 
 public class ListaPrenotazioni extends Frame {
@@ -20,19 +22,19 @@ public class ListaPrenotazioni extends Frame {
 							 BUTTONS_GAP = 15;
 	protected static final int MODIFY_OPERATION = 1,
 							   DELETE_OPERATION = 2;
+	private int operationType;
 	private JLabel prenotazioniLabel;
 	private JList<Prenotazione> prenotazioniList;
 	private JButton modifyOrDeleteButton;
 	private JButton cancelButton;
-	private int operationType;
 
-	public ListaPrenotazioni(Frame parentFrame, int operationType) {
+	public ListaPrenotazioni(Frame parentFrame, int operationType, ArrayList<Prenotazione> prenotazioni) {
 		super("Lista prenotazioni effettuate", parentFrame);
 		
 		// dichiarazione elementi
 		prenotazioniLabel = new JLabel("Prenotazioni");
 		
-		prenotazioniList = new JList<>();
+		prenotazioniList = new JList<>(prenotazioni.toArray(new Prenotazione[prenotazioni.size()]));
 		
 		modifyOrDeleteButton = new JButton();
 		cancelButton = new JButton("Annulla");
@@ -66,9 +68,7 @@ public class ListaPrenotazioni extends Frame {
 			
 			modifyOrDeleteButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					
-					// 
-					//JOptionPane.showMessageDialog(frame, "Messaggio.", "Attenzione", JOptionPane.WARNING_MESSAGE);
+//					GUIControllerPrenotazioni.getInstance().createFormModificaPrenotazione(prenotazioniList.getSelectedValue());
 				}
 			});
 		} else if (operationType == DELETE_OPERATION) {
@@ -76,9 +76,7 @@ public class ListaPrenotazioni extends Frame {
 			
 			modifyOrDeleteButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					
-					// 
-					//JOptionPane.showMessageDialog(frame, "Messaggio.", "Attenzione", JOptionPane.WARNING_MESSAGE);
+//					GUIControllerPrenotazioni.getInstance().deletePrenotazione(prenotazioniList.getSelectedValue());
 				}
 			});
 		}
@@ -99,8 +97,8 @@ public class ListaPrenotazioni extends Frame {
 		
 		layout.setHorizontalGroup(
 			layout.createParallelGroup(GroupLayout.Alignment.CENTER)
-				.addComponent(prenotazioniLabel)
-		   		.addComponent(prenotazioniList)
+				.addComponent(prenotazioniLabel, 0, 0, Short.MAX_VALUE)
+		   		.addComponent(prenotazioniList, 0, 0, Short.MAX_VALUE)
 		   		.addGroup(layout.createSequentialGroup()
 		   			.addComponent(cancelButton)
 		   			.addComponent(modifyOrDeleteButton))

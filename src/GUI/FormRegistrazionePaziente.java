@@ -66,6 +66,7 @@ public class FormRegistrazionePaziente extends Frame {
 		confirmButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (dataIsValid()) {
+					// ATTENZIONE: CONTROLLARE IL FILE TODO.TXT
 //					GUIControllerUtenti.getInstance().notifyData(nomeTextField.getText().trim(),
 //							cognomeTextField.getText().trim(),
 //							emailTextField.getText().trim(),
