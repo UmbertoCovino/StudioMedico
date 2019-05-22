@@ -24,5 +24,7 @@ public class Client {
 		new GUI.ListaVisite(frame, new ArrayList<Visite.Visita>());
 		
 		new GUI.FormRisultatoVisita(frame, new Prenotazione());
+		
+		new GUI.FormCreazioneReport(frame);
 	}
 }

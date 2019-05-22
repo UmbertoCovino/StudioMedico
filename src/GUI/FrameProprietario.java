@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 
+import Amministrazione.GUIControllerAmministrazione;
 import Utenti.Utente;
 
 public class FrameProprietario extends Frame { 
@@ -38,8 +39,7 @@ public class FrameProprietario extends Frame {
 	protected void addingEventHandlers() {
 		creaReportButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// 
-				//JOptionPane.showMessageDialog(frame, "Messaggio.", "Attenzione", JOptionPane.WARNING_MESSAGE);
+				GUIControllerAmministrazione.getInstance().createFormCreazioneReport();
 			}
 		});
 	}

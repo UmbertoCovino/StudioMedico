@@ -33,7 +33,7 @@ public class FormRisultatoVisita extends Frame {
 	private JButton cancelButton;
 
 	public FormRisultatoVisita(Frame parentFrame, Prenotazione prenotazione) {
-		super("Ricerca paziente", parentFrame);
+		super("Registra risultato visita", parentFrame);
 		
 		this.prenotazione = prenotazione;
 		

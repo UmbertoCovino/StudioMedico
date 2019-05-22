@@ -64,7 +64,7 @@ public class ListaPrenotazioni extends Frame {
 		
 		prenotazioniList.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
-				//
+				modifyOrDeleteButton.setEnabled(true);
 			}
 		});
 
