@@ -6,17 +6,28 @@ import java.awt.event.ActionListener;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 
+import Utenti.GUIControllerUtenti;
+import Utenti.Medico;
+import Utenti.Paziente;
+import Visite.GUIControllerPrenotazioni;
+import Visite.GUIControllerVisite;
+
 public class FrameMedico extends Frame { 
 	private static final int MAX_FRAME_WIDTH = 99999,
 			 				 EXTRA_FRAME_WIDTH = 50,
 							 BUTTONS_GAP = 15;
+	private Medico medico;
+	private Paziente paziente;
+	
 	private JButton ricercaPazienteButton;
 	private JButton registraVisitaButton;
 	private JButton generaFatturaButton;
 	private JButton registraPagamentoVisitaButton;
 
-	public FrameMedico() {
+	public FrameMedico(Medico medico) {
 		super("Area medico", true);
+		
+		this.medico = medico;
 		
 		// dichiarazione elementi
 		ricercaPazienteButton = new JButton("Ricerca paziente");
@@ -42,26 +53,25 @@ public class FrameMedico extends Frame {
 	protected void addingEventHandlers() {
 		ricercaPazienteButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// 
-				//JOptionPane.showMessageDialog(frame, "Messaggio.", "Attenzione", JOptionPane.WARNING_MESSAGE);
+				paziente = GUIControllerUtenti.getInstance().createFormRichiestaPaziente();
 			}
 		});
 		
 		registraVisitaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// 
+				GUIControllerPrenotazioni.getInstance().createListaPrenotazioni(paziente.getCodiceFiscale());
 			}
 		});
 		
 		generaFatturaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// 
+				GUIControllerVisite.getInstance().createListaVisite(paziente.getCodiceFiscale());
 			}
 		});
 		
 		registraPagamentoVisitaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// 
+				GUIControllerVisite.getInstance().createListaFatture(paziente.getCodiceFiscale());
 			}
 		});
 	}

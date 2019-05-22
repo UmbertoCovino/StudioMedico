@@ -1,9 +1,6 @@
 package GUI;
 
 import java.awt.Dimension;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -19,6 +16,7 @@ public abstract class Frame extends JFrame {
 		    addWindowListener(new java.awt.event.WindowAdapter() {
 		        @Override
 		        public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+		        	// PER DEBUG HO COMMENTATO. DA SCOMMENTARE
 //		            if (JOptionPane.showConfirmDialog(thisFrame,
 //		            		"Sei sicuro di voler terminare l'applicazione?",
 //		            		"Attenzione",

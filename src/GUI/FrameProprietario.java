@@ -7,13 +7,19 @@ import java.awt.event.ActionListener;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 
+import Utenti.Utente;
+
 public class FrameProprietario extends Frame { 
 	private static final int MAX_FRAME_WIDTH = 99999,
 			 				 EXTRA_FRAME_WIDTH = 150;
+	private Utente proprietario;
+	
 	private JButton creaReportButton;
 
-	public FrameProprietario() {
+	public FrameProprietario(Utente proprietario) {
 		super("Area proprietario", true);
+		
+		this.proprietario = proprietario;
 		
 		// dichiarazione elementi
 		creaReportButton = new JButton("Crea report");

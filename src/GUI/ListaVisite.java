@@ -9,6 +9,8 @@ import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JScrollPane;
+
 import Visite.Visita;
 
 public class ListaVisite extends Frame {
@@ -17,6 +19,7 @@ public class ListaVisite extends Frame {
 							 BUTTONS_GAP = 15;
 	private JLabel visiteLabel;
 	private JList<Visita> visiteList;
+	private JScrollPane visiteScrollPane;
 	private JButton exitButton;
 
 	public ListaVisite(Frame parentFrame, ArrayList<Visita> visite) {
@@ -26,6 +29,8 @@ public class ListaVisite extends Frame {
 		visiteLabel = new JLabel("Visite");
 		
 		visiteList = new JList<>(visite.toArray(new Visita[visite.size()]));
+		
+		visiteScrollPane = new JScrollPane(visiteList);
 		
 		exitButton = new JButton("Annulla");
 		
@@ -60,14 +65,14 @@ public class ListaVisite extends Frame {
 		layout.setHorizontalGroup(
 			layout.createParallelGroup(GroupLayout.Alignment.CENTER)
 				.addComponent(visiteLabel, 0, 0, Short.MAX_VALUE)
-		   		.addComponent(visiteList, 0, 0, Short.MAX_VALUE)
+		   		.addComponent(visiteScrollPane, 0, 0, Short.MAX_VALUE)
 	   			.addComponent(exitButton)
 		);
 		
 		layout.setVerticalGroup(
 			layout.createSequentialGroup()
 				.addComponent(visiteLabel)
-				.addComponent(visiteList)
+				.addComponent(visiteScrollPane)
 				.addGap(BUTTONS_GAP)
 				.addComponent(exitButton)
 		);

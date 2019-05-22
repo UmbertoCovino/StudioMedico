@@ -9,6 +9,7 @@ import javax.swing.JButton;
 
 import Utenti.Paziente;
 import Visite.GUIControllerPrenotazioni;
+import Visite.GUIControllerVisite;
 
 public class FramePaziente extends Frame {
 	public static final SimpleDateFormat DATE_SDF = new SimpleDateFormat("EEEEEEEEEE d MMMMMMMMMMMMM yyyy");
@@ -17,6 +18,7 @@ public class FramePaziente extends Frame {
 	private static final int MAX_FRAME_WIDTH = 99999,
 			 				 EXTRA_FRAME_WIDTH = 50;
 	private Paziente paziente;
+	
 	private JButton prenotaVisitaButton;
 	private JButton modificaPrenotazioneVisitaButton;
 	private JButton eliminaPrenotazioneVisitaButton;
@@ -55,19 +57,19 @@ public class FramePaziente extends Frame {
 		
 		modificaPrenotazioneVisitaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				GUIControllerPrenotazioni.getInstance().createListaPrenotazioni(paziente.getCodiceFiscale(), thisFrame);
+//				GUIControllerPrenotazioni.getInstance().createListaPrenotazioni(paziente.getCodiceFiscale(), thisFrame, MODIFY_OPERATION);
 			}
 		});
 		
 		eliminaPrenotazioneVisitaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				GUIControllerPrenotazioni.getInstance().createListaPrenotazioni(paziente.getCodiceFiscale(), thisFrame);
+//				GUIControllerPrenotazioni.getInstance().createListaPrenotazioni(paziente.getCodiceFiscale(), thisFrame, DELETE_OPERATION);
 			}
 		});
 		
 		visualizzaStoricoVisiteButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				GUIControllerPrenotazioni.getInstance().createListaPrenotazioni(paziente.getCodiceFiscale(), thisFrame);
+//				GUIControllerVisite.getInstance().createListaStoricoVisite(paziente.getCodiceFiscale(), thisFrame);
 			}
 		});
 	}

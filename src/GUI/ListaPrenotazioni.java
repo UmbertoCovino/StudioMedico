@@ -9,6 +9,7 @@ import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -23,8 +24,10 @@ public class ListaPrenotazioni extends Frame {
 	protected static final int MODIFY_OPERATION = 1,
 							   DELETE_OPERATION = 2;
 	private int operationType;
+	
 	private JLabel prenotazioniLabel;
 	private JList<Prenotazione> prenotazioniList;
+	private JScrollPane prenotazioniScrollPane;
 	private JButton modifyOrDeleteButton;
 	private JButton cancelButton;
 
@@ -37,6 +40,8 @@ public class ListaPrenotazioni extends Frame {
 		prenotazioniLabel = new JLabel("Prenotazioni");
 		
 		prenotazioniList = new JList<>(prenotazioni.toArray(new Prenotazione[prenotazioni.size()]));
+		
+		prenotazioniScrollPane = new JScrollPane(prenotazioniList);
 		
 		modifyOrDeleteButton = new JButton();
 		cancelButton = new JButton("Annulla");
@@ -98,7 +103,7 @@ public class ListaPrenotazioni extends Frame {
 		layout.setHorizontalGroup(
 			layout.createParallelGroup(GroupLayout.Alignment.CENTER)
 				.addComponent(prenotazioniLabel, 0, 0, Short.MAX_VALUE)
-		   		.addComponent(prenotazioniList, 0, 0, Short.MAX_VALUE)
+		   		.addComponent(prenotazioniScrollPane, 0, 0, Short.MAX_VALUE)
 		   		.addGroup(layout.createSequentialGroup()
 		   			.addComponent(cancelButton)
 		   			.addComponent(modifyOrDeleteButton))
@@ -107,7 +112,7 @@ public class ListaPrenotazioni extends Frame {
 		layout.setVerticalGroup(
 			layout.createSequentialGroup()
 				.addComponent(prenotazioniLabel)
-				.addComponent(prenotazioniList)
+				.addComponent(prenotazioniScrollPane)
 				.addGap(BUTTONS_GAP)
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
 					.addComponent(cancelButton)
