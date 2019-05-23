@@ -3,6 +3,7 @@ package Utenti;
 import GUI.FormRegistrazionePaziente;
 import GUI.FormRichiestaPaziente;
 import GUI.Frame;
+import GUI.FrameLogin;
 import GUI.FrameMedico;
 import GUI.FramePaziente;
 import GUI.FrameProprietario;
@@ -26,6 +27,10 @@ public class GUIControllerUtenti {
 	public void setGestoreUtenti(GestoreUtenti gestoreUtenti) {
 		this.gestoreUtenti = gestoreUtenti;
 	}
+	
+	public void createFrameLogin() {
+		new FrameLogin();
+	}
 
 	public void createFormRegistrazionePaziente(Frame parentFrame) {
 		new FormRegistrazionePaziente(parentFrame);
@@ -36,7 +41,7 @@ public class GUIControllerUtenti {
 	}
 
 	public void createFrameMedico(Medico medico) {
-		new FrameMedico();
+		new FrameMedico(medico);
 	}
 
 	public void createFramePaziente(Paziente paziente) {
@@ -44,7 +49,7 @@ public class GUIControllerUtenti {
 	}
 
 	public void createFrameProprietario(Utente utente) {
-		new FrameProprietario();
+		new FrameProprietario(utente);
 	}
 
 	public void notifyData(String nome, String cognome, String email, String password, String codiceFiscale) {

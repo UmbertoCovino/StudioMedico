@@ -24,6 +24,7 @@ public class Visita {
 		this.tipologiaVisita = prenotazione.getTipologiaVisita();
 		this.medico = prenotazione.getMedico();
 		this.paziente = prenotazione.getPaziente();
+		this.prenotazione = prenotazione;
 	}
 
 	public int getId() {

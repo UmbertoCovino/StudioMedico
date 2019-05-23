@@ -159,4 +159,8 @@ public class GestoreDatabase {
 	public ArrayList<Prenotazione> getPrenotazioniFromDate(String codiceFiscalePaziente, Date date) {
 		return null;
 	}
+	
+	public ArrayList<Prenotazione> getPrenotazioni(int codiceMedico, String nomeTipologiaVisita){
+		return null;
+	}
 }

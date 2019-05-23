@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import GUI.FormPagamento;
+import GUI.Frame;
 import GUI.ListaFatture;
 import GUI.ListaVisite;
 
@@ -28,22 +29,14 @@ public class GUIControllerVisite {
 		this.gestoreVisite = gestoreVisite;
 	}
 
-	public void createFormStoricoVisite() {
-		// da cancellare o da creare il form??
-	}
-
-	public void createFormStampaFattura() {
-		// da cancellare o da creare il form??
-	}
-
 	public void createListaStoricoVisite(String codiceFiscalePaziente) {
-		ListaVisite list = new ListaVisite();
 		ArrayList<Visita> visite = gestoreVisite.getVisite(codiceFiscalePaziente);
+		ListaVisite list = new ListaVisite(, visite);
 	}
 
 	public void createListaVisite(String codiceFiscalePaziente) {
-		ListaVisite list = new ListaVisite();
 		ArrayList<Visita> visite = gestoreVisite.getVisite(codiceFiscalePaziente);
+		ListaVisite list = new ListaVisite(, visite);
 	}
 
 	public void printFattura(Visita visita) {

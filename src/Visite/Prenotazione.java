@@ -12,8 +12,7 @@ public class Prenotazione {
 	private Medico medico;
 	private Paziente paziente;
 	
-	public Prenotazione(int id, Date giorno, Date ora, TipologiaVisita tipologiaVisita, Medico medico, Paziente paziente) {
-		this.id = id;
+	public Prenotazione(Date giorno, Date ora, TipologiaVisita tipologiaVisita, Medico medico, Paziente paziente) {
 		this.giorno = giorno;
 		this.ora = ora;
 		this.tipologiaVisita = tipologiaVisita;

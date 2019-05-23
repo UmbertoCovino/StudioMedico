@@ -37,8 +37,7 @@ public class GestorePrenotazioni {
 	}
 
 	public void createPrenotazione(Date giorno, Date ora, TipologiaVisita tipologiaVisita, Medico medico, Paziente paziente) {
-		//gestire l'id della prenotazione
-		Prenotazione prenotazione = new Prenotazione(0, giorno, ora, tipologiaVisita, medico, paziente);
+		Prenotazione prenotazione = new Prenotazione(giorno, ora, tipologiaVisita, medico, paziente);
 		gestoreDB.insertPrenotazione(prenotazione);
 	}
 
