@@ -32,7 +32,7 @@ public class ListaVisite extends Frame {
 		
 		visiteScrollPane = new JScrollPane(visiteList);
 		
-		exitButton = new JButton("Annulla");
+		exitButton = new JButton("Esci");
 		
 		// aggiunta event handlers
 		addingEventHandlers();

@@ -90,7 +90,7 @@ public class FormModificaPrenotazione extends Frame {
 		confirmButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (dataIsValid()) {
-//					GUIControllerPrenotazioni.getInstance().notifyData(
+//					GUIControllerPrenotazioni.getInstance().notifyModifiedData(
 //							giorno,
 //							ora,
 //							tipologiaVisita,

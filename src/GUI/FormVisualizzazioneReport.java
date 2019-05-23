@@ -19,7 +19,7 @@ public class FormVisualizzazioneReport extends Frame {
 			 				 EXTRA_FRAME_WIDTH = 100,
 							 BUTTONS_GAP = 15;
 	private JLabel reportLabel;
-	private JList<Riga> reportRigheList;
+	private JList<Object> reportRigheList;
 	private JScrollPane reportRigheScrollPane;
 	private JButton exitButton;
 
