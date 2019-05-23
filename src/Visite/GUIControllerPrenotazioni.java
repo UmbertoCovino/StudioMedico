@@ -43,7 +43,8 @@ public class GUIControllerPrenotazioni {
 	}
 
 	public void createFormModificaPrenotazione(Prenotazione prenotazione) {
-		new FormModificaPrenotazione(new GUI.FramePaziente(prenotazione.getPaziente()));
+		new FormModificaPrenotazione(new GUI.FramePaziente(prenotazione.getPaziente()), prenotazione.getTipologiaVisita(),
+										prenotazione.getMedico(), prenotazione.getGiorno(), prenotazione.getOra());
 	}
 
 	public void createFormRisultatoVisita(Prenotazione prenotazione) {
@@ -53,9 +54,13 @@ public class GUIControllerPrenotazioni {
 	public void notifyData(Date giorno, Date ora, TipologiaVisita tipologiaVisita, Medico medico) {
 		gestorePrenotazioni.createPrenotazione(giorno, ora, tipologiaVisita, medico, this.paziente);
 	}
+	
+	public void notifyData(int id, Date giorno, Date ora, TipologiaVisita tipologiaVisita, Medico medico) {
+		gestorePrenotazioni.modifyPrenotazione(id, giorno, ora, tipologiaVisita, medico);
+	}
 
-	public void deletePrenotazione(Prenotazione prenotazione) {
-		gestorePrenotazioni.deletePrenotazione(prenotazione.getId());
+	public void deletePrenotazione(int id) {
+		gestorePrenotazioni.deletePrenotazione(id);
 	}
 
 	public void notifyData(Prenotazione prenotazione, String diagnosi, String terapia) {
