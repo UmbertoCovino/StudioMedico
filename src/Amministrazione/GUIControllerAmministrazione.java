@@ -4,13 +4,16 @@ import java.util.ArrayList;
 
 import GUI.FormCreazioneReport;
 import GUI.FormVisualizzazioneReport;
+import GUI.Frame;
 import Utenti.Medico;
 
 public class GUIControllerAmministrazione {
 	private static GUIControllerAmministrazione instance;
 	private GestoreAmministrazione gestoreAmministrazione;
 
-	private GUIControllerAmministrazione() { }
+	private GUIControllerAmministrazione() {
+		gestoreAmministrazione = GestoreAmministrazione.getInstance();
+	}
 
 	public static GUIControllerAmministrazione getInstance() {
 		if(instance == null)
@@ -18,20 +21,12 @@ public class GUIControllerAmministrazione {
 		return instance;
 	}
 
-	public GestoreAmministrazione getGestoreAmministrazione() {
-		return gestoreAmministrazione;
+	public void createFormCreazioneReport(Frame parentFrame) {
+		new FormCreazioneReport(parentFrame);
 	}
 
-	public void setGestoreAmministrazione(GestoreAmministrazione gestoreAmministrazione) {
-		this.gestoreAmministrazione = gestoreAmministrazione;
-	}
-
-	public void createFormCreazioneReport() {
-		new FormCreazioneReport();
-	}
-
-	public void createFormVisualizzazioneReport() {
-		new FormVisualizzazioneReport();
+	public void createFormVisualizzazioneReport(Frame parentFrame, Report report) {
+		new FormVisualizzazioneReport(parentFrame, report);
 	}
 
 	public void createReport(String tipologia) {

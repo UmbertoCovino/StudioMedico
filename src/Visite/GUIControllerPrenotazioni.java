@@ -7,6 +7,7 @@ import Amministrazione.CalendarioDisponibilita;
 import GUI.FormModificaPrenotazione;
 import GUI.FormPrenotazioneVisita;
 import GUI.FormRisultatoVisita;
+import GUI.Frame;
 import GUI.ListaPrenotazioni;
 
 import java.util.ArrayList;
@@ -16,7 +17,9 @@ public class GUIControllerPrenotazioni {
 	private GestorePrenotazioni gestorePrenotazioni;
 	private Paziente paziente;
 
-	private GUIControllerPrenotazioni() { }
+	private GUIControllerPrenotazioni() {
+		gestorePrenotazioni = GestorePrenotazioni.getInstance();
+	}
 
 	public static GUIControllerPrenotazioni getInstance() {
 		if(instance == null)
@@ -24,31 +27,23 @@ public class GUIControllerPrenotazioni {
 		return instance;
 	}
 
-	public GestorePrenotazioni getGestorePrenotazioni() {
-		return gestorePrenotazioni;
-	}
-
-	public void setGestorePrenotazioni(GestorePrenotazioni gestorePrenotazioni) {
-		this.gestorePrenotazioni = gestorePrenotazioni;
-	}
-
 	public void createFormPrenotazioneVisita(Paziente paziente) {
 		this.paziente = paziente;
 		new FormPrenotazioneVisita(new GUI.FramePaziente(paziente));
 	}
 
-	public void createListaPrenotazioni(String codiceFiscalePaziente) {
-		//ListaPrenotazioni list = new ListaPrenotazioni(parentFrame, operationType);
+	public void createListaPrenotazioni(Frame parentFrame, int operationType, String codiceFiscalePaziente) {
 		ArrayList<Prenotazione> prenotazioni = gestorePrenotazioni.getPrenotazioni(codiceFiscalePaziente);
+		new ListaPrenotazioni(parentFrame, operationType, prenotazioni);
 	}
 
-	public void createFormModificaPrenotazione(Prenotazione prenotazione) {
-		new FormModificaPrenotazione(new GUI.FramePaziente(prenotazione.getPaziente()), prenotazione.getTipologiaVisita(),
+	public void createFormModificaPrenotazione(Frame parentFrame, Prenotazione prenotazione) {
+		new FormModificaPrenotazione(parentFrame, prenotazione.getTipologiaVisita(),
 										prenotazione.getMedico(), prenotazione.getGiorno(), prenotazione.getOra());
 	}
 
-	public void createFormRisultatoVisita(Prenotazione prenotazione) {
-		new FormRisultatoVisita();
+	public void createFormRisultatoVisita(Frame parentFrame, Prenotazione prenotazione) {
+		new FormRisultatoVisita(parentFrame, prenotazione);
 	}
 
 	public void notifyData(Date giorno, Date ora, TipologiaVisita tipologiaVisita, Medico medico) {

@@ -12,20 +12,14 @@ public class GUIControllerUtenti {
 	private static GUIControllerUtenti instance;
 	private GestoreUtenti gestoreUtenti;
 
-	private GUIControllerUtenti() { }
+	private GUIControllerUtenti() {
+		gestoreUtenti = GestoreUtenti.getInstance();
+	}
 
 	public static GUIControllerUtenti getInstance() {
 		if(instance == null)
 			instance = new GUIControllerUtenti();
 		return instance;
-	}
-
-	public GestoreUtenti getGestoreUtenti() {
-		return gestoreUtenti;
-	}
-
-	public void setGestoreUtenti(GestoreUtenti gestoreUtenti) {
-		this.gestoreUtenti = gestoreUtenti;
 	}
 	
 	public void createFrameLogin() {
@@ -56,8 +50,8 @@ public class GUIControllerUtenti {
 		gestoreUtenti.registerPaziente(nome, cognome, email, password, codiceFiscale);
 	}
 
-	public Paziente createFormRichiestaPaziente() {
-		FormRichiestaPaziente f = new FormRichiestaPaziente();
+	public Paziente createFormRichiestaPaziente(Frame parentFrame) {
+		FormRichiestaPaziente f = new FormRichiestaPaziente(parentFrame);
 		return null;
 	}
 

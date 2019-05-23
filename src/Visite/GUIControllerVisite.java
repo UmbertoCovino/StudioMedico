@@ -13,48 +13,41 @@ public class GUIControllerVisite {
 	private GestoreVisite gestoreVisite;
 	private Fattura fattura;
 
-	private GUIControllerVisite() { }
+	private GUIControllerVisite() {
+		gestoreVisite = GestoreVisite.getInstance();
+	}
 
 	public static GUIControllerVisite getInstance() {
 		if(instance == null)
 			instance = new GUIControllerVisite();
 		return instance;
 	}
-	
-	public GestoreVisite getGestoreVisite() {
-		return gestoreVisite;
-	}
 
-	public void setGestoreVisite(GestoreVisite gestoreVisite) {
-		this.gestoreVisite = gestoreVisite;
-	}
-
-	public void createListaStoricoVisite(String codiceFiscalePaziente) {
+	public void createListaStoricoVisite(Frame parentFrame, String codiceFiscalePaziente) {
 		ArrayList<Visita> visite = gestoreVisite.getVisite(codiceFiscalePaziente);
-		ListaVisite list = new ListaVisite(, visite);
+		new ListaVisite(parentFrame, visite);
 	}
 
-	public void createListaVisite(String codiceFiscalePaziente) {
+	public void createListaVisite(Frame parentFrame, String codiceFiscalePaziente) {
 		ArrayList<Visita> visite = gestoreVisite.getVisite(codiceFiscalePaziente);
-		ListaVisite list = new ListaVisite(, visite);
+		new ListaVisite(parentFrame, visite);
 	}
 
 	public void printFattura(Visita visita) {
 		gestoreVisite.printFattura(visita);
 	}
 
-	public void createListaFatture(String codiceFiscalePaziente) {
-		ListaFatture list = new ListaFatture();
+	public void createListaFatture(Frame parentFrame, String codiceFiscalePaziente) {
 		ArrayList<Fattura> fatture = gestoreVisite.getFatture(codiceFiscalePaziente);
+		new ListaFatture(parentFrame, fatture);
 	}
 
-	public void createFormPagamento(Fattura fattura) {
+	public void createFormPagamento(Frame parentFrame, Fattura fattura) {
 		this.fattura = fattura;
-		new FormPagamento();
+		new FormPagamento(parentFrame, fattura);
 	}
 
 	public void notifyData(String metodoPagamento) {
 		gestoreVisite.createPagamento(this.fattura, metodoPagamento, new Date());
 	}
-
 }
