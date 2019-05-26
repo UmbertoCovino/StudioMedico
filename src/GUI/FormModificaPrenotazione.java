@@ -137,7 +137,7 @@ public class FormModificaPrenotazione extends Frame {
 	}
 
 	protected void updateCalendarioDisponibilita(CalendarioDisponibilita calendarioDisponibilita) {
-		calendarioComboBox.setModel(new DefaultComboBoxModel<Date>((calendarioDisponibilita.getOrari().toArray(new Date[calendarioDisponibilita.getOrari().size()])));
+		calendarioComboBox.setModel(new DefaultComboBoxModel<Date>((calendarioDisponibilita.getOrari().toArray(new Date[calendarioDisponibilita.getOrari().size()]))));
 	}
 
 	protected void updateOrari(Disponibilita disponibilita) {

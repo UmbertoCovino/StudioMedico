@@ -23,12 +23,12 @@ public class GUIControllerVisite {
 		return instance;
 	}
 
-	public void createListaStoricoVisite(Frame parentFrame, int operationType, String codiceFiscalePaziente) {
+	public void createListaStoricoVisite(Frame parentFrame, String codiceFiscalePaziente, int operationType) {
 		ArrayList<Visita> visite = gestoreVisite.getVisite(codiceFiscalePaziente);
 		new ListaVisite(parentFrame, operationType, visite);
 	}
 
-	public void createListaVisite(Frame parentFrame, int operationType, String codiceFiscalePaziente) {
+	public void createListaVisite(Frame parentFrame, String codiceFiscalePaziente, int operationType) {
 		ArrayList<Visita> visite = gestoreVisite.getVisite(codiceFiscalePaziente);
 		new ListaVisite(parentFrame, operationType, visite);
 	}
