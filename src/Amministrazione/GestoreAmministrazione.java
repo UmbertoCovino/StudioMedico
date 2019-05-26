@@ -8,20 +8,14 @@ public class GestoreAmministrazione {
 	private static GestoreAmministrazione instance;
 	private GestoreDatabase gestoreDB;
 
-	private GestoreAmministrazione() { }
+	private GestoreAmministrazione() {
+		gestoreDB = GestoreDatabase.getInstance();
+	}
 
 	public static GestoreAmministrazione getInstance() {
 		if(instance == null)
 			instance = new GestoreAmministrazione();
 		return instance;
-	}
-
-	public GestoreDatabase getGestoreDB() {
-		return gestoreDB;
-	}
-
-	public void setGestoreDB(GestoreDatabase gestoreDB) {
-		this.gestoreDB = gestoreDB;
 	}
 
 	public Report createReport(String tipologia) {

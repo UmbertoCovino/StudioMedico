@@ -1,5 +1,7 @@
 package Utenti;
 
+import javax.swing.JOptionPane;
+
 import Persistenza.GestoreDatabase;
 
 public class GestoreUtenti {
@@ -8,20 +10,14 @@ public class GestoreUtenti {
 	private UtenteHandler creator;
 	private UtenteHandler utenteHandler;
 
-	private GestoreUtenti() { }
+	private GestoreUtenti() {
+		gestoreDB = GestoreDatabase.getInstance();
+	}
 
 	public static GestoreUtenti getInstance() {
 		if(instance == null)
 			instance = new GestoreUtenti();
 		return instance;
-	}
-
-	public GestoreDatabase getGestoreDB() {
-		return gestoreDB;
-	}
-
-	public void setGestoreDB(GestoreDatabase gestoreDB) {
-		this.gestoreDB = gestoreDB;
 	}
 
 	public UtenteHandler getCreator() {
@@ -43,19 +39,15 @@ public class GestoreUtenti {
 	public void registerPaziente(String nome, String cognome, String email, String password, String codiceFiscale) {
 		if(gestoreDB.isUtenteGiaPresente(email)) {
 			//popup "email gia registrata"
+			
+//			non va bene il this perché vuole un componete, questi contorlli li deve fare il form?
+//			JOptionPane.showMessageDialog(this, "Email già registrata.", "Attenzione", JOptionPane.WARNING_MESSAGE);
 		} else if(gestoreDB.isPazienteGiaPresente(codiceFiscale)) {
 			//popup "email gia registrata"
 		} else {			
 			PazienteHandler handler = new PazienteHandler();
-			Paziente paziente = (Paziente) handler.createElement();
-			
-			//valutare se fare tutti questi set o modificare il metodo createElement()
-			paziente.setNome(nome);
-			paziente.setCognome(cognome);
-			paziente.setEmail(email);
-			paziente.setPassword(password);
+			Paziente paziente = (Paziente) handler.createElement(nome, cognome, email, password);
 			paziente.setCodiceFiscale(codiceFiscale);
-			
 			gestoreDB.insertPaziente(paziente);
 			//popup "registrazione avvenuta con successo"
 		}

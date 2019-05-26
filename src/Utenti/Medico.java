@@ -4,6 +4,10 @@ public class Medico extends Utente {
 	private int codice;
 	private Specializzazione specializzazione;
 	
+	public Medico(String nome, String cognome, String email, String password) {
+		super(nome, cognome, email, password);
+	}
+
 	public int getCodice() {
 		return codice;
 	}

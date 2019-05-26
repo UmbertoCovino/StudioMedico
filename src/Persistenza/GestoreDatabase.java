@@ -2,8 +2,11 @@ package Persistenza;
 
 import Utenti.Utente;
 import Utenti.Paziente;
+import Utenti.PazienteHandler;
+
 import java.util.ArrayList;
 import Utenti.Medico;
+import Utenti.MedicoHandler;
 import Visite.Prenotazione;
 import java.util.Date;
 import Visite.TipologiaVisita;
@@ -29,7 +32,19 @@ public class GestoreDatabase {
 	}
 	
 	public Utente getUtente(String email, String password) {
-		return null;
+		//query al DB per trovare l'utente e capire se è: paziente, medico, admin
+		
+		Utente utente = null;
+		if(email.equals("mc@uni.com") && password.equals("123")) {
+			PazienteHandler handler = new PazienteHandler();
+			utente = (Paziente) handler.createElement("M", "C", email, password);
+		}
+		else if(email.equals("uc@uni.com") && password.equals("123")) {
+			MedicoHandler handler = new MedicoHandler();
+			utente = (Medico) handler.createElement("U", "C", email, password);
+		}
+		
+		return utente;
 	}
 
 	public void insertPaziente(Paziente paziente) {

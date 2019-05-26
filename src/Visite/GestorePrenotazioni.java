@@ -12,20 +12,14 @@ public class GestorePrenotazioni {
 	private GestoreDatabase gestoreDB;
 	private Prenotazione prenotazione;
 
-	private GestorePrenotazioni() {	}
+	private GestorePrenotazioni() {
+		gestoreDB = GestoreDatabase.getInstance();
+	}
 
 	public static GestorePrenotazioni getInstance() {
 		if(instance == null)
 			instance = new GestorePrenotazioni();
 		return instance;
-	}
-
-	public GestoreDatabase getGestoreDB() {
-		return gestoreDB;
-	}
-
-	public void setGestoreDB(GestoreDatabase gestoreDB) {
-		this.gestoreDB = gestoreDB;
 	}
 
 	public Prenotazione getPrenotazione() {

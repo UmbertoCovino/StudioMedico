@@ -9,20 +9,14 @@ public class GestoreVisite {
 	private GestoreDatabase gestoreDB;
 	private Visita visita;
 
-	private GestoreVisite() { }
+	private GestoreVisite() {
+		gestoreDB = GestoreDatabase.getInstance();
+	}
 
 	public static GestoreVisite getInstance() {
 		if(instance == null)
 			instance = new GestoreVisite();
 		return instance;
-	}
-
-	public GestoreDatabase getGestoreDB() {
-		return gestoreDB;
-	}
-
-	public void setGestoreDB(GestoreDatabase gestoreDB) {
-		this.gestoreDB = gestoreDB;
 	}
 
 	public Visita getVisita() {
