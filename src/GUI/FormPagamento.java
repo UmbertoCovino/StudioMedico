@@ -15,10 +15,7 @@ import Utenti.GUIControllerUtenti;
 import Visite.Fattura;
 import Visite.GUIControllerVisite;
 
-public class FormPagamento extends Frame { 
-	private static final int MAX_FRAME_WIDTH = 99999,
-			 				 EXTRA_FRAME_WIDTH = 100,
-							 BUTTONS_GAP = 15;
+public class FormPagamento extends Frame {
 	private JLabel metodoPagamentoLabel;
 	private JTextField metodoPagamentoTextField;
 	private JButton confirmButton;
@@ -26,6 +23,8 @@ public class FormPagamento extends Frame {
 
 	public FormPagamento(Frame parentFrame, Fattura fattura) {
 		super("Registrazione pagamento fattura", parentFrame);
+		
+		setExtraFrameWidth(100);
 		
 		// dichiarazione elementi
 		metodoPagamentoLabel = new JLabel("Metodo di pagamento");
@@ -42,7 +41,7 @@ public class FormPagamento extends Frame {
 		elementsPositioning();
 		
 		// visualizzazione frame
-		showFrame(EXTRA_FRAME_WIDTH);
+		showFrame();
 	}
 
 	@Override
@@ -97,7 +96,7 @@ public class FormPagamento extends Frame {
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 					.addComponent(metodoPagamentoLabel)
 					.addComponent(metodoPagamentoTextField))
-				.addGap(BUTTONS_GAP)
+				.addGap(getButtonsGap())
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
 					.addComponent(cancelButton)
 					.addComponent(confirmButton))

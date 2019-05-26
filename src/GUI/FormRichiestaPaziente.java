@@ -13,10 +13,7 @@ import javax.swing.JTextField;
 
 import Utenti.GUIControllerUtenti;
 
-public class FormRichiestaPaziente extends Frame { 
-	private static final int MAX_FRAME_WIDTH = 99999,
-			 				 EXTRA_FRAME_WIDTH = 100,
-							 BUTTONS_GAP = 15;
+public class FormRichiestaPaziente extends Frame {
 	private JLabel codiceFiscaleLabel;
 	private JTextField codiceFiscaleTextField;
 	private JButton confirmButton;
@@ -24,6 +21,8 @@ public class FormRichiestaPaziente extends Frame {
 
 	public FormRichiestaPaziente(Frame parentFrame) {
 		super("Ricerca paziente", parentFrame);
+		
+		setExtraFrameWidth(100);
 		
 		// dichiarazione elementi
 		codiceFiscaleLabel = new JLabel("Codice fiscale");
@@ -40,7 +39,7 @@ public class FormRichiestaPaziente extends Frame {
 		elementsPositioning();
 		
 		// visualizzazione frame
-		showFrame(EXTRA_FRAME_WIDTH);
+		showFrame();
 	}
 
 	@Override
@@ -95,7 +94,7 @@ public class FormRichiestaPaziente extends Frame {
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 					.addComponent(codiceFiscaleLabel)
 					.addComponent(codiceFiscaleTextField))
-				.addGap(BUTTONS_GAP)
+				.addGap(getButtonsGap())
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
 					.addComponent(cancelButton)
 					.addComponent(confirmButton))

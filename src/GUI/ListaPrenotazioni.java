@@ -18,21 +18,21 @@ import Visite.GUIControllerPrenotazioni;
 import Visite.Prenotazione;
 
 public class ListaPrenotazioni extends Frame {
-	private static final int MAX_FRAME_WIDTH = 99999,
-			 				 EXTRA_FRAME_WIDTH = 100,
-							 BUTTONS_GAP = 15;
 	protected static final int MODIFY_OPERATION = 1,
-							   DELETE_OPERATION = 2;
+							   DELETE_OPERATION = 2,
+							   REGISTER_VISIT_OPERATION = 3;
 	private int operationType;
 	
 	private JLabel prenotazioniLabel;
 	private JList<Prenotazione> prenotazioniList;
 	private JScrollPane prenotazioniScrollPane;
-	private JButton modifyOrDeleteButton;
+	private JButton confirmButton;
 	private JButton cancelButton;
 
 	public ListaPrenotazioni(Frame parentFrame, int operationType, ArrayList<Prenotazione> prenotazioni) {
 		super("Lista prenotazioni effettuate", parentFrame);
+		
+		setExtraFrameWidth(100);
 		
 		this.operationType = operationType;
 		
@@ -43,10 +43,10 @@ public class ListaPrenotazioni extends Frame {
 		
 		prenotazioniScrollPane = new JScrollPane(prenotazioniList);
 		
-		modifyOrDeleteButton = new JButton();
+		confirmButton = new JButton();
 		cancelButton = new JButton("Annulla");
 		
-		modifyOrDeleteButton.setEnabled(false);
+		confirmButton.setEnabled(false);
 		
 		// aggiunta event handlers
 		addingEventHandlers();
@@ -55,7 +55,7 @@ public class ListaPrenotazioni extends Frame {
 		elementsPositioning();
 		
 		// visualizzazione frame
-		showFrame(EXTRA_FRAME_WIDTH);
+		showFrame();
 	}
 
 	@Override
@@ -64,24 +64,32 @@ public class ListaPrenotazioni extends Frame {
 		
 		prenotazioniList.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
-				modifyOrDeleteButton.setEnabled(true);
+				confirmButton.setEnabled(true);
 			}
 		});
 
 		if (operationType == MODIFY_OPERATION) {
-			modifyOrDeleteButton.setText("Modifica");
+			confirmButton.setText("Modifica");
 			
-			modifyOrDeleteButton.addActionListener(new ActionListener() {
+			confirmButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 //					GUIControllerPrenotazioni.getInstance().createFormModificaPrenotazione(prenotazioniList.getSelectedValue());
 				}
 			});
 		} else if (operationType == DELETE_OPERATION) {
-			modifyOrDeleteButton.setText("Elimina");
+			confirmButton.setText("Elimina");
 			
-			modifyOrDeleteButton.addActionListener(new ActionListener() {
+			confirmButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 //					GUIControllerPrenotazioni.getInstance().deletePrenotazione(prenotazioniList.getSelectedValue());
+				}
+			});
+		} else if (operationType == REGISTER_VISIT_OPERATION) {
+			confirmButton.setText("Registra visita");
+			
+			confirmButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+//					GUIControllerPrenotazioni.getInstance().XXXXXXXXXXXXX(prenotazioniList.getSelectedValue());
 				}
 			});
 		}
@@ -106,17 +114,17 @@ public class ListaPrenotazioni extends Frame {
 		   		.addComponent(prenotazioniScrollPane, 0, 0, Short.MAX_VALUE)
 		   		.addGroup(layout.createSequentialGroup()
 		   			.addComponent(cancelButton)
-		   			.addComponent(modifyOrDeleteButton))
+		   			.addComponent(confirmButton))
 		);
 		
 		layout.setVerticalGroup(
 			layout.createSequentialGroup()
 				.addComponent(prenotazioniLabel)
 				.addComponent(prenotazioniScrollPane)
-				.addGap(BUTTONS_GAP)
+				.addGap(getButtonsGap())
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
 					.addComponent(cancelButton)
-					.addComponent(modifyOrDeleteButton))
+					.addComponent(confirmButton))
 		);
 	}
 }

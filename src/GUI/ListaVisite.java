@@ -14,16 +14,19 @@ import javax.swing.JScrollPane;
 import Visite.Visita;
 
 public class ListaVisite extends Frame {
-	private static final int MAX_FRAME_WIDTH = 99999,
-			 				 EXTRA_FRAME_WIDTH = 100,
-							 BUTTONS_GAP = 15;
+	protected static final int STORICO_VISITE_OPERATION = 1,
+							   GENERATE_FATTURA_OPERATION = 2;
+	private int operationType;
+
 	private JLabel visiteLabel;
 	private JList<Visita> visiteList;
 	private JScrollPane visiteScrollPane;
 	private JButton exitButton;
 
-	public ListaVisite(Frame parentFrame, ArrayList<Visita> visite) {
+	public ListaVisite(Frame parentFrame, int operationType, ArrayList<Visita> visite) {
 		super("Lista visite effettuate", parentFrame);
+		
+		setExtraFrameWidth(100);
 		
 		// dichiarazione elementi
 		visiteLabel = new JLabel("Visite");
@@ -41,7 +44,7 @@ public class ListaVisite extends Frame {
 		elementsPositioning();
 		
 		// visualizzazione frame
-		showFrame(EXTRA_FRAME_WIDTH);
+		showFrame();
 	}
 
 	@Override
@@ -73,7 +76,7 @@ public class ListaVisite extends Frame {
 			layout.createSequentialGroup()
 				.addComponent(visiteLabel)
 				.addComponent(visiteScrollPane)
-				.addGap(BUTTONS_GAP)
+				.addGap(getButtonsGap())
 				.addComponent(exitButton)
 		);
 	}

@@ -13,10 +13,7 @@ import javax.swing.JTextField;
 
 import Utenti.GUIControllerUtenti;
 
-public class FormRegistrazionePaziente extends Frame { 
-	private static final int MAX_FRAME_WIDTH = 99999,
-			 				 EXTRA_FRAME_WIDTH = 100,
-							 BUTTONS_GAP = 15;
+public class FormRegistrazionePaziente extends Frame {
 	private JLabel nomeLabel;
 	private JLabel cognomeLabel;
 	private JLabel emailLabel;
@@ -32,6 +29,8 @@ public class FormRegistrazionePaziente extends Frame {
 
 	public FormRegistrazionePaziente(Frame parentFrame) {
 		super("Registrazione paziente", parentFrame, "Sei sicuro di voler annullare la registrazione?");
+		
+		setExtraFrameWidth(100);
 		
 		// dichiarazione elementi
 		nomeLabel = new JLabel("Nome");
@@ -56,7 +55,7 @@ public class FormRegistrazionePaziente extends Frame {
 		elementsPositioning();
 		
 		// visualizzazione frame
-		showFrame(EXTRA_FRAME_WIDTH);
+		showFrame();
 	}
 
 	@Override
@@ -90,14 +89,26 @@ public class FormRegistrazionePaziente extends Frame {
 			JOptionPane.showMessageDialog(this, "Il campo cognome non può essere vuoto.", "Attenzione", JOptionPane.WARNING_MESSAGE);
 		} else if (emailTextField.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(this, "Il campo email non può essere vuoto.", "Attenzione", JOptionPane.WARNING_MESSAGE);
+		} else if (isEmailValid(emailTextField.getText())) {
+			JOptionPane.showMessageDialog(this, "Il campo email deve contenere un indirizzo email valido.", "Attenzione", JOptionPane.WARNING_MESSAGE);
 		} else if (String.valueOf(passwordTextField.getPassword()).isEmpty()) {
 			JOptionPane.showMessageDialog(this, "Il campo password non può essere vuoto.", "Attenzione", JOptionPane.WARNING_MESSAGE);
+		} else if (String.valueOf(passwordTextField.getPassword()).length() < 6) {
+			JOptionPane.showMessageDialog(this, "La password non può essere più corta di 6 caratteri.", "Attenzione", JOptionPane.WARNING_MESSAGE);
 		} else if (codiceFiscaleTextField.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(this, "Il campo codice fiscale non può essere vuoto.", "Attenzione", JOptionPane.WARNING_MESSAGE);
+		} else if (codiceFiscaleTextField.getText().length() != 16) {
+			JOptionPane.showMessageDialog(this, "Il codice fiscale deve essere esattamente di 16 caratteri.", "Attenzione", JOptionPane.WARNING_MESSAGE);
 		} else
 			return true;
 		
 		return false;
+	}
+
+	private boolean isEmailValid(String email) {
+		String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+
+		return email.matches(regex);
 	}
 
 	@Override
@@ -144,7 +155,7 @@ public class FormRegistrazionePaziente extends Frame {
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 					.addComponent(codiceFiscaleLabel)
 					.addComponent(codiceFiscaleTextField))
-				.addGap(BUTTONS_GAP)
+				.addGap(getButtonsGap())
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
 					.addComponent(cancelButton)
 					.addComponent(confirmButton))

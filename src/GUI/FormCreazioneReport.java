@@ -19,10 +19,7 @@ import Amministrazione.GUIControllerAmministrazione;
 import Utenti.GUIControllerUtenti;
 import Utenti.Medico;
 
-public class FormCreazioneReport extends Frame { 
-	private static final int MAX_FRAME_WIDTH = 99999,
-			 				 EXTRA_FRAME_WIDTH = 0,
-							 BUTTONS_GAP = 15;
+public class FormCreazioneReport extends Frame {
 	private static final String[] TIPOLOGIE_REPORT = new String[]{"Elenco di visite effettuate ordinate per medico",
 																  "Elenco di visite effettuate ordinate per giorno con indicazione del medico", 
 																  "Elenco dei medici ordinati per numero di visite",
@@ -58,7 +55,7 @@ public class FormCreazioneReport extends Frame {
 		elementsPositioning();
 		
 		// visualizzazione frame
-		showFrame(EXTRA_FRAME_WIDTH);
+		showFrame();
 	}
 
 	@Override
@@ -146,7 +143,7 @@ public class FormCreazioneReport extends Frame {
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 						.addComponent(mediciLabel)
 						.addComponent(mediciComboBox))
-				.addGap(BUTTONS_GAP)
+				.addGap(getButtonsGap())
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
 					.addComponent(cancelButton)
 					.addComponent(confirmButton))

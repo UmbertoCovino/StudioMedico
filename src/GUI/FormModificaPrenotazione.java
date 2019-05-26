@@ -18,10 +18,7 @@ import Utenti.Medico;
 import Visite.GUIControllerPrenotazioni;
 import Visite.TipologiaVisita;
 
-public class FormModificaPrenotazione extends Frame { 
-	private static final int MAX_FRAME_WIDTH = 99999,
-			 				 EXTRA_FRAME_WIDTH = 100,
-							 BUTTONS_GAP = 15;
+public class FormModificaPrenotazione extends Frame {
 	private JLabel tipologiaVisitaLabel;
 	private JLabel medicoLabel;
 	private JLabel calendarioLabel;
@@ -35,6 +32,8 @@ public class FormModificaPrenotazione extends Frame {
 
 	public FormModificaPrenotazione(Frame parentFrame, TipologiaVisita tipologiaVisita, Medico medico, Date giorno, Date ora) {
 		super("Modifica prenotazione", parentFrame, "Sei sicuro di voler annullare la modifica alla prenotazione?");
+		
+		setExtraFrameWidth(100);
 		
 		// dichiarazione elementi
 		tipologiaVisitaLabel = new JLabel("Tipologia visita");
@@ -60,7 +59,7 @@ public class FormModificaPrenotazione extends Frame {
 		elementsPositioning();
 		
 		// visualizzazione frame
-		showFrame(EXTRA_FRAME_WIDTH);
+		showFrame();
 	}
 
 	private void updateTipologieVisite(ArrayList<TipologiaVisita> tipologieVisite) {
@@ -168,7 +167,7 @@ public class FormModificaPrenotazione extends Frame {
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 					.addComponent(orarioLabel)
 					.addComponent(orarioComboBox))
-				.addGap(BUTTONS_GAP)
+				.addGap(getButtonsGap())
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
 					.addComponent(cancelButton)
 					.addComponent(confirmButton))

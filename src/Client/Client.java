@@ -5,18 +5,24 @@ import java.util.Date;
 
 import GUI.FormRichiestaPaziente;
 import GUI.FrameLogin;
+import GUI.FramePaziente;
 import Utenti.GUIControllerUtenti;
+import Utenti.Paziente;
 import Visite.Prenotazione;
 
 public class Client { 
 
 	public static void main(String[] args) {
 		// inizializzazione database?
-		//GUIControllerUtenti.getInstance().createFrameLogin();
 		
+		GUIControllerUtenti.getInstance().createFrameLogin();
+		
+		
+		
+		// CANCELLARE /////////////////////////////////
 		new FrameLogin();
+		new FramePaziente(new Paziente());
 		
-		// TEST - da cancellare
 		//new GUI.FrameMedico();
 		GUI.Frame frame = new GUI.FramePaziente(null);
 		new GUI.FormRegistrazionePaziente(frame);

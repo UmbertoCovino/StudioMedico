@@ -12,12 +12,17 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 
 import Amministrazione.Report;
+import Amministrazione.ReportMedici;
+import Amministrazione.ReportTipoVisite;
+import Amministrazione.ReportVisite;
+import Amministrazione.ReportVisitePerMedico;
+import Amministrazione.RigaMedici;
+import Amministrazione.RigaTipoVisite;
+import Amministrazione.RigaVisite;
+import Amministrazione.RigaVisitePerMedico;
 import Visite.Visita;
 
 public class FormVisualizzazioneReport extends Frame {
-	private static final int MAX_FRAME_WIDTH = 99999,
-			 				 EXTRA_FRAME_WIDTH = 100,
-							 BUTTONS_GAP = 15;
 	private JLabel reportLabel;
 	private JList<Object> reportRigheList;
 	private JScrollPane reportRigheScrollPane;
@@ -26,10 +31,27 @@ public class FormVisualizzazioneReport extends Frame {
 	public FormVisualizzazioneReport(Frame parentFrame, Report report) {
 		super("Lista visite effettuate", parentFrame);
 		
+		setExtraFrameWidth(100);
+		
 		// dichiarazione elementi
 		reportLabel = new JLabel("Visite");
 		
-		reportRigheList = new JList<>(report.getRisultato().toArray(new Riga[visite.size()]));
+		if (report instanceof ReportVisite) {
+			ArrayList<RigaVisite> risultato = ((ReportVisite) report).getRisultato();
+			reportRigheList = new JList<>(risultato.toArray(new RigaVisite[risultato.size()]));
+			
+		} else if (report instanceof ReportVisitePerMedico) {
+			ArrayList<RigaVisitePerMedico> risultato = ((ReportVisitePerMedico) report).getRisultato();
+			reportRigheList = new JList<>(risultato.toArray(new RigaVisitePerMedico[risultato.size()]));
+			
+		} else if (report instanceof ReportMedici) {
+			ArrayList<RigaMedici> risultato = ((ReportMedici) report).getRisultato();
+			reportRigheList = new JList<>(risultato.toArray(new RigaMedici[risultato.size()]));
+			
+		} else if (report instanceof ReportTipoVisite) {
+			ArrayList<RigaTipoVisite> risultato = ((ReportTipoVisite) report).getRisultato();
+			reportRigheList = new JList<>(risultato.toArray(new RigaTipoVisite[risultato.size()]));
+		}
 		
 		reportRigheScrollPane = new JScrollPane(reportRigheList);
 		
@@ -42,7 +64,7 @@ public class FormVisualizzazioneReport extends Frame {
 		elementsPositioning();
 		
 		// visualizzazione frame
-		showFrame(EXTRA_FRAME_WIDTH);
+		showFrame();
 	}
 
 	@Override
@@ -74,7 +96,7 @@ public class FormVisualizzazioneReport extends Frame {
 			layout.createSequentialGroup()
 				.addComponent(reportLabel)
 				.addComponent(reportRigheScrollPane)
-				.addGap(BUTTONS_GAP)
+				.addGap(getButtonsGap())
 				.addComponent(exitButton)
 		);
 	}

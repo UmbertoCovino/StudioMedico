@@ -10,9 +10,7 @@ import javax.swing.JButton;
 import Amministrazione.GUIControllerAmministrazione;
 import Utenti.Utente;
 
-public class FrameProprietario extends Frame { 
-	private static final int MAX_FRAME_WIDTH = 99999,
-			 				 EXTRA_FRAME_WIDTH = 150;
+public class FrameProprietario extends Frame {
 	private Utente proprietario;
 	
 	private JButton creaReportButton;
@@ -21,6 +19,8 @@ public class FrameProprietario extends Frame {
 		super("Area proprietario", true);
 		
 		this.proprietario = proprietario;
+		
+		setExtraFrameWidth(150);
 		
 		// dichiarazione elementi
 		creaReportButton = new JButton("Crea report");
@@ -32,14 +32,16 @@ public class FrameProprietario extends Frame {
 		elementsPositioning();
 		
 		// visualizzazione frame
-		showFrame(EXTRA_FRAME_WIDTH);
+		showFrame();
 	}
 
 	@Override
 	protected void addingEventHandlers() {
+		Frame thisFrame = this;
+		
 		creaReportButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				GUIControllerAmministrazione.getInstance().createFormCreazioneReport();
+				GUIControllerAmministrazione.getInstance().createFormCreazioneReport(thisFrame);
 			}
 		});
 	}

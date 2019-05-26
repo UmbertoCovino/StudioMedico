@@ -17,9 +17,6 @@ import Utenti.Paziente;
 import Utenti.Utente;
 
 public class FrameLogin extends Frame {
-	private static final int MAX_FRAME_WIDTH = 99999,
-			 				 EXTRA_FRAME_WIDTH = 100,
-							 BUTTONS_GAP = 15;
 	private JLabel emailLabel;
 	private JLabel passwordLabel;
 	private JTextField emailTextField;
@@ -29,6 +26,8 @@ public class FrameLogin extends Frame {
 
 	public FrameLogin() {
 		super("Autenticazione", true);
+		
+		setExtraFrameWidth(100);
 		
 		// dichiarazione elementi
 		emailLabel = new JLabel("Email");
@@ -47,7 +46,7 @@ public class FrameLogin extends Frame {
 		elementsPositioning();
 		
 		// visualizzazione frame
-		showFrame(EXTRA_FRAME_WIDTH);
+		showFrame();
 	}
 
 	protected void addingEventHandlers() {
@@ -61,7 +60,7 @@ public class FrameLogin extends Frame {
 //					if (utente != null) {
 //						if (utente instanceof Medico) {
 //							GUIControllerUtenti.getInstance().createFrameMedico((Medico) utente);
-//						} else if (utente instanceof Medico) {
+//						} else if (utente instanceof Paziente) {
 //							GUIControllerUtenti.getInstance().createFramePaziente((Paziente) utente);
 //						} else if (utente.isAdmin()) {
 //							GUIControllerUtenti.getInstance().createFrameProprietario(utente);
@@ -119,7 +118,7 @@ public class FrameLogin extends Frame {
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 					.addComponent(passwordLabel)
 					.addComponent(passwordTextField))
-				.addGap(BUTTONS_GAP)
+				.addGap(getButtonsGap())
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
 					.addComponent(signUpButton)
 					.addComponent(loginButton))

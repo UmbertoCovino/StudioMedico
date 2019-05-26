@@ -20,9 +20,6 @@ import Visite.GUIControllerVisite;
 import Visite.Prenotazione;
 
 public class ListaFatture extends Frame {
-	private static final int MAX_FRAME_WIDTH = 99999,
-			 				 EXTRA_FRAME_WIDTH = 100,
-							 BUTTONS_GAP = 15;
 	private JLabel fattureLabel;
 	private JList<Fattura> fattureList;
 	private JScrollPane fattureScrollPane;
@@ -31,6 +28,8 @@ public class ListaFatture extends Frame {
 
 	public ListaFatture(Frame parentFrame, ArrayList<Fattura> fatture) {
 		super("Lista fatture delle visite in sospeso", parentFrame);
+		
+		setExtraFrameWidth(100);
 		
 		// dichiarazione elementi
 		fattureLabel = new JLabel("Fatture delle visite in sospeso");
@@ -51,7 +50,7 @@ public class ListaFatture extends Frame {
 		elementsPositioning();
 		
 		// visualizzazione frame
-		showFrame(EXTRA_FRAME_WIDTH);
+		showFrame();
 	}
 
 	@Override
@@ -97,7 +96,7 @@ public class ListaFatture extends Frame {
 			layout.createSequentialGroup()
 				.addComponent(fattureLabel)
 				.addComponent(fattureScrollPane)
-				.addGap(BUTTONS_GAP)
+				.addGap(getButtonsGap())
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
 					.addComponent(cancelButton)
 					.addComponent(registraPagamentoButton))

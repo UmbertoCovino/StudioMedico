@@ -17,10 +17,7 @@ import Utenti.GUIControllerUtenti;
 import Visite.GUIControllerPrenotazioni;
 import Visite.Prenotazione;
 
-public class FormRisultatoVisita extends Frame { 
-	private static final int MAX_FRAME_WIDTH = 99999,
-			 				 EXTRA_FRAME_WIDTH = 100,
-							 BUTTONS_GAP = 15;
+public class FormRisultatoVisita extends Frame {
 	private Prenotazione prenotazione;
 	
 	private JLabel diagnosiLabel;
@@ -34,6 +31,8 @@ public class FormRisultatoVisita extends Frame {
 
 	public FormRisultatoVisita(Frame parentFrame, Prenotazione prenotazione) {
 		super("Registra risultato visita", parentFrame);
+		
+		setExtraFrameWidth(100);
 		
 		this.prenotazione = prenotazione;
 		
@@ -57,7 +56,7 @@ public class FormRisultatoVisita extends Frame {
 		elementsPositioning();
 		
 		// visualizzazione frame
-		showFrame(EXTRA_FRAME_WIDTH);
+		showFrame();
 	}
 
 	@Override
@@ -117,7 +116,7 @@ public class FormRisultatoVisita extends Frame {
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 					.addComponent(terapiaLabel)
 					.addComponent(terapiaScrollPane))
-				.addGap(BUTTONS_GAP)
+				.addGap(getButtonsGap())
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
 					.addComponent(cancelButton)
 					.addComponent(confirmButton))

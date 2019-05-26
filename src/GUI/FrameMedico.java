@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 
 import Utenti.GUIControllerUtenti;
 import Utenti.Medico;
@@ -12,14 +13,12 @@ import Utenti.Paziente;
 import Visite.GUIControllerPrenotazioni;
 import Visite.GUIControllerVisite;
 
-public class FrameMedico extends Frame { 
-	private static final int MAX_FRAME_WIDTH = 99999,
-			 				 EXTRA_FRAME_WIDTH = 50,
-							 BUTTONS_GAP = 15;
+public class FrameMedico extends Frame {
 	private Medico medico;
 	private Paziente paziente;
 	
 	private JButton ricercaPazienteButton;
+	private JLabel pazienteLabel;
 	private JButton registraVisitaButton;
 	private JButton generaFatturaButton;
 	private JButton registraPagamentoVisitaButton;
@@ -29,11 +28,15 @@ public class FrameMedico extends Frame {
 		
 		this.medico = medico;
 		
+		setExtraFrameWidth(50);
+		
 		// dichiarazione elementi
 		ricercaPazienteButton = new JButton("Ricerca paziente");
 		registraVisitaButton = new JButton("Registra visita");
 		generaFatturaButton = new JButton("Genera fattura");
 		registraPagamentoVisitaButton = new JButton("Registra pagamento visita");
+		
+		pazienteLabel.setVisible(false);
 		
 		registraVisitaButton.setEnabled(false);
 		generaFatturaButton.setEnabled(false);
@@ -46,32 +49,39 @@ public class FrameMedico extends Frame {
 		elementsPositioning();
 		
 		// visualizzazione frame
-		showFrame(EXTRA_FRAME_WIDTH);
+		showFrame();
 	}
 
 	@Override
 	protected void addingEventHandlers() {
+		Frame thisFrame = this;
+		
 		ricercaPazienteButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				paziente = GUIControllerUtenti.getInstance().createFormRichiestaPaziente();
+//				paziente = GUIControllerUtenti.getInstance().createFormRichiestaPaziente(thisFrame);
+//				
+//				if (paziente != null) {
+//					pazienteLabel.setText("Dati paziente ricercato: " + paziente.getNome() + " " + paziente.getCognome() + ", " + paziente.getCodiceFiscale() + ", " + paziente.getEmail());
+//					pazienteLabel.setVisible(true);
+//				}
 			}
 		});
 		
 		registraVisitaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				GUIControllerPrenotazioni.getInstance().createListaPrenotazioni(paziente.getCodiceFiscale());
+//				GUIControllerPrenotazioni.getInstance().createListaPrenotazioni(thisFrame, paziente.getCodiceFiscale(), ListaPrenotazioni.REGISTER_VISIT_OPERATION);
 			}
 		});
 		
 		generaFatturaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				GUIControllerVisite.getInstance().createListaVisite(paziente.getCodiceFiscale());
+//				GUIControllerVisite.getInstance().createListaVisite(thisFrame, paziente.getCodiceFiscale(), ListaVisite.GENERATE_FATTURA_OPERATION);
 			}
 		});
 		
 		registraPagamentoVisitaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				GUIControllerVisite.getInstance().createListaFatture(paziente.getCodiceFiscale());
+//				GUIControllerVisite.getInstance().createListaFatture(thisFrame, paziente.getCodiceFiscale());
 			}
 		});
 	}
@@ -83,14 +93,13 @@ public class FrameMedico extends Frame {
 		layout.setAutoCreateGaps(true);
 		layout.setAutoCreateContainerGaps(true);
 		
-		// VALUTARE SE AGGIUNGERE LA VISUALIZZAZIONE DEL PAZIENTE UNA VOLTA RICERCATO
-		
 		layout.setHorizontalGroup(
 			layout.createParallelGroup(GroupLayout.Alignment.CENTER)
 				.addGroup(layout.createSequentialGroup()
 					.addGap(0, 0, Short.MAX_VALUE)
 					.addComponent(ricercaPazienteButton)
 					.addGap(0, 0, Short.MAX_VALUE))
+				.addComponent(pazienteLabel)
 	   			.addComponent(registraVisitaButton)
 	   			.addComponent(generaFatturaButton)
 	   			.addComponent(registraPagamentoVisitaButton)
@@ -102,7 +111,8 @@ public class FrameMedico extends Frame {
 					.addGap(0)
 					.addComponent(ricercaPazienteButton)
 					.addGap(0))
-				.addGap(BUTTONS_GAP)
+				.addComponent(pazienteLabel)
+				.addGap(getButtonsGap())
 	   			.addComponent(registraVisitaButton)
 	   			.addComponent(generaFatturaButton)
 	   			.addComponent(registraPagamentoVisitaButton)
