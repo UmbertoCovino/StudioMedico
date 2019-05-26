@@ -51,7 +51,7 @@ public class FormPagamento extends Frame {
 		confirmButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (dataIsValid()) {
-//					GUIControllerVisite.getInstance().notifyData(metodoPagamentoTextField.getText().trim());
+					GUIControllerVisite.getInstance().notifyData(metodoPagamentoTextField.getText().trim());
 				}
 			}
 		});

@@ -7,6 +7,7 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -18,6 +19,8 @@ import javax.swing.JTextField;
 import Amministrazione.GUIControllerAmministrazione;
 import Utenti.GUIControllerUtenti;
 import Utenti.Medico;
+import Visite.GUIControllerPrenotazioni;
+import Visite.TipologiaVisita;
 
 public class FormCreazioneReport extends Frame {
 	private static final String[] TIPOLOGIE_REPORT = new String[]{"Elenco di visite effettuate ordinate per medico",
@@ -28,7 +31,7 @@ public class FormCreazioneReport extends Frame {
 	private JLabel tipologiaReportLabel;
 	private JLabel mediciLabel;
 	private JComboBox<String> tipologiaReportComboBox;
-	private JComboBox<Medico> mediciComboBox;
+	private JComboBox<Medico> medicoComboBox;
 	private JButton confirmButton;
 	private JButton cancelButton;
 
@@ -40,13 +43,13 @@ public class FormCreazioneReport extends Frame {
 		mediciLabel = new JLabel("Medico");
 		
 		tipologiaReportComboBox = new JComboBox<>(TIPOLOGIE_REPORT);
-		mediciComboBox = new JComboBox<>();
+		medicoComboBox = new JComboBox<>();
 		
 		confirmButton = new JButton("Conferma");
 		cancelButton = new JButton("Annulla");
 		
 		mediciLabel.setVisible(false);
-		mediciComboBox.setVisible(false);
+		medicoComboBox.setVisible(false);
 		
 		// aggiunta event handlers
 		addingEventHandlers();
@@ -65,15 +68,16 @@ public class FormCreazioneReport extends Frame {
 		tipologiaReportComboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (tipologiaReportComboBox.getSelectedIndex() == 1) {
-	//				ArrayList<Medico> medici = GUIControllerPrenotazioni.getInstance().getMedici(((TipologiaVisita) tipologiaVisitaComboBox.getSelectedItem()).getNome());
-	//				updateMedici(medici);
+					ArrayList<Medico> medici = GUIControllerAmministrazione.getInstance().getMedici();
+					updateMedici(medici);
+					
 					mediciLabel.setVisible(true);
-					mediciComboBox.setVisible(true);
+					medicoComboBox.setVisible(true);
 					pack();
 				} else {
-					if (mediciLabel.isVisible() && mediciComboBox.isVisible()) {
+					if (mediciLabel.isVisible() && medicoComboBox.isVisible()) {
 						mediciLabel.setVisible(false);
-						mediciComboBox.setVisible(false);
+						medicoComboBox.setVisible(false);
 						pack();
 					}
 				}
@@ -84,7 +88,7 @@ public class FormCreazioneReport extends Frame {
 			public void actionPerformed(ActionEvent e) {
 				if (dataIsValid()) {
 					if (tipologiaReportComboBox.getSelectedIndex() == 1) {
-						GUIControllerAmministrazione.getInstance().createReport((String) tipologiaReportComboBox.getSelectedItem(), (Medico) mediciComboBox.getSelectedItem());
+						GUIControllerAmministrazione.getInstance().createReport((String) tipologiaReportComboBox.getSelectedItem(), (Medico) medicoComboBox.getSelectedItem());
 					} else {
 						GUIControllerAmministrazione.getInstance().createReport((String) tipologiaReportComboBox.getSelectedItem());
 					}
@@ -102,7 +106,7 @@ public class FormCreazioneReport extends Frame {
 	protected boolean dataIsValid() {
 		if (tipologiaReportComboBox.getSelectedItem() == null) {
 			JOptionPane.showMessageDialog(this, "Il campo tipologia report non può essere vuoto.", "Attenzione", JOptionPane.WARNING_MESSAGE);
-		} else if (tipologiaReportComboBox.getSelectedIndex() == 1 && mediciComboBox.getSelectedItem() == null) {
+		} else if (tipologiaReportComboBox.getSelectedIndex() == 1 && medicoComboBox.getSelectedItem() == null) {
 			JOptionPane.showMessageDialog(this, "Il campo medico non può essere vuoto.", "Attenzione", JOptionPane.WARNING_MESSAGE);
 		} else
 			return true;
@@ -111,7 +115,7 @@ public class FormCreazioneReport extends Frame {
 	}
 	
 	protected void updateMedici(ArrayList<Medico> medici) {
-//		medicoComboBox.setModel(new DefaultComboBoxModel<Medico>(medici.toArray(new Medico[medici.size()])));
+		medicoComboBox.setModel(new DefaultComboBoxModel<Medico>(medici.toArray(new Medico[medici.size()])));
 	}
 
 	@Override
@@ -129,7 +133,7 @@ public class FormCreazioneReport extends Frame {
 		   				.addComponent(mediciLabel))
 		   			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
 		   				.addComponent(tipologiaReportComboBox)
-		   				.addComponent(mediciComboBox)))
+		   				.addComponent(medicoComboBox)))
 		   		.addGroup(layout.createSequentialGroup()
 		   			.addComponent(cancelButton)
 		   			.addComponent(confirmButton))
@@ -142,7 +146,7 @@ public class FormCreazioneReport extends Frame {
 					.addComponent(tipologiaReportComboBox))
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 						.addComponent(mediciLabel)
-						.addComponent(mediciComboBox))
+						.addComponent(medicoComboBox))
 				.addGap(getButtonsGap())
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
 					.addComponent(cancelButton)

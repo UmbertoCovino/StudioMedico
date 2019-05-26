@@ -32,9 +32,9 @@ public class FormRisultatoVisita extends Frame {
 	public FormRisultatoVisita(Frame parentFrame, Prenotazione prenotazione) {
 		super("Registra risultato visita", parentFrame);
 		
-		setExtraFrameWidth(100);
-		
 		this.prenotazione = prenotazione;
+		
+		setExtraFrameWidth(100);
 		
 		// dichiarazione elementi
 		diagnosiLabel = new JLabel("Diagnosi");
@@ -80,7 +80,9 @@ public class FormRisultatoVisita extends Frame {
 
 	protected boolean dataIsValid() {
 		if (diagnosiTextArea.getText().isEmpty()) {
-			JOptionPane.showMessageDialog(this, "Il campo codice fiscale non può essere vuoto.", "Attenzione", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Il campo diagnosi non può essere vuoto.", "Attenzione", JOptionPane.WARNING_MESSAGE);
+		} else if (terapiaTextArea.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(this, "Il campo terapia non può essere vuoto.", "Attenzione", JOptionPane.WARNING_MESSAGE);
 		} else
 			return true;
 		

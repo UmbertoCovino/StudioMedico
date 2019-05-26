@@ -20,6 +20,8 @@ import Visite.GUIControllerVisite;
 import Visite.Prenotazione;
 
 public class ListaFatture extends Frame {
+	private Frame parentFrame;
+	
 	private JLabel fattureLabel;
 	private JList<Fattura> fattureList;
 	private JScrollPane fattureScrollPane;
@@ -28,6 +30,8 @@ public class ListaFatture extends Frame {
 
 	public ListaFatture(Frame parentFrame, ArrayList<Fattura> fatture) {
 		super("Lista fatture delle visite in sospeso", parentFrame);
+		
+		this.parentFrame = parentFrame;
 		
 		setExtraFrameWidth(100);
 		
@@ -65,7 +69,7 @@ public class ListaFatture extends Frame {
 
 		registraPagamentoButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				GUIControllerVisite.getInstance().createFormPagamento(fattureList.getSelectedValue());
+				GUIControllerVisite.getInstance().createFormPagamento(parentFrame, fattureList.getSelectedValue());
 			}
 		});
 		

@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 
+import Visite.GUIControllerVisite;
 import Visite.Visita;
 
 public class ListaVisite extends Frame {
@@ -21,6 +22,7 @@ public class ListaVisite extends Frame {
 	private JLabel visiteLabel;
 	private JList<Visita> visiteList;
 	private JScrollPane visiteScrollPane;
+	private JButton confirmButton;
 	private JButton exitButton;
 
 	public ListaVisite(Frame parentFrame, int operationType, ArrayList<Visita> visite) {
@@ -37,6 +39,8 @@ public class ListaVisite extends Frame {
 		
 		exitButton = new JButton("Esci");
 		
+		confirmButton.setVisible(false);
+		
 		// aggiunta event handlers
 		addingEventHandlers();
 		
@@ -50,6 +54,23 @@ public class ListaVisite extends Frame {
 	@Override
 	protected void addingEventHandlers() {
 		Frame thisFrame = this;
+		
+		if (operationType == STORICO_VISITE_OPERATION) {
+			confirmButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					// non fa nulla
+				}
+			});
+		} else if (operationType == GENERATE_FATTURA_OPERATION) {
+			confirmButton.setText("Genera fattura");
+			confirmButton.setVisible(true);
+			
+			confirmButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					GUIControllerVisite.getInstance().printFattura(visiteList.getSelectedValue());
+				}
+			});
+		}
 		
 		exitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -69,7 +90,9 @@ public class ListaVisite extends Frame {
 			layout.createParallelGroup(GroupLayout.Alignment.CENTER)
 				.addComponent(visiteLabel, 0, 0, Short.MAX_VALUE)
 		   		.addComponent(visiteScrollPane, 0, 0, Short.MAX_VALUE)
-	   			.addComponent(exitButton)
+		   		.addGroup(layout.createSequentialGroup()
+			   			.addComponent(confirmButton)
+			   			.addComponent(exitButton))
 		);
 		
 		layout.setVerticalGroup(
@@ -77,7 +100,9 @@ public class ListaVisite extends Frame {
 				.addComponent(visiteLabel)
 				.addComponent(visiteScrollPane)
 				.addGap(getButtonsGap())
-				.addComponent(exitButton)
+				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+						.addComponent(confirmButton)
+						.addComponent(exitButton))
 		);
 	}
 }

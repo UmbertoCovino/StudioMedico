@@ -105,7 +105,7 @@ public class FormRegistrazionePaziente extends Frame {
 		return false;
 	}
 
-	private boolean isEmailValid(String email) {
+	public static boolean isEmailValid(String email) {
 		String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
 
 		return email.matches(regex);

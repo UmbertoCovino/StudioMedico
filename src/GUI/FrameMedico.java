@@ -58,30 +58,30 @@ public class FrameMedico extends Frame {
 		
 		ricercaPazienteButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				paziente = GUIControllerUtenti.getInstance().createFormRichiestaPaziente(thisFrame);
-//				
-//				if (paziente != null) {
-//					pazienteLabel.setText("Dati paziente ricercato: " + paziente.getNome() + " " + paziente.getCognome() + ", " + paziente.getCodiceFiscale() + ", " + paziente.getEmail());
-//					pazienteLabel.setVisible(true);
-//				}
+				paziente = GUIControllerUtenti.getInstance().createFormRichiestaPaziente(thisFrame);
+				
+				if (paziente != null) {
+					pazienteLabel.setText("Dati paziente ricercato: " + paziente.getNome() + " " + paziente.getCognome() + ", " + paziente.getCodiceFiscale() + ", " + paziente.getEmail());
+					pazienteLabel.setVisible(true);
+				}
 			}
 		});
 		
 		registraVisitaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				GUIControllerPrenotazioni.getInstance().createListaPrenotazioni(thisFrame, paziente.getCodiceFiscale(), ListaPrenotazioni.REGISTER_VISIT_OPERATION);
+				GUIControllerPrenotazioni.getInstance().createListaPrenotazioni(thisFrame, paziente.getCodiceFiscale(), ListaPrenotazioni.REGISTER_VISIT_OPERATION);
 			}
 		});
 		
 		generaFatturaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				GUIControllerVisite.getInstance().createListaVisite(thisFrame, paziente.getCodiceFiscale(), ListaVisite.GENERATE_FATTURA_OPERATION);
+				GUIControllerVisite.getInstance().createListaVisite(thisFrame, paziente.getCodiceFiscale(), ListaVisite.GENERATE_FATTURA_OPERATION);
 			}
 		});
 		
 		registraPagamentoVisitaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				GUIControllerVisite.getInstance().createListaFatture(thisFrame, paziente.getCodiceFiscale());
+				GUIControllerVisite.getInstance().createListaFatture(thisFrame, paziente.getCodiceFiscale());
 			}
 		});
 	}

@@ -51,29 +51,25 @@ public class FramePaziente extends Frame {
 		
 		prenotaVisitaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-	        	// DA SCOMMENTARE
-//				GUIControllerPrenotazioni.getInstance().createFormPrenotazioneVisita(thisFrame, paziente);
+				GUIControllerPrenotazioni.getInstance().createFormPrenotazioneVisita(thisFrame, paziente);
 			}
 		});
 		
 		modificaPrenotazioneVisitaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-	        	// DA SCOMMENTARE
-//				GUIControllerPrenotazioni.getInstance().createListaPrenotazioni(thisFrame, paziente.getCodiceFiscale(), ListaPrenotazioni.MODIFY_OPERATION);
+				GUIControllerPrenotazioni.getInstance().createListaPrenotazioni(thisFrame, paziente.getCodiceFiscale(), ListaPrenotazioni.MODIFY_OPERATION);
 			}
 		});
 		
 		eliminaPrenotazioneVisitaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-	        	// DA SCOMMENTARE
-//				GUIControllerPrenotazioni.getInstance().createListaPrenotazioni(thisFrame, paziente.getCodiceFiscale(), ListaPrenotazioni.DELETE_OPERATION);
+				GUIControllerPrenotazioni.getInstance().createListaPrenotazioni(thisFrame, paziente.getCodiceFiscale(), ListaPrenotazioni.DELETE_OPERATION);
 			}
 		});
 		
 		visualizzaStoricoVisiteButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-	        	// DA SCOMMENTARE
-//				GUIControllerVisite.getInstance().createListaStoricoVisite(thisFrame, paziente.getCodiceFiscale(), ListaVisite.STORICO_VISITE_OPERATION);
+				GUIControllerVisite.getInstance().createListaStoricoVisite(thisFrame, paziente.getCodiceFiscale(), ListaVisite.STORICO_VISITE_OPERATION);
 			}
 		});
 	}

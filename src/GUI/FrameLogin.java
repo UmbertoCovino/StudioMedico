@@ -55,26 +55,26 @@ public class FrameLogin extends Frame {
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (dataIsValid()) {
-//					Utente utente = GUIControllerUtenti.getInstance().notifyCredentials(emailTextField.getText().trim(), String.valueOf(passwordTextField.getPassword()));
-//					
-//					if (utente != null) {
-//						if (utente instanceof Medico) {
-//							GUIControllerUtenti.getInstance().createFrameMedico((Medico) utente);
-//						} else if (utente instanceof Paziente) {
-//							GUIControllerUtenti.getInstance().createFramePaziente((Paziente) utente);
-//						} else if (utente.isAdmin()) {
-//							GUIControllerUtenti.getInstance().createFrameProprietario(utente);
-//						}
-//					} else {
-//						JOptionPane.showMessageDialog(thisFrame, "Le credenziali immesse non sono corrette.", "Attenzione", JOptionPane.WARNING_MESSAGE);
-//					}
+					Utente utente = GUIControllerUtenti.getInstance().notifyCredentials(emailTextField.getText().trim(), String.valueOf(passwordTextField.getPassword()));
+					
+					if (utente != null) {
+						if (utente instanceof Medico) {
+							GUIControllerUtenti.getInstance().createFrameMedico((Medico) utente);
+						} else if (utente instanceof Paziente) {
+							GUIControllerUtenti.getInstance().createFramePaziente((Paziente) utente);
+						} else if (utente.isAdmin()) {
+							GUIControllerUtenti.getInstance().createFrameProprietario(utente);
+						}
+					} else {
+						JOptionPane.showMessageDialog(thisFrame, "Le credenziali immesse non sono corrette.", "Attenzione", JOptionPane.WARNING_MESSAGE);
+					}
 				}
 			}
 		});
 		
 		signUpButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				GUIControllerUtenti.getInstance().createFormRegistrazionePaziente(thisFrame);
+				GUIControllerUtenti.getInstance().createFormRegistrazionePaziente(thisFrame);
 			}
 		});
 	}
@@ -82,8 +82,12 @@ public class FrameLogin extends Frame {
 	protected boolean dataIsValid() {
 		if (emailTextField.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(this, "Il campo email non può essere vuoto.", "Attenzione", JOptionPane.WARNING_MESSAGE);
+		} else if (FormRegistrazionePaziente.isEmailValid(emailTextField.getText())) {
+			JOptionPane.showMessageDialog(this, "Il campo email deve contenere un indirizzo email valido.", "Attenzione", JOptionPane.WARNING_MESSAGE);
 		} else if (String.valueOf(passwordTextField.getPassword()).isEmpty()) {
 			JOptionPane.showMessageDialog(this, "Il campo password non può essere vuoto.", "Attenzione", JOptionPane.WARNING_MESSAGE);
+		} else if (String.valueOf(passwordTextField.getPassword()).length() < 6) {
+			JOptionPane.showMessageDialog(this, "La password non può essere più corta di 6 caratteri.", "Attenzione", JOptionPane.WARNING_MESSAGE);
 		} else
 			return true;
 		

@@ -21,6 +21,7 @@ public class ListaPrenotazioni extends Frame {
 	protected static final int MODIFY_OPERATION = 1,
 							   DELETE_OPERATION = 2,
 							   REGISTER_VISIT_OPERATION = 3;
+	private Frame parentFrame;
 	private int operationType;
 	
 	private JLabel prenotazioniLabel;
@@ -32,9 +33,10 @@ public class ListaPrenotazioni extends Frame {
 	public ListaPrenotazioni(Frame parentFrame, int operationType, ArrayList<Prenotazione> prenotazioni) {
 		super("Lista prenotazioni effettuate", parentFrame);
 		
-		setExtraFrameWidth(100);
-		
+		this.parentFrame = parentFrame;
 		this.operationType = operationType;
+		
+		setExtraFrameWidth(100);
 		
 		// dichiarazione elementi
 		prenotazioniLabel = new JLabel("Prenotazioni");
@@ -73,7 +75,7 @@ public class ListaPrenotazioni extends Frame {
 			
 			confirmButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-//					GUIControllerPrenotazioni.getInstance().createFormModificaPrenotazione(prenotazioniList.getSelectedValue());
+					GUIControllerPrenotazioni.getInstance().createFormModificaPrenotazione(parentFrame, prenotazioniList.getSelectedValue());
 				}
 			});
 		} else if (operationType == DELETE_OPERATION) {
@@ -81,7 +83,7 @@ public class ListaPrenotazioni extends Frame {
 			
 			confirmButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-//					GUIControllerPrenotazioni.getInstance().deletePrenotazione(prenotazioniList.getSelectedValue());
+					GUIControllerPrenotazioni.getInstance().deletePrenotazione(prenotazioniList.getSelectedValue().getId());
 				}
 			});
 		} else if (operationType == REGISTER_VISIT_OPERATION) {
@@ -89,7 +91,7 @@ public class ListaPrenotazioni extends Frame {
 			
 			confirmButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-//					GUIControllerPrenotazioni.getInstance().XXXXXXXXXXXXX(prenotazioniList.getSelectedValue());
+					GUIControllerPrenotazioni.getInstance().createFormRisultatoVisita(parentFrame, prenotazioniList.getSelectedValue());
 				}
 			});
 		}

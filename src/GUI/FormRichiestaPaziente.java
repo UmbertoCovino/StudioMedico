@@ -64,6 +64,8 @@ public class FormRichiestaPaziente extends Frame {
 	protected boolean dataIsValid() {
 		if (codiceFiscaleTextField.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(this, "Il campo codice fiscale non può essere vuoto.", "Attenzione", JOptionPane.WARNING_MESSAGE);
+		} else if (codiceFiscaleTextField.getText().length() != 16) {
+			JOptionPane.showMessageDialog(this, "Il codice fiscale deve essere esattamente di 16 caratteri.", "Attenzione", JOptionPane.WARNING_MESSAGE);
 		} else
 			return true;
 		

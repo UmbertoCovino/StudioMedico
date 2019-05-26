@@ -27,14 +27,13 @@ public abstract class Frame extends JFrame {
 		    addWindowListener(new java.awt.event.WindowAdapter() {
 		        @Override
 		        public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-		        	// DA SCOMMENTARE
-//		            if (JOptionPane.showConfirmDialog(thisFrame,
-//		            		"Sei sicuro di voler terminare l'applicazione?",
-//		            		"Attenzione",
-//		            		JOptionPane.YES_NO_OPTION,
-//		            		JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+		            if (JOptionPane.showConfirmDialog(thisFrame,
+		            		"Sei sicuro di voler terminare l'applicazione?",
+		            		"Attenzione",
+		            		JOptionPane.YES_NO_OPTION,
+		            		JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
 		                System.exit(0);
-//		            }
+		            }
 		        }
 		    });
 	    } else
