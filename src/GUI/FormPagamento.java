@@ -101,5 +101,7 @@ public class FormPagamento extends Frame {
 					.addComponent(cancelButton)
 					.addComponent(confirmButton))
 		);
+		
+		getRootPane().setDefaultButton(confirmButton);
 	}
 }

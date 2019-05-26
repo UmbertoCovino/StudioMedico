@@ -105,5 +105,7 @@ public class ListaFatture extends Frame {
 					.addComponent(cancelButton)
 					.addComponent(registraPagamentoButton))
 		);
+		
+		getRootPane().setDefaultButton(registraPagamentoButton);
 	}
 }

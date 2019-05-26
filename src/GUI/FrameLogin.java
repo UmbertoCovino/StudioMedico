@@ -82,12 +82,12 @@ public class FrameLogin extends Frame {
 	protected boolean dataIsValid() {
 		if (emailTextField.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(this, "Il campo email non può essere vuoto.", "Attenzione", JOptionPane.WARNING_MESSAGE);
-		} else if (FormRegistrazionePaziente.isEmailValid(emailTextField.getText())) {
+		} else if (!FormRegistrazionePaziente.isEmailValid(emailTextField.getText())) {
 			JOptionPane.showMessageDialog(this, "Il campo email deve contenere un indirizzo email valido.", "Attenzione", JOptionPane.WARNING_MESSAGE);
 		} else if (String.valueOf(passwordTextField.getPassword()).isEmpty()) {
 			JOptionPane.showMessageDialog(this, "Il campo password non può essere vuoto.", "Attenzione", JOptionPane.WARNING_MESSAGE);
-		} else if (String.valueOf(passwordTextField.getPassword()).length() < 6) {
-			JOptionPane.showMessageDialog(this, "La password non può essere più corta di 6 caratteri.", "Attenzione", JOptionPane.WARNING_MESSAGE);
+//		} else if (String.valueOf(passwordTextField.getPassword()).length() < 6) {
+//			JOptionPane.showMessageDialog(this, "La password non può essere più corta di 6 caratteri.", "Attenzione", JOptionPane.WARNING_MESSAGE);
 		} else
 			return true;
 		
@@ -127,5 +127,7 @@ public class FrameLogin extends Frame {
 					.addComponent(signUpButton)
 					.addComponent(loginButton))
 		);
+		
+		getRootPane().setDefaultButton(loginButton);
 	}
 }

@@ -152,5 +152,7 @@ public class FormCreazioneReport extends Frame {
 					.addComponent(cancelButton)
 					.addComponent(confirmButton))
 		);
+		
+		getRootPane().setDefaultButton(confirmButton);
 	}
 }

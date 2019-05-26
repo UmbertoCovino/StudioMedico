@@ -89,7 +89,7 @@ public class FormRegistrazionePaziente extends Frame {
 			JOptionPane.showMessageDialog(this, "Il campo cognome non può essere vuoto.", "Attenzione", JOptionPane.WARNING_MESSAGE);
 		} else if (emailTextField.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(this, "Il campo email non può essere vuoto.", "Attenzione", JOptionPane.WARNING_MESSAGE);
-		} else if (isEmailValid(emailTextField.getText())) {
+		} else if (!isEmailValid(emailTextField.getText())) {
 			JOptionPane.showMessageDialog(this, "Il campo email deve contenere un indirizzo email valido.", "Attenzione", JOptionPane.WARNING_MESSAGE);
 		} else if (String.valueOf(passwordTextField.getPassword()).isEmpty()) {
 			JOptionPane.showMessageDialog(this, "Il campo password non può essere vuoto.", "Attenzione", JOptionPane.WARNING_MESSAGE);
@@ -160,5 +160,7 @@ public class FormRegistrazionePaziente extends Frame {
 					.addComponent(cancelButton)
 					.addComponent(confirmButton))
 		);
+		
+		getRootPane().setDefaultButton(confirmButton);
 	}
 }

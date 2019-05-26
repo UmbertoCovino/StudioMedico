@@ -27,7 +27,7 @@ public class FormPrenotazioneVisita extends Frame {
 	private JLabel orarioLabel;
 	private JComboBox<TipologiaVisita> tipologiaVisitaComboBox;
 	private JComboBox<Medico> medicoComboBox;
-	private JComboBox<Date> calendarioComboBox;
+	private JComboBox<Disponibilita> calendarioComboBox;
 	private JComboBox<Date> orarioComboBox;
 	private JButton confirmButton;
 	private JButton cancelButton;
@@ -43,7 +43,7 @@ public class FormPrenotazioneVisita extends Frame {
 		
 		tipologiaVisitaComboBox = new JComboBox<>();
 		medicoComboBox = new JComboBox<>();
-		calendarioComboBox = new JComboBox<Date>();
+		calendarioComboBox = new JComboBox<>();
 		orarioComboBox = new JComboBox<>();
 		
 		confirmButton = new JButton("Conferma");
@@ -131,7 +131,7 @@ public class FormPrenotazioneVisita extends Frame {
 	}
 
 	protected void updateCalendarioDisponibilita(CalendarioDisponibilita calendarioDisponibilita) {
-		calendarioComboBox.setModel(new DefaultComboBoxModel<Disponibilita>((calendarioDisponibilita.getOrari().toArray(new Disponibilita[calendarioDisponibilita.getOrari().size()])));
+		calendarioComboBox.setModel(new DefaultComboBoxModel<Disponibilita>((calendarioDisponibilita.getOrari().toArray(new Disponibilita[calendarioDisponibilita.getOrari().size()]))));
 	}
 
 	protected void updateOrari(Disponibilita disponibilita) {
@@ -191,5 +191,7 @@ public class FormPrenotazioneVisita extends Frame {
 					.addComponent(cancelButton)
 					.addComponent(confirmButton))
 		);
+		
+		getRootPane().setDefaultButton(confirmButton);
 	}
 }

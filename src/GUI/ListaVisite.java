@@ -91,8 +91,8 @@ public class ListaVisite extends Frame {
 				.addComponent(visiteLabel, 0, 0, Short.MAX_VALUE)
 		   		.addComponent(visiteScrollPane, 0, 0, Short.MAX_VALUE)
 		   		.addGroup(layout.createSequentialGroup()
-			   			.addComponent(confirmButton)
-			   			.addComponent(exitButton))
+			   			.addComponent(exitButton)
+			   			.addComponent(confirmButton))
 		);
 		
 		layout.setVerticalGroup(
@@ -101,8 +101,10 @@ public class ListaVisite extends Frame {
 				.addComponent(visiteScrollPane)
 				.addGap(getButtonsGap())
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
-						.addComponent(confirmButton)
-						.addComponent(exitButton))
+						.addComponent(exitButton)
+						.addComponent(confirmButton))
 		);
+		
+		getRootPane().setDefaultButton(confirmButton);
 	}
 }
