@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import GUI.FormPagamento;
+import GUI.FormVisualizzazioneFattura;
 import GUI.Frame;
 import GUI.ListaFatture;
 import GUI.ListaVisite;
@@ -11,7 +12,9 @@ import GUI.ListaVisite;
 public class GUIControllerVisite {
 	private static GUIControllerVisite instance;
 	private GestoreVisite gestoreVisite;
+	
 	private Fattura fattura;
+	private Frame parentFrame;
 
 	private GUIControllerVisite() {
 		gestoreVisite = GestoreVisite.getInstance();
@@ -33,8 +36,13 @@ public class GUIControllerVisite {
 		new ListaVisite(parentFrame, operationType, visite);
 	}
 
-	public void printFattura(Visita visita) {
+	public void printFattura(Frame parentFrame, Visita visita) {
+		this.parentFrame = parentFrame;
 		gestoreVisite.printFattura(visita);
+	}
+
+	public void visualizzaFattura(Fattura fattura) {
+		new FormVisualizzazioneFattura(parentFrame, fattura);
 	}
 
 	public void createListaFatture(Frame parentFrame, String codiceFiscalePaziente) {

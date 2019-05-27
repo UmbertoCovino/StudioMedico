@@ -58,12 +58,7 @@ public class FrameMedico extends Frame {
 		
 		ricercaPazienteButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				paziente = GUIControllerUtenti.getInstance().createFormRichiestaPaziente(thisFrame);
-				
-				if (paziente != null) {
-					pazienteLabel.setText("Dati paziente ricercato: " + paziente.getNome() + " " + paziente.getCognome() + ", " + paziente.getCodiceFiscale() + ", " + paziente.getEmail());
-					pazienteLabel.setVisible(true);
-				}
+				GUIControllerUtenti.getInstance().createFormRichiestaPaziente(thisFrame);
 			}
 		});
 		
@@ -84,6 +79,19 @@ public class FrameMedico extends Frame {
 				GUIControllerVisite.getInstance().createListaFatture(thisFrame, paziente.getCodiceFiscale());
 			}
 		});
+	}
+	
+	public void setPazienteFound(Paziente paziente) {
+		this.paziente = paziente;
+		
+		if (paziente != null) {
+			pazienteLabel.setText("Dati paziente ricercato: " + paziente.getNome() + " " + paziente.getCognome() + ", " + paziente.getCodiceFiscale() + ", " + paziente.getEmail());
+			pazienteLabel.setVisible(true);
+			
+			registraVisitaButton.setEnabled(true);
+			generaFatturaButton.setEnabled(true);
+			registraPagamentoVisitaButton.setEnabled(true);
+		}
 	}
 
 	@Override

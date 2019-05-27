@@ -35,8 +35,7 @@ public class GestoreVisite {
 	public void printFattura(Visita visita) {
 		Fattura fattura = new Fattura(visita);
 		gestoreDB.insertFattura(fattura);
-	
-		// stampa fattura
+		GUIControllerVisite.getInstance().visualizzaFattura(fattura);
 	}
 
 	public ArrayList<Fattura> getFatture(String codiceFiscalePaziente) {

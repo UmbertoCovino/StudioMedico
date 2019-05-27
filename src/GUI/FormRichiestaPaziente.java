@@ -14,6 +14,8 @@ import javax.swing.JTextField;
 import Utenti.GUIControllerUtenti;
 
 public class FormRichiestaPaziente extends Frame {
+	private Frame parentFrame;
+	
 	private JLabel codiceFiscaleLabel;
 	private JTextField codiceFiscaleTextField;
 	private JButton confirmButton;
@@ -21,6 +23,8 @@ public class FormRichiestaPaziente extends Frame {
 
 	public FormRichiestaPaziente(Frame parentFrame) {
 		super("Ricerca paziente", parentFrame);
+		
+		this.parentFrame = parentFrame;
 		
 		setExtraFrameWidth(100);
 		
@@ -49,7 +53,7 @@ public class FormRichiestaPaziente extends Frame {
 		confirmButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (dataIsValid()) {
-					GUIControllerUtenti.getInstance().getPaziente(codiceFiscaleTextField.getText().trim());
+					GUIControllerUtenti.getInstance().setPazienteFound((FrameMedico) parentFrame, GUIControllerUtenti.getInstance().getPaziente(codiceFiscaleTextField.getText().trim()));
 				}
 			}
 		});

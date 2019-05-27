@@ -11,8 +11,6 @@ import GUI.FrameProprietario;
 public class GUIControllerUtenti {
 	private static GUIControllerUtenti instance;
 	private GestoreUtenti gestoreUtenti;
-	
-	private Paziente paziente;
 
 	private GUIControllerUtenti() {
 		gestoreUtenti = GestoreUtenti.getInstance();
@@ -52,22 +50,15 @@ public class GUIControllerUtenti {
 		gestoreUtenti.registerPaziente(nome, cognome, email, password, codiceFiscale);
 	}
 
-	public Paziente createFormRichiestaPaziente(Frame parentFrame) {
-		FormRichiestaPaziente f = new FormRichiestaPaziente(parentFrame);
-		
-		//dobbiamo fare un lock mentre aspettiamo il paziente da getPaz..()
-		waitUntilPazienteReturns();
-		
-		return paziente;
+	public void createFormRichiestaPaziente(Frame parentFrame) {
+		new FormRichiestaPaziente(parentFrame);
 	}
 
-	private void waitUntilPazienteReturns() {
-		//lock
+	public Paziente getPaziente(String codiceFiscale) {
+		return gestoreUtenti.getPaziente(codiceFiscale);
 	}
 
-	public void getPaziente(String codiceFiscale) {
-		paziente = gestoreUtenti.getPaziente(codiceFiscale);
-		
-		//unlock
+	public void setPazienteFound(FrameMedico frameMedico, Paziente paziente) {
+		frameMedico.setPazienteFound(paziente);
 	}
 }
