@@ -1,7 +1,5 @@
 package Utenti;
 
-import java.sql.SQLException;
-
 import GUI.FormRegistrazionePaziente;
 import GUI.FormRichiestaPaziente;
 import GUI.Frame;
@@ -13,12 +11,14 @@ import GUI.FrameProprietario;
 public class GUIControllerUtenti {
 	private static GUIControllerUtenti instance;
 	private GestoreUtenti gestoreUtenti;
+	
+	private Paziente paziente;
 
-	private GUIControllerUtenti() throws ClassNotFoundException, SQLException {
+	private GUIControllerUtenti() {
 		gestoreUtenti = GestoreUtenti.getInstance();
 	}
 
-	public static GUIControllerUtenti getInstance() throws ClassNotFoundException, SQLException {
+	public static GUIControllerUtenti getInstance() {
 		if(instance == null)
 			instance = new GUIControllerUtenti();
 		return instance;
@@ -54,10 +54,20 @@ public class GUIControllerUtenti {
 
 	public Paziente createFormRichiestaPaziente(Frame parentFrame) {
 		FormRichiestaPaziente f = new FormRichiestaPaziente(parentFrame);
-		return null;
+		
+		//dobbiamo fare un lock mentre aspettiamo il paziente da getPaz..()
+		waitUntilPazienteReturns();
+		
+		return paziente;
+	}
+
+	private void waitUntilPazienteReturns() {
+		//lock
 	}
 
 	public void getPaziente(String codiceFiscale) {
-		gestoreUtenti.getPaziente(codiceFiscale);
+		paziente = gestoreUtenti.getPaziente(codiceFiscale);
+		
+		//unlock
 	}
 }
