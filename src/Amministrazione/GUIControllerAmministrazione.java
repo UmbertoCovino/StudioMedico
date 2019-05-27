@@ -1,5 +1,6 @@
 package Amministrazione;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import GUI.FormCreazioneReport;
@@ -11,11 +12,11 @@ public class GUIControllerAmministrazione {
 	private static GUIControllerAmministrazione instance;
 	private GestoreAmministrazione gestoreAmministrazione;
 
-	private GUIControllerAmministrazione() {
+	private GUIControllerAmministrazione() throws ClassNotFoundException, SQLException {
 		gestoreAmministrazione = GestoreAmministrazione.getInstance();
 	}
 
-	public static GUIControllerAmministrazione getInstance() {
+	public static GUIControllerAmministrazione getInstance() throws ClassNotFoundException, SQLException {
 		if(instance == null)
 			instance = new GUIControllerAmministrazione();
 		return instance;

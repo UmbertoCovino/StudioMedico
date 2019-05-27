@@ -1,5 +1,7 @@
 package Utenti;
 
+import java.sql.SQLException;
+
 import javax.swing.JOptionPane;
 
 import Persistenza.GestoreDatabase;

@@ -4,6 +4,10 @@ import Utenti.Utente;
 import Utenti.Paziente;
 import Utenti.PazienteHandler;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import Utenti.Medico;
 import Utenti.MedicoHandler;
@@ -17,9 +21,26 @@ import Visite.Pagamento;
 import Amministrazione.Report;
 
 public class GestoreDatabase {
+	private final String DB_NAME = "StudioMedico";
+	
 	private static GestoreDatabase instance;
+	private Connection connection;
+	private Statement statement;
 
-	private GestoreDatabase() {	}
+	private GestoreDatabase() {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		
+			String url = "jdbc:mysql://localhost:3306/"+ DB_NAME +"?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false";
+			
+			this.connection = DriverManager.getConnection(url, "root", "qwerty");
+			this.statement= this.connection.createStatement();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public static GestoreDatabase getInstance() {
 		if(instance == null)

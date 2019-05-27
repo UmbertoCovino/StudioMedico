@@ -1,5 +1,7 @@
 package Utenti;
 
+import java.sql.SQLException;
+
 import GUI.FormRegistrazionePaziente;
 import GUI.FormRichiestaPaziente;
 import GUI.Frame;
@@ -12,11 +14,11 @@ public class GUIControllerUtenti {
 	private static GUIControllerUtenti instance;
 	private GestoreUtenti gestoreUtenti;
 
-	private GUIControllerUtenti() {
+	private GUIControllerUtenti() throws ClassNotFoundException, SQLException {
 		gestoreUtenti = GestoreUtenti.getInstance();
 	}
 
-	public static GUIControllerUtenti getInstance() {
+	public static GUIControllerUtenti getInstance() throws ClassNotFoundException, SQLException {
 		if(instance == null)
 			instance = new GUIControllerUtenti();
 		return instance;
