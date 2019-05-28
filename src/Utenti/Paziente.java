@@ -4,7 +4,7 @@ public class Paziente extends Utente {
 	private String codiceFiscale;
 
 	public Paziente (String nome, String cognome, String email, String password) {
-		super(nome, cognome, email, password);
+		super(nome, cognome, email, password, false);
 	}
 
 	public String getCodiceFiscale() {

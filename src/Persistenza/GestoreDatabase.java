@@ -3,9 +3,11 @@ package Persistenza;
 import Utenti.Utente;
 import Utenti.Paziente;
 import Utenti.PazienteHandler;
+import Utenti.Specializzazione;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -13,6 +15,9 @@ import Utenti.Medico;
 import Utenti.MedicoHandler;
 import Visite.Prenotazione;
 import java.util.Date;
+
+import javax.sql.StatementEvent;
+
 import Visite.TipologiaVisita;
 import Visite.Visita;
 import Visite.Fattura;
@@ -21,7 +26,7 @@ import Visite.Pagamento;
 import Amministrazione.Report;
 
 public class GestoreDatabase {
-	private final String DB_NAME = "StudioMedico";
+	private final String DB_NAME = "ElaboratoDB";
 	
 	private static GestoreDatabase instance;
 	private Connection connection;
@@ -48,21 +53,113 @@ public class GestoreDatabase {
 		return instance;
 	}
 
+	public void provaDB() {
+		String query = "select CodiceFiscale from Attori where CodiceFiscale='Z1'";
+		try {
+			ResultSet rs = statement.executeQuery(query);
+			while(rs.next()) {
+				System.out.println("eseguito");
+				System.out.println(rs.getString(1));
+			}
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+/*
+ * 	DA CANCELLARE
+ *
 	public Utente getUtente(String email) {
+		String query = "select email from pazienti where email='"+email+"'";
+		try {
+			ResultSet rs = statement.executeQuery(query);
+			
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
-	
-	public Utente getUtente(String email, String password) {
-		//query al DB per trovare l'utente e capire se è: paziente, medico, admin
-		
+*/	
+
+	public Utente getUtente(String emailUtente, String passwordUtente) {
 		Utente utente = null;
-		if(email.equals("mc@uni.com") && password.equals("123")) {
-			PazienteHandler handler = new PazienteHandler();
-			utente = (Paziente) handler.createElement("M", "C", email, password);
-		}
-		else if(email.equals("uc@uni.com") && password.equals("123")) {
-			MedicoHandler handler = new MedicoHandler();
-			utente = (Medico) handler.createElement("U", "C", email, password);
+		
+		String tabella_utente = "medici";
+		String query = "select email, password"
+						+ "from "+ tabella_utente
+						+ " where email='"+ emailUtente +"' and password='"+ passwordUtente+"'";
+		
+		
+		//così ha fatto Andrea, pensavo che si possono mettere anche direttamente i rs.get nei costruttori. Che ne pensi?
+		//come sta ora è più 'pulito' ma molto più lungo
+		String nome;
+		String cognome;
+		String email;
+		String password;
+		String codiceFiscale;
+		int codice;
+		
+		//problema specializzazione nel DB è salvata come string come facciamo?
+		Specializzazione specializzazione;
+		
+		try {
+			ResultSet rs = statement.executeQuery(query);
+			
+			//ricerca nella tabella medici, poi nella tabella dei pazienti, infine in quella dei proprietari 
+			if(rs.next()) {
+				codice = rs.getInt("codice");
+				nome = rs.getString("nome");
+				cognome = rs.getString("cognome");
+				email = rs.getString("email");
+				password = rs.getString("password");
+				String sspecializzazione = rs.getString("nome_specializzazione");
+				
+				MedicoHandler handler = new MedicoHandler();
+				Medico medico = (Medico) handler.createElement(nome, cognome, email, password);
+				medico.setCodice(codice);
+				//medico.setSpecializzazione(specializzazione);
+				utente = medico;
+			} else {
+				tabella_utente = "pazienti";
+				rs = statement.executeQuery(query);
+				
+				if(rs.next()) {
+					codiceFiscale = rs.getString("codice_fiscale");
+					nome = rs.getString("nome");
+					cognome = rs.getString("cognome");
+					email = rs.getString("email");
+					password = rs.getString("password");
+					
+					PazienteHandler handler = new PazienteHandler();
+					Paziente paziente = (Paziente) handler.createElement(nome, cognome, email, password);
+					paziente.setCodiceFiscale(codiceFiscale);
+					
+					utente = paziente;
+				} else {
+					tabella_utente = "proprietari";
+					rs = statement.executeQuery(query);
+					
+					if(rs.next()) {
+						nome = rs.getString("nome");
+						cognome = rs.getString("cognome");
+						email = rs.getString("email");
+						password = rs.getString("password");
+						
+						//non posso creare un nuovo utente con new Utente.. aggiungiamo la fabbrica per il proprietario o lasciamo così?
+						PazienteHandler handler = new PazienteHandler();
+						Paziente proprietario = (Paziente) handler.createElement(nome, cognome, email, password);
+						proprietario.setAdmin(true);
+						
+						utente = proprietario;
+					}
+				}
+			}
+			
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 		
 		return utente;

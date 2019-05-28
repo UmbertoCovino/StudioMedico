@@ -7,11 +7,12 @@ public abstract class Utente {
 	private String password;
 	private boolean admin;
 	
-	public Utente(String nome, String cognome, String email, String password) {
+	public Utente(String nome, String cognome, String email, String password, boolean admin) {
 		this.nome = nome;
 		this.cognome = cognome;
 		this.email = email;
 		this.password = password;
+		this.admin = admin;
 	}
 	
 	public String getNome() {
