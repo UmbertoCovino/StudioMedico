@@ -1,6 +1,6 @@
 package Utenti;
 
-public abstract class Utente {
+public class Utente {
 	private String nome;
 	private String cognome;
 	private String email;

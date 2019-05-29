@@ -26,7 +26,8 @@ import Visite.Pagamento;
 import Amministrazione.Report;
 
 public class GestoreDatabase {
-	private final String DB_NAME = "ElaboratoDB";
+	private final String DB_NAME = "studiomedico";
+	private final String REFERENCED_LIBRARY = "com.mysql.jdbc.Driver";
 	
 	private static GestoreDatabase instance;
 	private Connection connection;
@@ -34,7 +35,7 @@ public class GestoreDatabase {
 
 	private GestoreDatabase() {
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName(REFERENCED_LIBRARY);
 		
 			String url = "jdbc:mysql://localhost:3306/"+ DB_NAME +"?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false";
 			
@@ -54,12 +55,16 @@ public class GestoreDatabase {
 	}
 
 	public void provaDB() {
-		String query = "select CodiceFiscale from Attori where CodiceFiscale='Z1'";
+		String query = "select * from Attori where CodiceFiscale='Z1'";
 		try {
 			ResultSet rs = statement.executeQuery(query);
 			while(rs.next()) {
 				System.out.println("eseguito");
 				System.out.println(rs.getString(1));
+				System.out.println(rs.getString(2));
+				System.out.println(rs.getString(3));
+				System.out.println(rs.getString(4));
+				System.out.println(rs.getString(5));
 			}
 			rs.close();
 		} catch (SQLException e) {
@@ -70,8 +75,8 @@ public class GestoreDatabase {
 /*
  * 	DA CANCELLARE
  *
-	public Utente getUtente(String email) {
-		String query = "select email from pazienti where email='"+email+"'";
+	public Utente getUtente(String emailUtente, String passwordUtente) {
+		String query = "select email from pazienti where email='"+emailUtente+"'";
 		try {
 			ResultSet rs = statement.executeQuery(query);
 			
@@ -83,28 +88,26 @@ public class GestoreDatabase {
 	}
 */	
 
-	public Utente getUtente(String emailUtente, String passwordUtente) {
+	/*
+	 *		SD Autenticazione
+	 */
+	public Utente getUtente(String email) {
 		Utente utente = null;
-		
-		String tabella_utente = "medici";
-		String query = "select email, password"
-						+ "from "+ tabella_utente
-						+ " where email='"+ emailUtente +"' and password='"+ passwordUtente+"'";
-		
-		
-		//così ha fatto Andrea, pensavo che si possono mettere anche direttamente i rs.get nei costruttori. Che ne pensi?
-		//come sta ora è più 'pulito' ma molto più lungo
+			
 		String nome;
 		String cognome;
-		String email;
 		String password;
 		String codiceFiscale;
 		int codice;
-		
-		//problema specializzazione nel DB è salvata come string come facciamo?
 		Specializzazione specializzazione;
 		
+		String query = "select *"
+				+ " from medici"
+				+ " where email='"+ email +"'";
+		
 		try {
+			System.out.println(query);
+			System.out.println("Cerco nei medici");
 			ResultSet rs = statement.executeQuery(query);
 			
 			//ricerca nella tabella medici, poi nella tabella dei pazienti, infine in quella dei proprietari 
@@ -112,24 +115,28 @@ public class GestoreDatabase {
 				codice = rs.getInt("codice");
 				nome = rs.getString("nome");
 				cognome = rs.getString("cognome");
-				email = rs.getString("email");
 				password = rs.getString("password");
-				String sspecializzazione = rs.getString("nome_specializzazione");
+				specializzazione = new Specializzazione(rs.getString("nome_specializzazione"));
 				
 				MedicoHandler handler = new MedicoHandler();
 				Medico medico = (Medico) handler.createElement(nome, cognome, email, password);
 				medico.setCodice(codice);
-				//medico.setSpecializzazione(specializzazione);
+				medico.setSpecializzazione(specializzazione);
 				utente = medico;
 			} else {
-				tabella_utente = "pazienti";
+				query = "select *"
+						+ " from pazienti"
+						+ " where email='"+ email +"'";
+				
+				System.out.println(query);
+				System.out.println("Cerco nei pazienti");
+				
 				rs = statement.executeQuery(query);
 				
 				if(rs.next()) {
 					codiceFiscale = rs.getString("codice_fiscale");
 					nome = rs.getString("nome");
 					cognome = rs.getString("cognome");
-					email = rs.getString("email");
 					password = rs.getString("password");
 					
 					PazienteHandler handler = new PazienteHandler();
@@ -138,21 +145,21 @@ public class GestoreDatabase {
 					
 					utente = paziente;
 				} else {
-					tabella_utente = "proprietari";
+					query = "select *"
+							+ " from proprietari"
+							+ " where email='"+ email +"'";
+				
+					System.out.println(query);
+					System.out.println("Cerco nei proprietari");
+					
 					rs = statement.executeQuery(query);
 					
 					if(rs.next()) {
 						nome = rs.getString("nome");
 						cognome = rs.getString("cognome");
-						email = rs.getString("email");
 						password = rs.getString("password");
-						
-						//non posso creare un nuovo utente con new Utente.. aggiungiamo la fabbrica per il proprietario o lasciamo così?
-						PazienteHandler handler = new PazienteHandler();
-						Paziente proprietario = (Paziente) handler.createElement(nome, cognome, email, password);
-						proprietario.setAdmin(true);
-						
-						utente = proprietario;
+					
+						utente = new Utente(nome, cognome, email, password, true);
 					}
 				}
 			}
@@ -161,7 +168,7 @@ public class GestoreDatabase {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+		System.out.println(utente);
 		return utente;
 	}
 
@@ -169,8 +176,38 @@ public class GestoreDatabase {
 
 	}
 
+	/*
+	 *		SD Ricerca paziente
+	 */
 	public Paziente getPaziente(String codiceFiscale) {
-		return null;
+		Paziente paziente = null;
+		
+		String query = "select *"
+						+ "from pazienti"
+						+ " where codice_fiscale='"+ codiceFiscale +"'";
+		String nome;
+		String cognome;
+		String email;
+		
+		try {
+			ResultSet rs = statement.executeQuery(query);
+			
+			if(rs.next()) {
+				nome = rs.getString("nome");
+				cognome = rs.getString("cognome");
+				email = rs.getString("email");
+					
+				PazienteHandler handler = new PazienteHandler();
+				paziente = (Paziente) handler.createElement(nome, cognome, email, "");
+				paziente.setCodiceFiscale(codiceFiscale);
+			}
+			
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return paziente;
 	}
 
 	public ArrayList<Paziente> getPazienti() {
