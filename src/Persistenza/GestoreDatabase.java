@@ -26,7 +26,9 @@ import Visite.Pagamento;
 import Amministrazione.Report;
 
 public class GestoreDatabase {
-	private final String DB_NAME = "studiomedico";
+	private final String DB_NAME = "studiomedico"; // studio_medico
+	private final String DB_USER = "root";
+	private final String DB_PASSWORD = "qwerty";
 	private final String REFERENCED_LIBRARY = "com.mysql.jdbc.Driver";
 	
 	private static GestoreDatabase instance;
@@ -39,7 +41,7 @@ public class GestoreDatabase {
 		
 			String url = "jdbc:mysql://localhost:3306/"+ DB_NAME +"?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false";
 			
-			this.connection = DriverManager.getConnection(url, "root", "qwerty");
+			this.connection = DriverManager.getConnection(url, DB_USER, DB_PASSWORD);
 			this.statement= this.connection.createStatement();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -101,9 +103,9 @@ public class GestoreDatabase {
 		int codice;
 		Specializzazione specializzazione;
 		
-		String query = "select *"
-				+ " from medici"
-				+ " where email='"+ email +"'";
+		String query = "select * "
+					 + "from medici "
+					 + "where email = '" + email + "'";
 		
 		try {
 			System.out.println(query);
@@ -124,9 +126,9 @@ public class GestoreDatabase {
 				medico.setSpecializzazione(specializzazione);
 				utente = medico;
 			} else {
-				query = "select *"
-						+ " from pazienti"
-						+ " where email='"+ email +"'";
+				query = "select * "
+					  + "from pazienti "
+					  + "where email = '" + email + "'";
 				
 				System.out.println(query);
 				System.out.println("Cerco nei pazienti");
@@ -145,9 +147,9 @@ public class GestoreDatabase {
 					
 					utente = paziente;
 				} else {
-					query = "select *"
-							+ " from proprietari"
-							+ " where email='"+ email +"'";
+					query = "select * "
+						  + "from proprietari "
+						  + "where email = '" + email + "'";
 				
 					System.out.println(query);
 					System.out.println("Cerco nei proprietari");
@@ -168,6 +170,7 @@ public class GestoreDatabase {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
 		System.out.println(utente);
 		return utente;
 	}
@@ -182,12 +185,13 @@ public class GestoreDatabase {
 	public Paziente getPaziente(String codiceFiscale) {
 		Paziente paziente = null;
 		
-		String query = "select *"
-						+ "from pazienti"
-						+ " where codice_fiscale='"+ codiceFiscale +"'";
 		String nome;
 		String cognome;
 		String email;
+		
+		String query = "select * "
+					 + "from pazienti "
+					 + "where codice_fiscale = '" + codiceFiscale + "'";
 		
 		try {
 			ResultSet rs = statement.executeQuery(query);
