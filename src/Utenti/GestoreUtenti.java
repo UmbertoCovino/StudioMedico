@@ -1,9 +1,5 @@
 package Utenti;
 
-import java.sql.SQLException;
-
-import javax.swing.JOptionPane;
-
 import Persistenza.GestoreDatabase;
 
 public class GestoreUtenti {
@@ -40,23 +36,25 @@ public class GestoreUtenti {
 
 	public void registerPaziente(String nome, String cognome, String email, String password, String codiceFiscale) {
 		if(gestoreDB.isUtenteGiaPresente(email)) {
-			//popup "email gia registrata"
-			
-//			non va bene il this perché vuole un componete, questi contorlli li deve fare il form?
-//			JOptionPane.showMessageDialog(this, "Email già registrata.", "Attenzione", JOptionPane.WARNING_MESSAGE);
+			throw new UtenteGiaPresesteException(email);			
 		} else if(gestoreDB.isPazienteGiaPresente(codiceFiscale)) {
-			//popup "email gia registrata"
+			throw new PazienteGiaPresenteException(codiceFiscale);
 		} else {			
 			PazienteHandler handler = new PazienteHandler();
 			Paziente paziente = (Paziente) handler.createElement(nome, cognome, email, password);
 			paziente.setCodiceFiscale(codiceFiscale);
-			gestoreDB.insertPaziente(paziente);
-			//popup "registrazione avvenuta con successo"
+//			da implementare			
+//			gestoreDB.insertPaziente(paziente);
 		}
 	}
 
 	public Utente authentication(String email, String password) {
-		return gestoreDB.getUtente(email, password);
+		Utente utente = gestoreDB.getUtente(email);
+		if(utente != null && utente.getPassword().equals(password)) {
+			utente.setPassword("");
+			return utente;
+		}
+		return null;
 	}
 
 	public Paziente getPaziente(String codiceFiscale) {
