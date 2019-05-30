@@ -11,6 +11,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import Utenti.CodiceFiscaleGiaRegistratoException;
+import Utenti.EmailGiaRegistrataException;
 import Utenti.GUIControllerUtenti;
 
 public class FormRegistrazionePaziente extends Frame {
@@ -65,11 +67,21 @@ public class FormRegistrazionePaziente extends Frame {
 		confirmButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (dataIsValid()) {
-					GUIControllerUtenti.getInstance().notifyData(nomeTextField.getText().trim(),
-							cognomeTextField.getText().trim(),
-							emailTextField.getText().trim(),
-							String.valueOf(passwordTextField.getPassword()),
-							codiceFiscaleTextField.getText().trim());
+					try {
+						GUIControllerUtenti.getInstance().notifyData(nomeTextField.getText().trim(),
+								cognomeTextField.getText().trim(),
+								emailTextField.getText().trim(),
+								String.valueOf(passwordTextField.getPassword()),
+								codiceFiscaleTextField.getText().trim());
+						
+						JOptionPane.showMessageDialog(thisFrame, "La registrazione è andata a buon fine. Puoi adesso utilizzare le tue nuove credenziali per accedere.", "Registrazione effettuata con successo!", JOptionPane.INFORMATION_MESSAGE);
+					} catch (EmailGiaRegistrataException e1) {
+						JOptionPane.showMessageDialog(thisFrame, "Spiacenti, l'indirizzo email inserito è già registrato nel sistema.", "Errore", JOptionPane.ERROR_MESSAGE);
+					} catch (CodiceFiscaleGiaRegistratoException e2) {
+						JOptionPane.showMessageDialog(thisFrame, "Spiacenti, il codice fiscale inserito è già registrato nel sistema.", "Errore", JOptionPane.ERROR_MESSAGE);
+					}
+					
+					cancelButton.doClick();
 				}
 			}
 		});
