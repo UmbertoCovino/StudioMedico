@@ -1,5 +1,7 @@
 package Utenti;
 
+import java.io.PrintStream;
+
 public class Paziente extends Utente {
 	private String codiceFiscale;
 
@@ -13,5 +15,12 @@ public class Paziente extends Utente {
 
 	public void setCodiceFiscale(String codiceFiscale) {
 		this.codiceFiscale = codiceFiscale;
+	}
+
+	public void print(PrintStream out) {
+		out.println(super.getNome());
+		out.println(super.getCognome());
+		out.println(super.getEmail());
+		out.println(codiceFiscale);
 	}
 }

@@ -10,6 +10,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import Utenti.Medico;
 import Utenti.MedicoHandler;
@@ -32,6 +33,7 @@ public class GestoreDatabase {
 	private static GestoreDatabase instance;
 	private Connection connection;
 	private Statement statement;
+
 
 	private GestoreDatabase() {
 		try {
@@ -394,7 +396,6 @@ public class GestoreDatabase {
 	}
 
 	
-	
 	/*
 	 * 		WORKING IN PROGRESS
 	 */
@@ -738,7 +739,7 @@ public class GestoreDatabase {
 		try {
 			ResultSet rs = statement.executeQuery(query);
 			
-			if(rs.next()) {
+			while(rs.next()) {
 				String nome = rs.getString("M.nome");
 				String cognome = rs.getString("M.cognome");
 				String email = rs.getString("M.email");
@@ -781,12 +782,107 @@ public class GestoreDatabase {
 
 	
 	/*
-	 * 		WORKING IN PROGRESS
+	 * 		SD ??? DA TESTARE
 	 */
 	public ArrayList<Visita> getVisite() {
-		return null;
+		ArrayList<Visita> visite = new ArrayList<Visita>();
+		
+		String query = "select * "
+					 + "from visite ";
+		
+		try {
+			ResultSet rs = statement.executeQuery(query);
+			
+			while(rs.next()) {
+				String diagnosi = rs.getString("diagnosi");
+				String terapia = rs.getString("terapia");
+				Prenotazione prenotazione = this.getPrenotazione(rs.getInt("id_prenotazione"));
+				
+				visite.add(new Visita(prenotazione, diagnosi, terapia));
+			}
+			
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return visite;
 	}
 
+	
+	/*
+	 * 		SD Esegue visita		DA TESTARE
+	 */
+	public ArrayList<Prenotazione> getPrenotazioniFromDate(String codiceFiscalePaziente, Date date) {
+		ArrayList<Prenotazione> prenotazioni = new ArrayList<Prenotazione>(); 
+		
+		String query = "select * "
+					 + "from prenotazioni "
+					 + "where codice_fiscale_paziente = '" + codiceFiscalePaziente + "' and giorno > '" + new SimpleDateFormat("YYYY-MM-DD").format(date) + "'";
+		
+		try {
+			ResultSet rs = statement.executeQuery(query);
+			
+			while(rs.next()) {
+				Date giorno = rs.getDate("giorno");
+				Date ora = rs.getTime("ora");
+				int id_tipologia_visita = rs.getInt("id_tipologia_visita");
+				int codice_medico = rs.getInt("codice_medico");
+				
+				TipologiaVisita tipologiaVisita = this.getTipologiaVisita(id_tipologia_visita);
+				Medico medico = this.getMedico(codice_medico);
+				Paziente paziente = this.getPaziente(codiceFiscalePaziente);
+					
+				Prenotazione prenotazione = new Prenotazione(giorno, ora, tipologiaVisita, medico, paziente);
+				
+				prenotazioni.add(prenotazione);
+			}
+			
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return prenotazioni;
+	}
+	
+	
+	
+	/*
+	 * 		SD Prenota visia. Chiamato da getCalendarioDisponibilita(int codiceMedico, String nomeTipologiaVisita)		DA TESTARE
+	 */
+	public ArrayList<Prenotazione> getPrenotazioni(int codiceMedico, String nomeTipologiaVisita){
+		ArrayList<Prenotazione> prenotazioni = new ArrayList<Prenotazione>();
+		
+		String query = "select * "
+					 + "from prenotazioni P "
+					 + "join tipologie_visite TV on P.id_tipologia_visita = TV.id "
+					 + "where P.codice_medico = '" + codiceMedico + "' and TV.nome = '" + nomeTipologiaVisita + "'";
+		
+		try {
+			ResultSet rs = statement.executeQuery(query);
+			
+			while(rs.next()) {
+				Date giorno = rs.getDate("giorno");
+				Date ora = rs.getTime("ora");
+				TipologiaVisita tipologiaVisita = this.getTipologiaVisita(rs.getInt("id_tipologia_visita"));
+				Medico medico = this.getMedico(rs.getInt("codice_medico"));
+				Paziente paziente = null;
+					
+				Prenotazione prenotazione = new Prenotazione(giorno, ora, tipologiaVisita, medico, paziente);
+				
+				prenotazioni.add(prenotazione);
+			}
+			
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return prenotazioni;
+	}
+	
+	
 	
 	/*
 	 * 		WORKING IN PROGRESS
@@ -796,6 +892,7 @@ public class GestoreDatabase {
 	}
 
 	
+	
 	/*
 	 * 		WORKING IN PROGRESS
 	 */
@@ -803,6 +900,7 @@ public class GestoreDatabase {
 		return null;
 	}
 
+	
 	
 	/*
 	 * 		WORKING IN PROGRESS
@@ -812,26 +910,11 @@ public class GestoreDatabase {
 	}
 
 	
+	
 	/*
 	 * 		WORKING IN PROGRESS
 	 */
 	public Report getReportTipologieVisite() {
-		return null;
-	}
-
-	
-	/*
-	 * 		WORKING IN PROGRESS
-	 */
-	public ArrayList<Prenotazione> getPrenotazioniFromDate(String codiceFiscalePaziente, Date date) {
-		return null;
-	}
-	
-	
-	/*
-	 * 		WORKING IN PROGRESS
-	 */
-	public ArrayList<Prenotazione> getPrenotazioni(int codiceMedico, String nomeTipologiaVisita){
 		return null;
 	}
 }

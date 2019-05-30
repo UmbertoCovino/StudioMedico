@@ -66,6 +66,6 @@ public class TipologiaVisita {
 		out.println(prezzoFisso);
 		out.println(costoManodopera);
 		out.println(costoEsercizio);
-		out.println("SpecializzazioniIdonee: " + specializzazioniIdonee.toString());
+		out.println("Specializzazioni idonee: " + specializzazioniIdonee.toString());
 	}
 }

@@ -1,5 +1,6 @@
 package Visite;
 
+import java.io.PrintStream;
 import java.util.Date;
 import Utenti.Medico;
 import Utenti.Paziente;
@@ -21,7 +22,7 @@ public class Prenotazione {
 	}
 
 	public Prenotazione() {
-		// TODO Auto-generated constructor stub
+	
 	}
 
 	public int getId() {
@@ -70,5 +71,14 @@ public class Prenotazione {
 	
 	public void setPaziente(Paziente paziente) {
 		this.paziente = paziente;
+	}
+
+	public void print(PrintStream out) {
+		out.println(id);
+		out.println(giorno);
+		out.println(ora);
+		tipologiaVisita.print(out);
+		medico.print(out);
+		paziente.print(out);
 	}
 }
