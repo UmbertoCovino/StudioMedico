@@ -42,11 +42,11 @@ public class GestoreAmministrazione {
 	}
 
 	public Report createReport(String tipologia, Medico medico) {
-		Report report;
+		Report report = null;
+		
 		if(tipologia.equals("Elenco di visite effettuare ordinate per giorno con indicazione del medico"))
 			report = gestoreDB.getReportVisitePerMedico(medico.getCodice());
-		else
-			report = null;
+		
 		return report;
 	}
 }

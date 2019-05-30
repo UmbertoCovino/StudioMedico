@@ -1,5 +1,6 @@
 package Visite;
 
+import java.io.PrintStream;
 import java.util.Date;
 
 public class Pagamento {
@@ -35,5 +36,11 @@ public class Pagamento {
 	
 	public void setFattura(Fattura fattura) {
 		this.fattura = fattura;
+	}
+
+	public void print(PrintStream out) {
+		out.println(dataPagamento);
+		out.println(metodoPagamento);
+		fattura.print(out);
 	}
 }

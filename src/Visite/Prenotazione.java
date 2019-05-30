@@ -13,16 +13,13 @@ public class Prenotazione {
 	private Medico medico;
 	private Paziente paziente;
 	
-	public Prenotazione(Date giorno, Date ora, TipologiaVisita tipologiaVisita, Medico medico, Paziente paziente) {
+	public Prenotazione(int id, Date giorno, Date ora, TipologiaVisita tipologiaVisita, Medico medico, Paziente paziente) {
+		this.id = id;
 		this.giorno = giorno;
 		this.ora = ora;
 		this.tipologiaVisita = tipologiaVisita;
 		this.medico = medico;
 		this.paziente = paziente;
-	}
-
-	public Prenotazione() {
-	
 	}
 
 	public int getId() {

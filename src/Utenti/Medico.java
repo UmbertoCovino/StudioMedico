@@ -27,10 +27,8 @@ public class Medico extends Utente {
 	}
 
 	public void print(PrintStream out) {
-		out.println(super.getNome());
-		out.println(super.getCognome());
-		out.println(super.getEmail());
 		out.println(codice);
+		super.print(out);
 		specializzazione.print(out);
 	}
 }

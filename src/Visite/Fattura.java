@@ -1,5 +1,7 @@
 package Visite;
 
+import java.io.PrintStream;
+
 import Utenti.Paziente;
 
 public class Fattura {
@@ -47,5 +49,11 @@ public class Fattura {
 
 	public void setPaziente(Paziente paziente) {
 		this.paziente = paziente;
+	}
+
+	public void print(PrintStream out) {
+		out.println(id);
+		out.println(importo);
+		visita.print(out);
 	}
 }

@@ -1,5 +1,6 @@
 package Visite;
 
+import java.io.PrintStream;
 import java.util.Date;
 import Utenti.Medico;
 import Utenti.Paziente;
@@ -97,5 +98,12 @@ public class Visita {
 
 	public void setPrenotazione(Prenotazione prenotazione) {
 		this.prenotazione = prenotazione;
+	}
+
+	public void print(PrintStream out) {
+		out.println(id);
+		out.println(diagnosi);
+		out.println(terapia);
+		prenotazione.print(out);
 	}
 }

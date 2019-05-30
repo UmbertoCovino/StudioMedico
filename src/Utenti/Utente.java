@@ -1,5 +1,7 @@
 package Utenti;
 
+import java.io.PrintStream;
+
 public class Utente {
 	private String nome;
 	private String cognome;
@@ -53,5 +55,11 @@ public class Utente {
 
 	public void setAdmin(boolean admin) {
 		this.admin = admin;
+	}
+
+	public void print(PrintStream out) {
+		out.println(nome);
+		out.println(cognome);
+		out.println(email);
 	}
 }
