@@ -24,7 +24,9 @@ import Visite.Pagamento;
 import Amministrazione.Report;
 
 public class GestoreDatabase {
-	private final String DB_NAME = "studiomedico";
+	private final String DB_NAME = "studiomedico"; // studio_medico
+	private final String DB_USER = "root";
+	private final String DB_PASSWORD = "qwerty";
 	private final String REFERENCED_LIBRARY = "com.mysql.jdbc.Driver";
 	
 	private static GestoreDatabase instance;
@@ -37,7 +39,7 @@ public class GestoreDatabase {
 		
 			String url = "jdbc:mysql://localhost:3306/"+ DB_NAME +"?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false";
 			
-			this.connection = DriverManager.getConnection(url, "root", "qwerty");
+			this.connection = DriverManager.getConnection(url, DB_USER, DB_PASSWORD);
 			this.statement= this.connection.createStatement();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
