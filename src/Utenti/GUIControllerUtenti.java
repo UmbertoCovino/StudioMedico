@@ -46,7 +46,7 @@ public class GUIControllerUtenti {
 		new FrameProprietario(utente);
 	}
 
-	public void notifyData(String nome, String cognome, String email, String password, String codiceFiscale) {
+	public void notifyData(String nome, String cognome, String email, String password, String codiceFiscale) throws EmailGiaRegistrataException, CodiceFiscaleGiaRegistratoException {
 		gestoreUtenti.registerPaziente(nome, cognome, email, password, codiceFiscale);
 	}
 

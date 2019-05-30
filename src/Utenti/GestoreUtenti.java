@@ -34,7 +34,7 @@ public class GestoreUtenti {
 		this.utenteHandler = utenteHandler;
 	}
 
-	public void registerPaziente(String nome, String cognome, String email, String password, String codiceFiscale) {
+	public void registerPaziente(String nome, String cognome, String email, String password, String codiceFiscale) throws EmailGiaRegistrataException, CodiceFiscaleGiaRegistratoException {
 		if(gestoreDB.isUtenteGiaPresente(email)) {
 			throw new EmailGiaRegistrataException(email);			
 		} else if(gestoreDB.isPazienteGiaPresente(codiceFiscale)) {
