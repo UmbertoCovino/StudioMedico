@@ -36,7 +36,11 @@ public class GestoreUtenti {
 
 	public void registerPaziente(String nome, String cognome, String email, String password, String codiceFiscale) {
 		if(gestoreDB.isUtenteGiaPresente(email)) {
+<<<<<<< HEAD
 			throw new UtenteGiaPresesteException(email);			
+=======
+			//popup "email gia registrata"			
+>>>>>>> branch 'master' of https://github.com/UmbertoCovino/StudioMedico.git
 		} else if(gestoreDB.isPazienteGiaPresente(codiceFiscale)) {
 			throw new PazienteGiaPresenteException(codiceFiscale);
 		} else {			
