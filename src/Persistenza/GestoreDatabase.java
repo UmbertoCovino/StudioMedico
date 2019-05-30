@@ -100,9 +100,9 @@ public class GestoreDatabase {
 		String cognome;
 		String password;
 				
-		String query = "select *"
-						+ " from medici"
-						+ " where email='"+ email +"'";
+		String query = "select * "
+					 + "from medici "
+					 + "where email = '" + email + "'";
 		
 		try {
 			System.out.println(query);
@@ -123,9 +123,9 @@ public class GestoreDatabase {
 				medico.setSpecializzazione(specializzazione);
 				utente = medico;
 			} else {
-				query = "select *"
-						+ " from pazienti"
-						+ " where email='"+ email +"'";
+				query = "select * "
+					  + "from pazienti "
+					  + "where email = '" + email + "'";
 				
 				System.out.println(query);
 				System.out.println("Cerco nei pazienti");
@@ -144,9 +144,9 @@ public class GestoreDatabase {
 					
 					utente = paziente;
 				} else {
-					query = "select *"
-							+ " from proprietari"
-							+ " where email='"+ email +"'";
+					query = "select * "
+						  + "from proprietari "
+						  + "where email = '" + email + "'";
 				
 					System.out.println(query);
 					System.out.println("Cerco nei proprietari");
@@ -167,6 +167,7 @@ public class GestoreDatabase {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
 		System.out.println(utente);
 		return utente;
 	}
@@ -185,10 +186,10 @@ public class GestoreDatabase {
 	 */
 	public Paziente getPaziente(String codiceFiscale) {
 		Paziente paziente = null;
-		
-		String query = "select *"
-						+ " from pazienti"
-						+ " where codice_fiscale='"+ codiceFiscale +"'";
+
+		String query = "select * "
+					 + "from pazienti "
+					 + "where codice_fiscale = '" + codiceFiscale + "'";
 		
 		try {
 			ResultSet rs = statement.executeQuery(query);
@@ -218,8 +219,8 @@ public class GestoreDatabase {
 	public ArrayList<Paziente> getPazienti() {
 		ArrayList<Paziente> pazienti = new ArrayList<Paziente>();
 		
-		String query = "select *"
-						+ " from pazienti";
+		String query = "select * "
+					 + "from pazienti";
 		
 		try {
 			ResultSet rs = statement.executeQuery(query);
@@ -251,9 +252,9 @@ public class GestoreDatabase {
 	public Medico getMedico(int codice) {
 		Medico medico = null;
 		
-		String query = "select *"
-						+ " from medici"
-						+ " where codice='"+ codice +"'";
+		String query = "select * "
+					 + "from medici "
+					 + "where codice = '" + codice + "'";
 		
 		try {
 			ResultSet rs = statement.executeQuery(query);
@@ -284,8 +285,8 @@ public class GestoreDatabase {
 	public ArrayList<Medico> getMedici() {
 		ArrayList<Medico> medici = new ArrayList<Medico>();
 		
-		String query = "select *"
-						+ " from medici";
+		String query = "select * "
+					 + "from medici";
 		
 		try {
 			ResultSet rs = statement.executeQuery(query);
@@ -327,9 +328,9 @@ public class GestoreDatabase {
 	public Prenotazione getPrenotazione(int id) {
 		Prenotazione prenotazione = null;
 		
-		String query = "select *"
-						+ " from prenotazioni"
-						+ " where id='"+ id +"'";
+		String query = "select * "
+					 + "from prenotazioni "
+					 + "where id = '" + id + "'";
 		
 		try {
 			ResultSet rs = statement.executeQuery(query);
@@ -359,10 +360,10 @@ public class GestoreDatabase {
 	public TipologiaVisita getTipologiaVisita(int id) {
 		TipologiaVisita tipologiaVisita = null;
 		
-		String query = "select *"
-						+ " from tipologie_visite T"
-						+ " join tipologie_visite_specializzazioni TS on T.id=TS.id_tipologia_visita"
-						+ " where id='"+ id +"'";
+		String query = "select * "
+					 + "from tipologie_visite T "
+					 + "join tipologie_visite_specializzazioni TS on T.id = TS.id_tipologia_visita "
+					 + "where id = '" + id + "'";
 		
 		try {
 			ResultSet rs = statement.executeQuery(query);
@@ -416,9 +417,9 @@ public class GestoreDatabase {
 	public ArrayList<Prenotazione> getPrenotazioni(String codiceFiscalePaziente) {
 		ArrayList<Prenotazione> prenotazioni = new ArrayList<Prenotazione>();
 		
-		String query = "select *"
-						+ " from prenotazioni"
-						+ " where codice_fiscale_paziente='"+ codiceFiscalePaziente +"'";
+		String query = "select * "
+					 + "from prenotazioni "
+					 + "where codice_fiscale_paziente = '" + codiceFiscalePaziente + "'";
 		
 		try {
 			ResultSet rs = statement.executeQuery(query);
@@ -458,9 +459,9 @@ public class GestoreDatabase {
 	public Visita getVisita(int id) {
 		Visita visita = null;
 		
-		String query = "select *"
-						+ " from visite"
-						+ " where id='"+ id +"'";
+		String query = "select * "
+					 + "from visite "
+					 + "where id = '" + id + "'";
 		
 		try {
 			ResultSet rs = statement.executeQuery(query);
@@ -488,10 +489,10 @@ public class GestoreDatabase {
 	public ArrayList<Visita> getVisite(String codiceFiscalePaziente) {
 		ArrayList<Visita> visite = new ArrayList<Visita>();
 		
-		String query = "select *"
-						+ " from visite V"
-						+ " join prenotazioni P on V.id_prenotazione=P.id"
-						+ " where codice_fiscale_paziente='"+ codiceFiscalePaziente +"'";
+		String query = "select * "
+					 + "from visite V "
+					 + "join prenotazioni P on V.id_prenotazione = P.id "
+					 + "where codice_fiscale_paziente = '" + codiceFiscalePaziente + "'";
 
 		try {
 			ResultSet rs = statement.executeQuery(query);
@@ -537,10 +538,10 @@ public class GestoreDatabase {
 	public TipologiaVisita getTipologiaVisita(String nome) {
 		TipologiaVisita tipologiaVisita = null;
 		
-		String query = "select *"
-						+ " from tipologie_visite T"
-						+ " join tipologie_visite_specializzazioni TS on T.id=TS.id_tipologia_visita"
-						+ " where nome='"+ nome +"'";
+		String query = "select * "
+					 + "from tipologie_visite T "
+					 + "join tipologie_visite_specializzazioni TS on T.id = TS.id_tipologia_visita "
+					 + "where nome = '" + nome + "'";
 		
 		try {
 			ResultSet rs = statement.executeQuery(query);
@@ -576,10 +577,10 @@ public class GestoreDatabase {
 	public ArrayList<TipologiaVisita> getTipologieVisite() {
 		ArrayList<TipologiaVisita> tipologieVisite = new ArrayList<TipologiaVisita>();
 		
-		String query = "select *"
-						+ " from tipologie_visite T"
-						+ " join tipologie_visite_specializzazioni TS on T.id=TS.id_tipologia_visita"
-						+ " order by T.nome";
+		String query = "select * "
+					 + "from tipologie_visite T "
+					 + "join tipologie_visite_specializzazioni TS on T.id = TS.id_tipologia_visita "
+					 + "order by T.nome";
 	
 		try {
 			ResultSet rs = statement.executeQuery(query);
@@ -626,9 +627,9 @@ public class GestoreDatabase {
 	public CalendarioDisponibilita getCalendarioDisponibilita(int codiceMedico, int anno) {
 		CalendarioDisponibilita calendarioDisponibilita = null;
 		
-		String query = "select *"
-						+ " from calendario_disponibilita"
-						+ " where codice_medico='"+ codiceMedico +"' and anno='"+ anno +"'";
+		String query = "select * "
+					 + "from calendario_disponibilita "
+					 + "where codice_medico = '" + codiceMedico + "' and anno = '" + anno + "'";
 		
 		try {
 			ResultSet rs = statement.executeQuery(query);
@@ -654,9 +655,9 @@ public class GestoreDatabase {
 	public ArrayList<Fattura> getFatture(String codiceFiscalePaziente) {
 		ArrayList<Fattura> fatture = new ArrayList<Fattura>();
 		
-		String query = "select *"
-						+ " from fatture"
-						+ " where codice_fiscale_paziente='"+ codiceFiscalePaziente +"'";
+		String query = "select * "
+					 + "from fatture "
+					 + "where codice_fiscale_paziente = '" + codiceFiscalePaziente + "'";
 
 		try {
 			ResultSet rs = statement.executeQuery(query);
@@ -700,9 +701,9 @@ public class GestoreDatabase {
 	public CalendarioDisponibilita getCalendarioDisponibilita(int codiceMedico, String nomeTipologiaVisita) {
 		CalendarioDisponibilita calendarioDisponibilita = null;
 		
-		String query = "select *"
-						+ " from calendario_disponibilita"
-						+ " where codice_medico='"+ codiceMedico +"'";
+		String query = "select * "
+					 + "from calendario_disponibilita "
+					 + "where codice_medico = '" + codiceMedico + "'";
 		
 		try {
 			ResultSet rs = statement.executeQuery(query);
@@ -728,11 +729,11 @@ public class GestoreDatabase {
 	public ArrayList<Medico> getMedici(String nomeTipologiaVisita) {
 		ArrayList<Medico> medici = new ArrayList<Medico>();
 		
-		String query = "select *"
-						+ " from medici M "
-						+ " join tipologie_visite_specializzazioni TS on M.nome_specializzazione = TS.nome_specializzazione"
-						+ " join tipologie_visite T on T.id = TS.id_tipologia_visita"
-						+ " where T.nome='"+ nomeTipologiaVisita +"'";
+		String query = "select * "
+					 + "from medici M "
+					 + "join tipologie_visite_specializzazioni TS on M.nome_specializzazione = TS.nome_specializzazione "
+					 + "join tipologie_visite T on T.id = TS.id_tipologia_visita "
+					 + "where T.nome = '" + nomeTipologiaVisita + "'";
 		
 		try {
 			ResultSet rs = statement.executeQuery(query);
