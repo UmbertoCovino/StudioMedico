@@ -1,5 +1,8 @@
 package Visite;
 
+import java.io.PrintStream;
+import java.util.ArrayList;
+
 import Utenti.Specializzazione;
 
 public class TipologiaVisita {
@@ -7,8 +10,17 @@ public class TipologiaVisita {
 	private float prezzoFisso;
 	private float costoManodopera;
 	private float costoEsercizio;
-	private Specializzazione[] specializzazioniIdonee;
+	private ArrayList<Specializzazione> specializzazioniIdonee;
 	
+	public TipologiaVisita(String nome, float prezzoFisso, float costoManodopera, float costoEsercizio,
+			ArrayList<Specializzazione> specializzazioniIdonee) {
+		this.nome = nome;
+		this.prezzoFisso = prezzoFisso;
+		this.costoManodopera = costoManodopera;
+		this.costoEsercizio = costoEsercizio;
+		this.specializzazioniIdonee = specializzazioniIdonee;
+	}
+
 	public String getNome() {
 		return nome;
 	}
@@ -41,11 +53,19 @@ public class TipologiaVisita {
 		this.costoEsercizio = costoEsercizio;
 	}
 	
-	public Specializzazione[] getSpecializzazioniIdonee() {
+	public ArrayList<Specializzazione> getSpecializzazioniIdonee() {
 		return specializzazioniIdonee;
 	}
 	
-	public void setSpecializzazioniIdonee(Specializzazione[] specializzazioniIdonee) {
+	public void setSpecializzazioniIdonee(ArrayList<Specializzazione> specializzazioniIdonee) {
 		this.specializzazioniIdonee = specializzazioniIdonee;
+	}
+
+	public void print(PrintStream out) {
+		out.println(nome);
+		out.println(prezzoFisso);
+		out.println(costoManodopera);
+		out.println(costoEsercizio);
+		out.println("SpecializzazioniIdonee: " + specializzazioniIdonee.toString());
 	}
 }

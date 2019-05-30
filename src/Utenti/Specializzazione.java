@@ -1,5 +1,7 @@
 package Utenti;
 
+import java.io.PrintStream;
+
 public class Specializzazione {
 	private String nome;
 
@@ -13,5 +15,14 @@ public class Specializzazione {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	@Override
+	public String toString() {
+		return nome;
+	}
+
+	public void print(PrintStream out) {
+		out.println(nome);
 	}
 }

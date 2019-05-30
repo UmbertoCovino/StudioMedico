@@ -30,7 +30,7 @@ create table medici (
 
 create table calendario_disponibilita (
 	id int(10) primary key auto_increment,
-	anno int not null,
+	anno int(4) not null,
 	codice_medico int(10),
 	foreign key (codice_medico) references medici(codice)
 );

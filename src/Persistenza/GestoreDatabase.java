@@ -24,7 +24,7 @@ import Visite.Pagamento;
 import Amministrazione.Report;
 
 public class GestoreDatabase {
-	private final String DB_NAME = "studiomedico"; // studio_medico
+	private final String DB_NAME = "studio_medico";
 	private final String DB_USER = "root";
 	private final String DB_PASSWORD = "qwerty";
 	private final String REFERENCED_LIBRARY = "com.mysql.jdbc.Driver";
@@ -89,6 +89,7 @@ public class GestoreDatabase {
 	}
 */	
 
+	
 	/*
 	 *		SD Autenticazione
 	 */
@@ -100,8 +101,8 @@ public class GestoreDatabase {
 		String password;
 				
 		String query = "select *"
-				+ " from medici"
-				+ " where email='"+ email +"'";
+						+ " from medici"
+						+ " where email='"+ email +"'";
 		
 		try {
 			System.out.println(query);
@@ -170,34 +171,32 @@ public class GestoreDatabase {
 		return utente;
 	}
 
+	
 	/*
-	 * 		WORKING
+	 * 		WORKING IN PROGRESS
 	 */
 	public void insertPaziente(Paziente paziente) {
 
 	}
 
+	
 	/*
-	 *		SD Ricerca paziente
-	 *		DA TESTARE
+	 *		SD Ricerca paziente		DA TESTARE
 	 */
 	public Paziente getPaziente(String codiceFiscale) {
 		Paziente paziente = null;
 		
 		String query = "select *"
-						+ "from pazienti"
+						+ " from pazienti"
 						+ " where codice_fiscale='"+ codiceFiscale +"'";
-		String nome;
-		String cognome;
-		String email;
 		
 		try {
 			ResultSet rs = statement.executeQuery(query);
 			
 			if(rs.next()) {
-				nome = rs.getString("nome");
-				cognome = rs.getString("cognome");
-				email = rs.getString("email");
+				String nome = rs.getString("nome");
+				String cognome = rs.getString("cognome");
+				String email = rs.getString("email");
 					
 				PazienteHandler handler = new PazienteHandler();
 				paziente = (Paziente) handler.createElement(nome, cognome, email, "");
@@ -212,22 +211,48 @@ public class GestoreDatabase {
 		return paziente;
 	}
 
-	/*
-	 * 		WORKING
-	 */
-	public ArrayList<Paziente> getPazienti() {
-		return null;
-	}
 	
 	/*
-	 *		SD ???
-	 *		DA TESTARE
+	 * 		GET GENERICO 	DA TESTARE
+	 */
+	public ArrayList<Paziente> getPazienti() {
+		ArrayList<Paziente> pazienti = new ArrayList<Paziente>();
+		
+		String query = "select *"
+						+ " from pazienti";
+		
+		try {
+			ResultSet rs = statement.executeQuery(query);
+			
+			while(rs.next()) {
+				String nome = rs.getString("nome");
+				String cognome = rs.getString("cognome");
+				String email = rs.getString("email");
+					
+				PazienteHandler handler = new PazienteHandler();
+				Paziente paziente = (Paziente) handler.createElement(nome, cognome, email, "");
+				paziente.setCodiceFiscale(rs.getString("codice_fiscale"));
+				
+				pazienti.add(paziente);
+			}
+			
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return pazienti;
+	}
+	
+	
+	/*
+	 *		SD ???		DA TESTARE
 	 */
 	public Medico getMedico(int codice) {
 		Medico medico = null;
 		
 		String query = "select *"
-						+ "from medici"
+						+ " from medici"
 						+ " where codice='"+ codice +"'";
 		
 		try {
@@ -237,12 +262,11 @@ public class GestoreDatabase {
 				String nome = rs.getString("nome");
 				String cognome = rs.getString("cognome");
 				String email = rs.getString("email");
-				Specializzazione specializzazione = new Specializzazione(rs.getString("nome_specializzazione"));
 					
 				MedicoHandler handler = new MedicoHandler();
 				medico = (Medico) handler.createElement(nome, cognome, email, "");
-				medico.setSpecializzazione(specializzazione);
 				medico.setCodice(codice);
+				medico.setSpecializzazione(new Specializzazione(rs.getString("nome_specializzazione")));
 			}
 			
 			rs.close();
@@ -253,29 +277,58 @@ public class GestoreDatabase {
 		return medico;
 	}
 
+	
 	/*
-	 * 		WORKING
+	 * 		GET GENERICO	DA TESTARE
 	 */
 	public ArrayList<Medico> getMedici() {
-		return null;
+		ArrayList<Medico> medici = new ArrayList<Medico>();
+		
+		String query = "select *"
+						+ " from medici";
+		
+		try {
+			ResultSet rs = statement.executeQuery(query);
+			
+			while(rs.next()) {
+				String nome = rs.getString("nome");
+				String cognome = rs.getString("cognome");
+				String email = rs.getString("email");
+					
+				MedicoHandler handler = new MedicoHandler();
+				Medico medico = (Medico) handler.createElement(nome, cognome, email, "");
+				medico.setCodice(rs.getInt("codice"));
+				medico.setSpecializzazione(new Specializzazione(rs.getString("nome_specializzazione")));
+				
+				medici.add(medico);
+			}
+			
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return medici;
+
 	}
 
+	
 	/*
-	 * 		WORKING
+	 * 		WORKING IN PROGRESS
 	 */
 	public void insertPrenotazione(Prenotazione prenotazione) {
 
 	}
 	
+	
 	/*
-	 *		SD ???
-	 *		DA TESTARE
+	 *		SD ???		DA TESTARE
 	 */
 	public Prenotazione getPrenotazione(int id) {
 		Prenotazione prenotazione = null;
 		
 		String query = "select *"
-						+ "from prenotazioni"
+						+ " from prenotazioni"
 						+ " where id='"+ id +"'";
 		
 		try {
@@ -284,11 +337,11 @@ public class GestoreDatabase {
 			if(rs.next()) {
 				Date giorno = rs.getDate("giorno");
 				Date ora = rs.getTime("ora");
-				int id_tipologia_visita = rs.getInt("id_tipologia_visita");
-				int codice_medico = rs.getInt("codice_medico");
-				String codice_fiscale_paziente = rs.getString("codice_fiscale_paziente");
+				TipologiaVisita tipologiaVisita = this.getTipologiaVisita(rs.getInt("id_tipologia_visita"));
+				Medico medico = this.getMedico(rs.getInt("codice_medico"));
+				Paziente paziente = this.getPaziente(rs.getString("codice_fiscale_paziente"));
 					
-//				prenotazione = new Prenotazione(giorno, ora, id_tipologia_visita, codice_medico, codice_fiscale_paziente);
+				prenotazione = new Prenotazione(giorno, ora, tipologiaVisita, medico, paziente);
 			}
 			
 			rs.close();
@@ -299,128 +352,415 @@ public class GestoreDatabase {
 		return prenotazione;
 	}
 
+	
 	/*
-	 * 		WORKING
+	 *		USATO IN getPrenotazione(int)
+	 */
+	public TipologiaVisita getTipologiaVisita(int id) {
+		TipologiaVisita tipologiaVisita = null;
+		
+		String query = "select *"
+						+ " from tipologie_visite T"
+						+ " join tipologie_visite_specializzazioni TS on T.id=TS.id_tipologia_visita"
+						+ " where id='"+ id +"'";
+		
+		try {
+			ResultSet rs = statement.executeQuery(query);
+			
+			if(rs.next()) {
+				String nome = rs.getString("nome");					
+				float prezzo_fisso = rs.getFloat("prezzo_fisso");
+				float costo_manodopera = rs.getFloat("costo_manodopera");;
+				float costo_esercizio = rs.getFloat("costo_esercizio");;
+				ArrayList<Specializzazione> specializzazioniIdonee = new ArrayList<Specializzazione>();
+				
+				Specializzazione specializzazione = new Specializzazione(rs.getString("nome_specializzazione"));
+				specializzazioniIdonee.add(specializzazione);
+				while(rs.next()) {
+					specializzazione = new Specializzazione(rs.getString("nome_specializzazione"));
+					specializzazioniIdonee.add(specializzazione);
+				}
+				
+				tipologiaVisita = new TipologiaVisita(nome, prezzo_fisso, costo_manodopera, costo_esercizio, specializzazioniIdonee);
+			}
+			
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return tipologiaVisita;
+	}
+
+	
+	
+	/*
+	 * 		WORKING IN PROGRESS
 	 */
 	public void updatePrenotazione(int id, Date giorno, Date ora, TipologiaVisita tipologiaVisita, Medico medico) {
 
 	}
 
+	
 	/*
-	 * 		WORKING
+	 * 		WORKING IN PROGRESS
 	 */
 	public void deletePrenotazione(int id) {
 
 	}
 
+	
 	/*
-	 * 		WORKING
+	 * 		SD Modifica e Elimina prenotazione visita  	DA TESTARE
 	 */
 	public ArrayList<Prenotazione> getPrenotazioni(String codiceFiscalePaziente) {
-		return null;
+		ArrayList<Prenotazione> prenotazioni = new ArrayList<Prenotazione>();
+		
+		String query = "select *"
+						+ " from prenotazioni"
+						+ " where codice_fiscale_paziente='"+ codiceFiscalePaziente +"'";
+		
+		try {
+			ResultSet rs = statement.executeQuery(query);
+			
+			while(rs.next()) {
+				Date giorno = rs.getDate("giorno");
+				Date ora = rs.getTime("ora");
+				TipologiaVisita tipologiaVisita = this.getTipologiaVisita(rs.getInt("id_tipologia_visita"));
+				Medico medico = this.getMedico(rs.getInt("codice_medico"));
+				Paziente paziente = this.getPaziente(codiceFiscalePaziente);
+					
+				Prenotazione prenotazione = new Prenotazione(giorno, ora, tipologiaVisita, medico, paziente);
+				
+				prenotazioni.add(prenotazione);
+			}
+			
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return prenotazioni;
 	}
 
+	
 	/*
-	 * 		WORKING
+	 * 		WORKING IN PROGRESS
 	 */
 	public void insertVisita(Visita visita) {
 
 	}
 
+	
 	/*
-	 * 		WORKING
+	 * 		SD ???		DA TESTARE
 	 */
 	public Visita getVisita(int id) {
-		return null;
+		Visita visita = null;
+		
+		String query = "select *"
+						+ " from visite"
+						+ " where id='"+ id +"'";
+		
+		try {
+			ResultSet rs = statement.executeQuery(query);
+			
+			if(rs.next()) {
+				String diagnosi = rs.getString("diagnosi");
+				String terapia = rs.getString("terapia");
+				Prenotazione prenotazione = this.getPrenotazione(rs.getInt("id_prenotazione"));
+				
+				visita = new Visita(prenotazione, diagnosi, terapia);
+			}
+			
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return visita;
 	}
 
+	
 	/*
-	 * 		WORKING
+	 * 		SD Visualizza storico visite DA TESTARE
 	 */
 	public ArrayList<Visita> getVisite(String codiceFiscalePaziente) {
-		return null;
+		ArrayList<Visita> visite = new ArrayList<Visita>();
+		
+		String query = "select *"
+						+ " from visite V"
+						+ " join prenotazioni P on V.id_prenotazione=P.id"
+						+ " where codice_fiscale_paziente='"+ codiceFiscalePaziente +"'";
+
+		try {
+			ResultSet rs = statement.executeQuery(query);
+			
+			while(rs.next()) {
+				String diagnosi = rs.getString("diagnosi");
+				String terapia = rs.getString("terapia");
+				Prenotazione prenotazione = this.getPrenotazione(rs.getInt("id_prenotazione"));	
+				
+				Visita visita = new Visita(prenotazione, diagnosi, terapia);
+				
+				visite.add(visita);
+			}
+			
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return visite;
 	}
 
+	
 	/*
-	 * 		WORKING
+	 * 		WORKING IN PROGRESS
 	 */
 	public void insertFattura(Fattura fattura) {
 
 	}
 
+	
 	/*
-	 * 		WORKING
+	 * 		WORKING IN PROGRESS
 	 */
 	public void insertTipologiaVisita(TipologiaVisita tipologiaVisita) {
 
 	}
 
+	
 	/*
-	 * 		WORKING
+	 * 		SD ???
 	 */
 	public TipologiaVisita getTipologiaVisita(String nome) {
-		return null;
+		TipologiaVisita tipologiaVisita = null;
+		
+		String query = "select *"
+						+ " from tipologie_visite T"
+						+ " join tipologie_visite_specializzazioni TS on T.id=TS.id_tipologia_visita"
+						+ " where nome='"+ nome +"'";
+		
+		try {
+			ResultSet rs = statement.executeQuery(query);
+			
+			if(rs.next()) {					
+				float prezzo_fisso = rs.getFloat("prezzo_fisso");
+				float costo_manodopera = rs.getFloat("costo_manodopera");
+				float costo_esercizio = rs.getFloat("costo_esercizio");
+				ArrayList<Specializzazione> specializzazioniIdonee = new ArrayList<Specializzazione>();
+				
+				Specializzazione specializzazione = new Specializzazione(rs.getString("nome_specializzazione"));
+				specializzazioniIdonee.add(specializzazione);
+				while(rs.next()) {
+					specializzazione = new Specializzazione(rs.getString("nome_specializzazione"));
+					specializzazioniIdonee.add(specializzazione);
+				}
+				
+				tipologiaVisita = new TipologiaVisita(nome, prezzo_fisso, costo_manodopera, costo_esercizio, specializzazioniIdonee);
+			}
+			
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return tipologiaVisita;
 	}
 
+	
 	/*
-	 * 		WORKING
+	 * 		GET GENERICO (da ottimizzare)
 	 */
 	public ArrayList<TipologiaVisita> getTipologieVisite() {
-		return null;
+		ArrayList<TipologiaVisita> tipologieVisite = new ArrayList<TipologiaVisita>();
+		
+		String query = "select *"
+						+ " from tipologie_visite T"
+						+ " join tipologie_visite_specializzazioni TS on T.id=TS.id_tipologia_visita"
+						+ " order by T.nome";
+	
+		try {
+			ResultSet rs = statement.executeQuery(query);
+			
+			while(rs.next()) {					
+				String nome = rs.getString("nome");
+				float prezzo_fisso = rs.getFloat("prezzo_fisso");
+				float costo_manodopera = rs.getFloat("costo_manodopera");
+				float costo_esercizio = rs.getFloat("costo_esercizio");
+				Specializzazione specializzazione = new Specializzazione(rs.getString("nome_specializzazione")); 
+				
+				ArrayList<Specializzazione> specializzazioniIdonee = new ArrayList<Specializzazione>(1);
+				specializzazioniIdonee.add(specializzazione);
+				
+				if(!tipologieVisite.isEmpty() && nome.equals(tipologieVisite.get(tipologieVisite.size()-1).getNome())) {
+					tipologieVisite.get(tipologieVisite.size()-1).getSpecializzazioniIdonee().add(specializzazione);
+				} else {
+					TipologiaVisita tipologiaVisita = new TipologiaVisita(nome, prezzo_fisso, costo_manodopera, costo_esercizio, specializzazioniIdonee);
+					tipologieVisite.add(tipologiaVisita);
+				}
+			}
+			
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return tipologieVisite;
+
 	}
 
+	
 	/*
-	 * 		WORKING
+	 * 		WORKING IN PROGRESS
 	 */
 	public void insertCalendarioDisponibilita(CalendarioDisponibilita calendarioDisponibilita) {
 
 	}
 
+	
 	/*
-	 * 		WORKING
+	 * 		SD ???		DA TESTARE
 	 */
 	public CalendarioDisponibilita getCalendarioDisponibilita(int codiceMedico, int anno) {
-		return null;
+		CalendarioDisponibilita calendarioDisponibilita = null;
+		
+		String query = "select *"
+						+ " from calendario_disponibilita"
+						+ " where codice_medico='"+ codiceMedico +"' and anno='"+ anno +"'";
+		
+		try {
+			ResultSet rs = statement.executeQuery(query);
+			
+			if(rs.next()) {					
+				Medico medico = this.getMedico(rs.getInt("codice_medico"));
+				
+				calendarioDisponibilita = new CalendarioDisponibilita(anno, medico);
+			}
+			
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return calendarioDisponibilita;
 	}
 
+	
 	/*
-	 * 		WORKING
+	 * 		SD Paga visita		DA TESTARE
 	 */
 	public ArrayList<Fattura> getFatture(String codiceFiscalePaziente) {
-		return null;
+		ArrayList<Fattura> fatture = new ArrayList<Fattura>();
+		
+		String query = "select *"
+						+ " from fatture"
+						+ " where codice_fiscale_paziente='"+ codiceFiscalePaziente +"'";
+
+		try {
+			ResultSet rs = statement.executeQuery(query);
+			
+			while(rs.next()) {
+				Visita visita = this.getVisita(rs.getInt("id_visita"));	
+				
+				Fattura fattura = new Fattura(visita);
+				
+				fatture.add(fattura);
+			}
+			
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return fatture;
 	}
 
+	
 	/*
-	 * 		WORKING
+	 * 		WORKING IN PROGRESS
 	 */
 	public void insertPagamento(Pagamento pagamento) {
 
 	}
 
+	
 	/*
-	 * 		WORKING
+	 * 		WORKING IN PROGRESS
 	 */
 	public ArrayList<Pagamento> getPagamentiFatture(ArrayList<Integer> idFatture) {
 		return null;
 	}
 
+	
 	/*
-	 * 		WORKING
+	 * 		SD Prenota Visita 	WORKING IN PROGRESS 	DA TESTARE
 	 */
 	public CalendarioDisponibilita getCalendarioDisponibilita(int codiceMedico, String nomeTipologiaVisita) {
-		return null;
+		CalendarioDisponibilita calendarioDisponibilita = null;
+		
+		String query = "select *"
+						+ " from calendario_disponibilita"
+						+ " where codice_medico='"+ codiceMedico +"'";
+		
+		try {
+			ResultSet rs = statement.executeQuery(query);
+			
+			if(rs.next()) {					
+				Medico medico = this.getMedico(rs.getInt("codice_medico"));
+				
+			//	calendarioDisponibilita = new CalendarioDisponibilita(anno, medico);
+			}
+			
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return calendarioDisponibilita;
 	}
 
+	
 	/*
-	 * 		WORKING
+	 * 		SD Prenota vista
 	 */
 	public ArrayList<Medico> getMedici(String nomeTipologiaVisita) {
-		return null;
+		ArrayList<Medico> medici = new ArrayList<Medico>();
+		
+		String query = "select *"
+						+ " from medici M "
+						+ " join tipologie_visite_specializzazioni TS on M.nome_specializzazione = TS.nome_specializzazione"
+						+ " join tipologie_visite T on T.id = TS.id_tipologia_visita"
+						+ " where T.nome='"+ nomeTipologiaVisita +"'";
+		
+		try {
+			ResultSet rs = statement.executeQuery(query);
+			
+			if(rs.next()) {
+				String nome = rs.getString("M.nome");
+				String cognome = rs.getString("M.cognome");
+				String email = rs.getString("M.email");
+					
+				MedicoHandler handler = new MedicoHandler();
+				Medico medico = (Medico) handler.createElement(nome, cognome, email, "");
+				medico.setCodice(rs.getInt("codice"));
+				medico.setSpecializzazione(new Specializzazione(rs.getString("M.nome_specializzazione")));
+				
+				medici.add(medico);
+			}
+			
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return medici;
 	}
 
+	
 	/*
-	 * 		SD Registrazione
-	 * 		da testare
+	 * 		SD Registrazione	DA TESTARE
 	 */
 	public boolean isUtenteGiaPresente(String email) {
 		if(this.getUtente(email) != null)
@@ -428,9 +768,9 @@ public class GestoreDatabase {
 		return false;
 	}
 
+	
 	/*
-	 * 		SD Registrazione
-	 * 		da testare
+	 * 		SD Registrazione	DA TESTARE
 	 */
 	public boolean isPazienteGiaPresente(String codiceFiscale) {
 		if(this.getPaziente(codiceFiscale) != null)
@@ -438,50 +778,57 @@ public class GestoreDatabase {
 		return false;
 	}
 
+	
 	/*
-	 * 		WORKING
+	 * 		WORKING IN PROGRESS
 	 */
 	public ArrayList<Visita> getVisite() {
 		return null;
 	}
 
+	
 	/*
-	 * 		WORKING
+	 * 		WORKING IN PROGRESS
 	 */
 	public Report getReportVisite() {
 		return null;
 	}
 
+	
 	/*
-	 * 		WORKING
+	 * 		WORKING IN PROGRESS
 	 */
 	public Report getReportVisitePerMedico(int codiceMedico) {
 		return null;
 	}
 
+	
 	/*
-	 * 		WORKING
+	 * 		WORKING IN PROGRESS
 	 */
 	public Report getReportMedici() {
 		return null;
 	}
 
+	
 	/*
-	 * 		WORKING
+	 * 		WORKING IN PROGRESS
 	 */
 	public Report getReportTipologieVisite() {
 		return null;
 	}
 
+	
 	/*
-	 * 		WORKING
+	 * 		WORKING IN PROGRESS
 	 */
 	public ArrayList<Prenotazione> getPrenotazioniFromDate(String codiceFiscalePaziente, Date date) {
 		return null;
 	}
 	
+	
 	/*
-	 * 		WORKING
+	 * 		WORKING IN PROGRESS
 	 */
 	public ArrayList<Prenotazione> getPrenotazioni(int codiceMedico, String nomeTipologiaVisita){
 		return null;

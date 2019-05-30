@@ -6,9 +6,14 @@ import Utenti.Medico;
 public class CalendarioDisponibilita {
 	private ArrayList<Disponibilita> orari;
 	private int anno;
-	private boolean[] approvato;
+	private boolean approvato;
 	private Medico medico;
 	
+	public CalendarioDisponibilita(int anno, Medico medico) {
+		this.anno = anno;
+		this.medico = medico;
+	}
+
 	public ArrayList<Disponibilita> getOrari() {
 		return orari;
 	}
@@ -25,11 +30,11 @@ public class CalendarioDisponibilita {
 		this.anno = anno;
 	}
 
-	public boolean[] getApprovato() {
+	public boolean getApprovato() {
 		return approvato;
 	}
 
-	public void setApprovato(boolean[] approvato) {
+	public void setApprovato(boolean approvato) {
 		this.approvato = approvato;
 	}
 

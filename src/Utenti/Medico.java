@@ -1,5 +1,7 @@
 package Utenti;
 
+import java.io.PrintStream;
+
 public class Medico extends Utente {
 	private int codice;
 	private Specializzazione specializzazione;
@@ -22,5 +24,13 @@ public class Medico extends Utente {
 	
 	public void setSpecializzazione(Specializzazione specializzazione) {
 		this.specializzazione = specializzazione;
+	}
+
+	public void print(PrintStream out) {
+		out.println(super.getNome());
+		out.println(super.getCognome());
+		out.println(super.getEmail());
+		out.println(codice);
+		specializzazione.print(out);
 	}
 }
