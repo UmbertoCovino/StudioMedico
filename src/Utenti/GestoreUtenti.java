@@ -36,9 +36,9 @@ public class GestoreUtenti {
 
 	public void registerPaziente(String nome, String cognome, String email, String password, String codiceFiscale) {
 		if(gestoreDB.isUtenteGiaPresente(email)) {
-			throw new UtenteGiaPresesteException(email);			
+			throw new EmailGiaRegistrataException(email);			
 		} else if(gestoreDB.isPazienteGiaPresente(codiceFiscale)) {
-			throw new PazienteGiaPresenteException(codiceFiscale);
+			throw new CodiceFiscaleGiaRegistratoException(codiceFiscale);
 		} else {			
 			PazienteHandler handler = new PazienteHandler();
 			Paziente paziente = (Paziente) handler.createElement(nome, cognome, email, password);

@@ -37,7 +37,7 @@ public class GestoreDatabase {
 		try {
 			Class.forName(REFERENCED_LIBRARY);
 		
-			String url = "jdbc:mysql://localhost:3306/"+ DB_NAME +"?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false";
+			String url = "jdbc:mysql://localhost:3306/" + DB_NAME + "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false";
 			
 			this.connection = DriverManager.getConnection(url, DB_USER, DB_PASSWORD);
 			this.statement= this.connection.createStatement();
