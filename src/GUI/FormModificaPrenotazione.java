@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.DefaultComboBoxModel;
@@ -144,16 +145,22 @@ public class FormModificaPrenotazione extends Frame {
 	}
 
 	protected void updateOrari(Disponibilita disponibilita) {
-//		ArrayList<String> orari = new ArrayList<>();
-//		
-//		Duration diff = (disponibilita.getOraFine() - disponibilita.getOraInizio());
-//		
-//		for (int i = 0; i < diff.toMinutes() / 30; i = i + 30) {
-//			date + 30;
-//			orari.add(FramePaziente.TIME_SDF.format(date);
-//		}
-//		
-//		orariComboBox.setModel(new DefaultComboBoxModel<String>(orari.toArray(new String[orari.size()])));
+		ArrayList<Date> orari = new ArrayList<>();
+
+		long minutesFromInizioToFine = ((disponibilita.getOraFine().getTime() - disponibilita.getOraInizio().getTime()) / 1000) / 60;
+		long numberOfHalfHours = minutesFromInizioToFine / 30;
+
+		Calendar halfHours = Calendar.getInstance();
+		halfHours.setTime(disponibilita.getOraInizio());
+
+		for (int i = 0; i < numberOfHalfHours; i++) {
+			orari.add(halfHours.getTime());
+//			orari.add(FramePaziente.TIME_SDF.format(halfHours.getTime());
+
+			halfHours.set(Calendar.MINUTE, halfHours.get(Calendar.MINUTE) + 30);
+		}
+
+		orarioComboBox.setModel(new DefaultComboBoxModel<Date>(orari.toArray(new Date[orari.size()])));
 	}
 
 	@Override
