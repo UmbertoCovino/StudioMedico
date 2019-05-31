@@ -6,6 +6,7 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
@@ -16,8 +17,13 @@ import Visite.Fattura;
 import Visite.GUIControllerVisite;
 
 public class FormPagamento extends Frame {
+	private static final String[] METODI_DI_PAGAMENTO = new String[]{"Contanti",
+																  	 "Bonifico bancario", 
+																  	 "Carta di credito",
+															  		 "Assegno"};
+	
 	private JLabel metodoPagamentoLabel;
-	private JTextField metodoPagamentoTextField;
+	private JComboBox<String> metodoPagamentoComboBox;
 	private JButton confirmButton;
 	private JButton cancelButton;
 
@@ -29,7 +35,7 @@ public class FormPagamento extends Frame {
 		// dichiarazione elementi
 		metodoPagamentoLabel = new JLabel("Metodo di pagamento");
 		
-		metodoPagamentoTextField = new JTextField();
+		metodoPagamentoComboBox = new JComboBox<>(METODI_DI_PAGAMENTO);
 		
 		confirmButton = new JButton("Conferma");
 		cancelButton = new JButton("Annulla");
@@ -50,12 +56,10 @@ public class FormPagamento extends Frame {
 		
 		confirmButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (dataIsValid()) {
-					GUIControllerVisite.getInstance().notifyData(metodoPagamentoTextField.getText().trim());
+				GUIControllerVisite.getInstance().notifyData(((String) metodoPagamentoComboBox.getSelectedItem()).trim());
 
-					JOptionPane.showMessageDialog(thisFrame, "Il pagamento è stato registrato con successo!", "Pagamento registrato", JOptionPane.INFORMATION_MESSAGE);
-					closeFrame();
-				}
+				JOptionPane.showMessageDialog(thisFrame, "Il pagamento è stato registrato con successo!", "Pagamento registrato", JOptionPane.INFORMATION_MESSAGE);
+				closeFrame();
 			}
 		});
 		
@@ -64,15 +68,6 @@ public class FormPagamento extends Frame {
 				thisFrame.dispatchEvent(new WindowEvent(thisFrame, WindowEvent.WINDOW_CLOSING));
 			}
 		});
-	}
-
-	protected boolean dataIsValid() {
-		if (metodoPagamentoTextField.getText().isEmpty()) {
-			JOptionPane.showMessageDialog(this, "Il campo metodo di pagamento non può essere vuoto.", "Attenzione", JOptionPane.WARNING_MESSAGE);
-		} else
-			return true;
-		
-		return false;
 	}
 
 	@Override
@@ -88,7 +83,7 @@ public class FormPagamento extends Frame {
 		   			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
 		   				.addComponent(metodoPagamentoLabel))
 		   			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-		   				.addComponent(metodoPagamentoTextField)))
+		   				.addComponent(metodoPagamentoComboBox)))
 		   		.addGroup(layout.createSequentialGroup()
 		   			.addComponent(cancelButton)
 		   			.addComponent(confirmButton))
@@ -98,7 +93,7 @@ public class FormPagamento extends Frame {
 			layout.createSequentialGroup()
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 					.addComponent(metodoPagamentoLabel)
-					.addComponent(metodoPagamentoTextField))
+					.addComponent(metodoPagamentoComboBox))
 				.addGap(getButtonsGap())
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
 					.addComponent(cancelButton)

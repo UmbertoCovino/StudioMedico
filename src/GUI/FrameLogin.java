@@ -65,6 +65,8 @@ public class FrameLogin extends Frame {
 						} else if (utente.isAdmin()) {
 							GUIControllerUtenti.getInstance().createFrameProprietario(utente);
 						}
+						
+						closeFrame();
 					} else {
 						JOptionPane.showMessageDialog(thisFrame, "Le credenziali immesse non sono corrette.", "Attenzione", JOptionPane.WARNING_MESSAGE);
 					}
