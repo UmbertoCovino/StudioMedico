@@ -8,6 +8,7 @@ public abstract class Frame extends JFrame {
 	private int maxFrameWidth;
 	private int extraFrameWidth;
 	private int buttonsGap;
+	private Frame parentFrame;
 	
 	private Frame(String title) {
 		super(title);
@@ -46,6 +47,7 @@ public abstract class Frame extends JFrame {
 		
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
+		this.parentFrame = parentFrame;
 		parentFrame.setVisible(false);
     	
 		Frame thisFrame = this;
@@ -53,8 +55,7 @@ public abstract class Frame extends JFrame {
 		addWindowListener(new java.awt.event.WindowAdapter() {
 	        @Override
 	        public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-				parentFrame.setVisible(true);
-				thisFrame.dispose();
+				closeFrame();
 	        }
 	    });
 	}
@@ -65,6 +66,7 @@ public abstract class Frame extends JFrame {
 		
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
+		this.parentFrame = parentFrame;
 		parentFrame.setVisible(false);
     	
 		Frame thisFrame = this;
@@ -77,8 +79,7 @@ public abstract class Frame extends JFrame {
 		        		"Attenzione",
 		        		JOptionPane.YES_NO_OPTION,
 		        		JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
-					parentFrame.setVisible(true);
-					thisFrame.dispose();
+	        		closeFrame();
 		        }
 	        }
 	    });
@@ -106,6 +107,21 @@ public abstract class Frame extends JFrame {
 
 	public void setButtonsGap(int buttonsGap) {
 		this.buttonsGap = buttonsGap;
+	}
+
+	public Frame getParentFrame() {
+		return parentFrame;
+	}
+
+	public void setParentFrame(Frame parentFrame) {
+		this.parentFrame = parentFrame;
+	}
+
+	protected void closeFrame() {
+		if (parentFrame != null)
+			parentFrame.setVisible(true);
+		
+		this.dispose();
 	}
 
 	protected void showFrame() {

@@ -9,6 +9,7 @@ import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
@@ -21,7 +22,6 @@ public class ListaPrenotazioni extends Frame {
 	protected static final int MODIFY_OPERATION = 1,
 							   DELETE_OPERATION = 2,
 							   REGISTER_VISIT_OPERATION = 3;
-	private Frame parentFrame;
 	private int operationType;
 	
 	private JLabel prenotazioniLabel;
@@ -33,7 +33,6 @@ public class ListaPrenotazioni extends Frame {
 	public ListaPrenotazioni(Frame parentFrame, int operationType, ArrayList<Prenotazione> prenotazioni) {
 		super("Lista prenotazioni effettuate", parentFrame);
 		
-		this.parentFrame = parentFrame;
 		this.operationType = operationType;
 		
 		setExtraFrameWidth(100);
@@ -75,7 +74,9 @@ public class ListaPrenotazioni extends Frame {
 			
 			confirmButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					GUIControllerPrenotazioni.getInstance().createFormModificaPrenotazione(parentFrame, prenotazioniList.getSelectedValue());
+					GUIControllerPrenotazioni.getInstance().createFormModificaPrenotazione(getParentFrame(), prenotazioniList.getSelectedValue());
+
+					closeFrame();
 				}
 			});
 		} else if (operationType == DELETE_OPERATION) {
@@ -84,6 +85,9 @@ public class ListaPrenotazioni extends Frame {
 			confirmButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					GUIControllerPrenotazioni.getInstance().deletePrenotazione(prenotazioniList.getSelectedValue().getId());
+
+					JOptionPane.showMessageDialog(thisFrame, "La prenotazione è stata cancellata con successo!", "Prenotazione cancellata", JOptionPane.INFORMATION_MESSAGE);
+					closeFrame();
 				}
 			});
 		} else if (operationType == REGISTER_VISIT_OPERATION) {
@@ -91,7 +95,9 @@ public class ListaPrenotazioni extends Frame {
 			
 			confirmButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					GUIControllerPrenotazioni.getInstance().createFormRisultatoVisita(parentFrame, prenotazioniList.getSelectedValue());
+					GUIControllerPrenotazioni.getInstance().createFormRisultatoVisita(getParentFrame(), prenotazioniList.getSelectedValue());
+
+					closeFrame();
 				}
 			});
 		}

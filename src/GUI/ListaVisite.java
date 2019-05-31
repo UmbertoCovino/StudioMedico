@@ -9,6 +9,7 @@ import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 
 import Visite.GUIControllerVisite;
@@ -17,7 +18,6 @@ import Visite.Visita;
 public class ListaVisite extends Frame {
 	protected static final int STORICO_VISITE_OPERATION = 1,
 							   GENERATE_FATTURA_OPERATION = 2;
-	private Frame parentFrame;
 	private int operationType;
 
 	private JLabel visiteLabel;
@@ -28,8 +28,6 @@ public class ListaVisite extends Frame {
 
 	public ListaVisite(Frame parentFrame, int operationType, ArrayList<Visita> visite) {
 		super("Lista visite effettuate", parentFrame);
-		
-		this.parentFrame = parentFrame;
 		
 		setExtraFrameWidth(100);
 		
@@ -70,7 +68,10 @@ public class ListaVisite extends Frame {
 			
 			confirmButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					GUIControllerVisite.getInstance().printFattura(parentFrame, visiteList.getSelectedValue());
+					GUIControllerVisite.getInstance().printFattura(getParentFrame(), visiteList.getSelectedValue());
+
+					JOptionPane.showMessageDialog(thisFrame, "Il pagamento è stato registrato con successo!", "Pagamento registrato", JOptionPane.INFORMATION_MESSAGE);
+					closeFrame();
 				}
 			});
 		}

@@ -106,6 +106,9 @@ public class FormModificaPrenotazione extends Frame {
 							(Date) orarioComboBox.getSelectedItem(),
 							(TipologiaVisita) tipologiaVisitaComboBox.getSelectedItem(),
 							(Medico) medicoComboBox.getSelectedItem());
+
+					JOptionPane.showMessageDialog(thisFrame, "La prenotazione è stata modificata con successo!", "Prenotazione modificata", JOptionPane.INFORMATION_MESSAGE);
+					closeFrame();
 				}
 			}
 		});

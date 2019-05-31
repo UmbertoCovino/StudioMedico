@@ -74,14 +74,13 @@ public class FormRegistrazionePaziente extends Frame {
 								String.valueOf(passwordTextField.getPassword()),
 								codiceFiscaleTextField.getText().trim());
 						
-						JOptionPane.showMessageDialog(thisFrame, "La registrazione è andata a buon fine. Puoi adesso utilizzare le tue nuove credenziali per accedere.", "Registrazione effettuata con successo!", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(thisFrame, "La registrazione è andata a buon fine! Adesso puoi utilizzare le tue nuove credenziali per accedere.", "Registrazione effettuata con successo!", JOptionPane.INFORMATION_MESSAGE);
+						closeFrame();
 					} catch (EmailGiaRegistrataException e1) {
 						JOptionPane.showMessageDialog(thisFrame, "Spiacenti, l'indirizzo email inserito è già registrato nel sistema.", "Errore", JOptionPane.ERROR_MESSAGE);
 					} catch (CodiceFiscaleGiaRegistratoException e2) {
 						JOptionPane.showMessageDialog(thisFrame, "Spiacenti, il codice fiscale inserito è già registrato nel sistema.", "Errore", JOptionPane.ERROR_MESSAGE);
 					}
-					
-					cancelButton.doClick();
 				}
 			}
 		});

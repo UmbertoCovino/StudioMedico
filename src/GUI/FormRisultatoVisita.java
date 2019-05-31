@@ -67,6 +67,9 @@ public class FormRisultatoVisita extends Frame {
 			public void actionPerformed(ActionEvent e) {
 				if (dataIsValid()) {
 					GUIControllerPrenotazioni.getInstance().notifyData(prenotazione, diagnosiTextArea.getText().trim(), terapiaTextArea.getText().trim());
+
+					JOptionPane.showMessageDialog(thisFrame, "Il risultato della visita è stato registrato con successo!", "Risultato visita registrato", JOptionPane.INFORMATION_MESSAGE);
+					closeFrame();
 				}
 			}
 		});

@@ -12,10 +12,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import Utenti.GUIControllerUtenti;
+import Utenti.Paziente;
 
 public class FormRichiestaPaziente extends Frame {
-	private Frame parentFrame;
-	
 	private JLabel codiceFiscaleLabel;
 	private JTextField codiceFiscaleTextField;
 	private JButton confirmButton;
@@ -23,8 +22,6 @@ public class FormRichiestaPaziente extends Frame {
 
 	public FormRichiestaPaziente(Frame parentFrame) {
 		super("Ricerca paziente", parentFrame);
-		
-		this.parentFrame = parentFrame;
 		
 		setExtraFrameWidth(100);
 		
@@ -53,7 +50,15 @@ public class FormRichiestaPaziente extends Frame {
 		confirmButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (dataIsValid()) {
-					GUIControllerUtenti.getInstance().setPazienteFound((FrameMedico) parentFrame, GUIControllerUtenti.getInstance().getPaziente(codiceFiscaleTextField.getText().trim()));
+					Paziente paziente = GUIControllerUtenti.getInstance().getPaziente(codiceFiscaleTextField.getText().trim());
+					
+					if (paziente != null) {
+						JOptionPane.showMessageDialog(thisFrame, "Il paziente è stato trovato con successo!", "Paziente trovato", JOptionPane.INFORMATION_MESSAGE);
+						GUIControllerUtenti.getInstance().setPazienteFound((FrameMedico) getParentFrame(), paziente);
+						closeFrame();
+					} else {
+						JOptionPane.showMessageDialog(thisFrame, "Il codice fiscale inserito non corrisponde a nessun paziente.", "Errore", JOptionPane.ERROR_MESSAGE);
+					}
 				}
 			}
 		});

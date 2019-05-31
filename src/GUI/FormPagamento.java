@@ -52,6 +52,9 @@ public class FormPagamento extends Frame {
 			public void actionPerformed(ActionEvent e) {
 				if (dataIsValid()) {
 					GUIControllerVisite.getInstance().notifyData(metodoPagamentoTextField.getText().trim());
+
+					JOptionPane.showMessageDialog(thisFrame, "Il pagamento è stato registrato con successo!", "Pagamento registrato", JOptionPane.INFORMATION_MESSAGE);
+					closeFrame();
 				}
 			}
 		});
