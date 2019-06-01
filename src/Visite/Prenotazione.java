@@ -22,6 +22,14 @@ public class Prenotazione {
 		this.paziente = paziente;
 	}
 
+	public Prenotazione(Date giorno, Date ora, TipologiaVisita tipologiaVisita, Medico medico, Paziente paziente) {
+		this.giorno = giorno;
+		this.ora = ora;
+		this.tipologiaVisita = tipologiaVisita;
+		this.medico = medico;
+		this.paziente = paziente;
+	}
+
 	public int getId() {
 		return id;
 	}
