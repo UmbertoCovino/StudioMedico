@@ -21,6 +21,9 @@ import Visite.TipologiaVisita;
 import Visite.Visita;
 import Visite.Fattura;
 import Amministrazione.CalendarioDisponibilita;
+import Amministrazione.DisponibilitaDirector;
+import Amministrazione.DisponibilitaGiornaliera;
+import Amministrazione.DisponibilitaGiornalieraBuilder;
 import Visite.Pagamento;
 import Amministrazione.Report;
 
@@ -414,6 +417,7 @@ public class GestoreDatabase {
 			ResultSet rs = statement.executeQuery(query);
 			
 			while(rs.next()) {
+				int id = rs.getInt("V.id");
 				String diagnosi = rs.getString("diagnosi");
 				String terapia = rs.getString("terapia");
 				
@@ -430,7 +434,7 @@ public class GestoreDatabase {
 				if(!rs.isFirst() && previousTV.equals(currentTV)) {
 					visite.get(visite.size()-1).getTipologiaVisita().getSpecializzazioniIdonee().add(new Specializzazione(rs.getString("TVS.nome_specializzazione")));
 				} else {
-					Visita visita = new Visita(prenotazione, diagnosi, terapia);
+					Visita visita = new Visita(id, prenotazione, diagnosi, terapia);
 					visite.add(visita);
 				}
 			}
@@ -583,11 +587,12 @@ public class GestoreDatabase {
 	}
 	
 	private Visita getVisita(ResultSet rs) throws SQLException {
+		int id = rs.getInt("V.id");
 		String diagnosi = rs.getString("diagnosi");
 		String terapia = rs.getString("terapia");
 		Prenotazione prenotazione = this.getPrenotazione(rs);
 		
-		return new Visita(prenotazione, diagnosi, terapia);
+		return new Visita(id, prenotazione, diagnosi, terapia);
 	}
 
 	private Prenotazione getPrenotazione(ResultSet rs) throws SQLException {
@@ -798,7 +803,7 @@ public class GestoreDatabase {
 				String terapia = rs.getString("terapia");
 				Prenotazione prenotazione = this.getPrenotazione(rs.getInt("id_prenotazione"));
 				
-				visita = new Visita(prenotazione, diagnosi, terapia);
+				visita = new Visita(id, prenotazione, diagnosi, terapia);
 			}
 			
 			rs.close();
@@ -864,7 +869,6 @@ public class GestoreDatabase {
 			if(rs.next()) {					
 				Medico medico = this.getMedico(rs.getInt("codice_medico"));
 				
-				calendarioDisponibilita = new CalendarioDisponibilita(anno, medico);
 			}
 			
 			rs.close();
@@ -895,6 +899,7 @@ public class GestoreDatabase {
 			ResultSet rs = statement.executeQuery(query);
 			
 			while(rs.next()) {
+				int id = rs.getInt("V.id");
 				String diagnosi = rs.getString("diagnosi");
 				String terapia = rs.getString("terapia");
 				
@@ -910,7 +915,7 @@ public class GestoreDatabase {
 				if(!rs.isFirst() && previousTV.equals(currentTV)) {
 					visite.get(visite.size()-1).getTipologiaVisita().getSpecializzazioniIdonee().add(new Specializzazione(rs.getString("TVS.nome_specializzazione")));
 				} else {
-					Visita visita = new Visita(prenotazione, diagnosi, terapia);
+					Visita visita = new Visita(id, prenotazione, diagnosi, terapia);
 					visite.add(visita);
 				}
 			}
@@ -935,18 +940,34 @@ public class GestoreDatabase {
 		CalendarioDisponibilita calendarioDisponibilita = null;
 		
 		String query = "select * "
-					 + "from calendario_disponibilita "
+					 + "from calendario_disponibilita CD "
+					 + "join disponibilita D on CD.id = D.id_calendario_disponibilita "
+					 + "join medici M on CD.codice_medico = M.codice "
 					 + "where codice_medico = '" + codiceMedico + "'";
-		
+//		select * from calendario_disponibilita CD join disponibilita D on CD.id = D.id_calendario_disponibilita where codice_medico = '';
 		try {
 			ResultSet rs = statement.executeQuery(query);
-			
-			if(rs.next()) {					
-				Medico medico = this.getMedico(rs.getInt("codice_medico"));
+			if(rs.next()) {
+				int anno = 0;
+				Medico medico = this.getMedico(rs);
 				
-			//	calendarioDisponibilita = new CalendarioDisponibilita(anno, medico);
+				ArrayList<DisponibilitaGiornaliera> disponibilita = new ArrayList<DisponibilitaGiornaliera>();
+				do {
+					DisponibilitaGiornaliera disp = (DisponibilitaGiornaliera) DisponibilitaDirector.buildPart(new DisponibilitaGiornalieraBuilder(), rs);
+					disponibilita.add(disp);
+				} while(rs.next());
+				
+				if(!disponibilita.isEmpty())
+					anno = disponibilita.get(1).getGiorno().getYear();
+				
+				ArrayList<Prenotazione> prenotazioni = this.getPrenotazioni(codiceMedico, nomeTipologiaVisita);
+				for(DisponibilitaGiornaliera d: disponibilita)
+					for(Prenotazione p: prenotazioni) {
+//						if(d.getGiorno().equals(p.getGiorno()) && d.getOraInizio())
+					}
+				
+				calendarioDisponibilita = new CalendarioDisponibilita(anno, medico, disponibilita);
 			}
-			
 			rs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -1027,7 +1048,9 @@ public class GestoreDatabase {
 	 */
 	public void insertPrenotazione(Prenotazione p) {
 		String insert = "insert into prenotazioni (giorno, ora, id_tipologia_visita, codice_medico, codice_fiscale_paziente) "
-						+ "values ('" + new SimpleDateFormat("YYYY-MM-dd").format(p.getGiorno()) + "', '" + new SimpleDateFormat("hh:mm:ss").format(p.getOra()) + "', '" + p.getTipologiaVisita().getId() + "', '" + p.getMedico().getCodice() + "', '" + p.getPaziente().getCodiceFiscale() + "')";
+						+ "values ('" + new SimpleDateFormat("YYYY-MM-dd").format(p.getGiorno()) + "', "
+						+ "'" + new SimpleDateFormat("hh:mm:ss").format(p.getOra()) + "', "
+						+ "'" + p.getTipologiaVisita().getId() + "', '" + p.getMedico().getCodice() + "', '" + p.getPaziente().getCodiceFiscale() + "')";
 		try {
 			statement.executeUpdate(insert);
 		} catch (SQLException e) {
@@ -1041,8 +1064,9 @@ public class GestoreDatabase {
 	 */
 	public void updatePrenotazione(int id, Date giorno, Date ora, TipologiaVisita tipologiaVisita, Medico medico) {
 		String update = "update prenotazioni set "
-						+ "giorno = '" + new SimpleDateFormat("YYYY-MM-dd").format(giorno) + "', ora = '" + new SimpleDateFormat("hh:mm:ss").format(ora) + "', id_tipologia_visita = '" + tipologiaVisita.getId() + "', codice_medico = '" + medico.getCodice() + "' "
-						+ "where id = '" + id + "'";
+						+ "giorno = '" + new SimpleDateFormat("YYYY-MM-dd").format(giorno) + "', "
+						+ "ora = '" + new SimpleDateFormat("hh:mm:ss").format(ora) + "', "
+						+ "id_tipologia_visita = '" + tipologiaVisita.getId() + "', codice_medico = '" + medico.getCodice() + "' where id = '" + id + "'";
 		try {
 			statement.executeUpdate(update);
 		} catch (SQLException e) {
@@ -1098,7 +1122,8 @@ public class GestoreDatabase {
 	 */
 	public void insertPagamento(Pagamento p) {
 		String insert = "insert into pagamenti (data, metodo_pagamento, id_fattura) "
-						+ "values ('" + new SimpleDateFormat("YYYY-MM-dd").format(p.getDataPagamento()) + "', '" + p.getMetodoPagamento() + "', '" + p.getFattura().getId() + "')";
+						+ "values ('" + new SimpleDateFormat("YYYY-MM-dd").format(p.getDataPagamento()) + "', "
+						+ "'" + p.getMetodoPagamento() + "', '" + p.getFattura().getId() + "')";
 		try {
 			statement.executeUpdate(insert);
 		} catch (SQLException e) {

@@ -4,21 +4,22 @@ import java.util.ArrayList;
 import Utenti.Medico;
 
 public class CalendarioDisponibilita {
-	private ArrayList<Disponibilita> orari;
+	private ArrayList<DisponibilitaGiornaliera> orari;
 	private int anno;
 	private boolean approvato;
 	private Medico medico;
 	
-	public CalendarioDisponibilita(int anno, Medico medico) {
+	public CalendarioDisponibilita(int anno, Medico medico, ArrayList<DisponibilitaGiornaliera> disponibilita) {
 		this.anno = anno;
 		this.medico = medico;
+		this.orari = disponibilita;
 	}
 
-	public ArrayList<Disponibilita> getOrari() {
+	public ArrayList<DisponibilitaGiornaliera> getOrari() {
 		return orari;
 	}
 
-	public void setOrari(ArrayList<Disponibilita> orari) {
+	public void setOrari(ArrayList<DisponibilitaGiornaliera> orari) {
 		this.orari = orari;
 	}
 

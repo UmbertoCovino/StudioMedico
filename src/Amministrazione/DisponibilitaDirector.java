@@ -1,17 +1,14 @@
 package Amministrazione;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class DisponibilitaDirector {
-	private DisponibilitaBuilder disponibilitaBuilder;
-
-	public DisponibilitaBuilder getDisponibilitaBuilder() {
-		return disponibilitaBuilder;
-	}
-
-	public void setDisponibilitaBuilder(DisponibilitaBuilder disponibilitaBuilder) {
-		this.disponibilitaBuilder = disponibilitaBuilder;
-	}
-
-	public static Disponibilita buildPart() {
-		return null;
+	public static Object buildPart(DisponibilitaBuilder builder, ResultSet rs) throws SQLException {
+		if(builder instanceof DisponibilitaGiornalieraBuilder) {
+			builder.setDisponibilita(rs.getDate("ora_inizio"), rs.getDate("ora_fine"), rs.getInt("max_num_visite"));
+			builder.setGiorno(rs.getDate("giorno"), false);
+		}
+		return builder.buildPart();
 	}
 }
