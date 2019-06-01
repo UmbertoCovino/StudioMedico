@@ -273,7 +273,8 @@ public class GestoreDatabase {
 		try {
 			ResultSet rs = statement.executeQuery(query);
 			
-			while(rs.next()) {					
+			while(rs.next()) {	
+				int id = rs.getInt("id");
 				String nome = rs.getString("nome");
 				float prezzo_fisso = rs.getFloat("prezzo_fisso");
 				float costo_manodopera = rs.getFloat("costo_manodopera");
@@ -286,7 +287,7 @@ public class GestoreDatabase {
 				if(!tipologieVisite.isEmpty() && nome.equals(tipologieVisite.get(tipologieVisite.size()-1).getNome())) {
 					tipologieVisite.get(tipologieVisite.size()-1).getSpecializzazioniIdonee().add(specializzazione);
 				} else {
-					TipologiaVisita tipologiaVisita = new TipologiaVisita(nome, prezzo_fisso, costo_manodopera, costo_esercizio, specializzazioniIdonee);
+					TipologiaVisita tipologiaVisita = new TipologiaVisita(id, nome, prezzo_fisso, costo_manodopera, costo_esercizio, specializzazioniIdonee);
 					tipologieVisite.add(tipologiaVisita);
 				}
 			}
@@ -349,7 +350,7 @@ public class GestoreDatabase {
 					 	+ "join tipologie_visite_specializzazioni TVS on TV.id = TVS.id_tipologia_visita "
 					 	+ "join medici M on PR.codice_medico = M.codice "
 					 	+ "join pazienti P on PR.codice_fiscale_paziente = P.codice_fiscale "
-					 	+ "where PR.codice_fiscale_paziente = '" + codiceFiscalePaziente + "' and PR.giorno > '" + new SimpleDateFormat("YYYY-MM-DD").format(date) + "' "
+					 	+ "where PR.codice_fiscale_paziente = '" + codiceFiscalePaziente + "' and PR.giorno > '" + new SimpleDateFormat("YYYY-MM-dd").format(date) + "' "
 			 		 	+ "order by TV.nome";
 		
 		try {
@@ -550,6 +551,8 @@ public class GestoreDatabase {
  */
 	
 	public Report getReportVisite() {
+		ArrayList<Visita> visite = this.getVisite();
+		
 		return null;
 	}
 
@@ -599,6 +602,7 @@ public class GestoreDatabase {
 	}
 	
 	private TipologiaVisita getTipologiaVisita(ResultSet rs) throws SQLException {
+		int id = rs.getInt("TV.id");
 		String nome = rs.getString("TV.nome");					
 		float prezzo_fisso = rs.getFloat("TV.prezzo_fisso");
 		float costo_manodopera = rs.getFloat("TV.costo_manodopera");
@@ -607,7 +611,7 @@ public class GestoreDatabase {
 		ArrayList<Specializzazione> specializzazioniIdonee = new ArrayList<Specializzazione>(1);
 		specializzazioniIdonee.add(specializzazione);
 	
-		return new TipologiaVisita(nome, prezzo_fisso, costo_manodopera, costo_esercizio, specializzazioniIdonee);
+		return new TipologiaVisita(id, nome, prezzo_fisso, costo_manodopera, costo_esercizio, specializzazioniIdonee);
 	}
 	
 	private Medico getMedico(ResultSet rs) throws SQLException {
@@ -745,8 +749,8 @@ public class GestoreDatabase {
 		TipologiaVisita tipologiaVisita = null;
 		
 		String query = "select * "
-					 + "from tipologie_visite T "
-					 + "join tipologie_visite_specializzazioni TS on T.id = TS.id_tipologia_visita "
+				 + "from tipologie_visite TV "
+				 + "join tipologie_visite_specializzazioni TVS on TV.id = TVS.id_tipologia_visita "
 					 + "where id = '" + id + "'";
 		
 		try {
@@ -759,14 +763,12 @@ public class GestoreDatabase {
 				float costo_esercizio = rs.getFloat("costo_esercizio");
 				ArrayList<Specializzazione> specializzazioniIdonee = new ArrayList<Specializzazione>();
 				
-				Specializzazione specializzazione = new Specializzazione(rs.getString("nome_specializzazione"));
-				specializzazioniIdonee.add(specializzazione);
-				while(rs.next()) {
-					specializzazione = new Specializzazione(rs.getString("nome_specializzazione"));
+				do {
+					Specializzazione specializzazione = new Specializzazione(rs.getString("nome_specializzazione"));
 					specializzazioniIdonee.add(specializzazione);
-				}
+				} while (rs.next());
 				
-				tipologiaVisita = new TipologiaVisita(nome, prezzo_fisso, costo_manodopera, costo_esercizio, specializzazioniIdonee);
+				tipologiaVisita = new TipologiaVisita(id, nome, prezzo_fisso, costo_manodopera, costo_esercizio, specializzazioniIdonee);
 			}
 			
 			rs.close();
@@ -815,27 +817,26 @@ public class GestoreDatabase {
 		TipologiaVisita tipologiaVisita = null;
 		
 		String query = "select * "
-					 + "from tipologie_visite T "
-					 + "join tipologie_visite_specializzazioni TS on T.id = TS.id_tipologia_visita "
+					 + "from tipologie_visite TV "
+					 + "join tipologie_visite_specializzazioni TVS on TV.id = TVS.id_tipologia_visita "
 					 + "where nome = '" + nome + "'";
 		
 		try {
 			ResultSet rs = statement.executeQuery(query);
 			
 			if(rs.next()) {					
+				int id = rs.getInt("id");
 				float prezzo_fisso = rs.getFloat("prezzo_fisso");
 				float costo_manodopera = rs.getFloat("costo_manodopera");
 				float costo_esercizio = rs.getFloat("costo_esercizio");
 				ArrayList<Specializzazione> specializzazioniIdonee = new ArrayList<Specializzazione>();
 				
-				Specializzazione specializzazione = new Specializzazione(rs.getString("nome_specializzazione"));
-				specializzazioniIdonee.add(specializzazione);
-				while(rs.next()) {
-					specializzazione = new Specializzazione(rs.getString("nome_specializzazione"));
+				do {
+					Specializzazione specializzazione = new Specializzazione(rs.getString("nome_specializzazione"));
 					specializzazioniIdonee.add(specializzazione);
-				}
+				} while (rs.next());
 				
-				tipologiaVisita = new TipologiaVisita(nome, prezzo_fisso, costo_manodopera, costo_esercizio, specializzazioniIdonee);
+				tipologiaVisita = new TipologiaVisita(id, nome, prezzo_fisso, costo_manodopera, costo_esercizio, specializzazioniIdonee);
 			}
 			
 			rs.close();
@@ -876,23 +877,42 @@ public class GestoreDatabase {
 
 
 	/*
-	 * 		SD ??? DA TESTARE
+	 * 		USATO DA getReportVisite()	 DA TESTARE
 	 */
 	public ArrayList<Visita> getVisite() {
 		ArrayList<Visita> visite = new ArrayList<Visita>();
 		
 		String query = "select * "
-					 + "from visite ";
-		
+					 + "from visite V "
+					 + "join prenotazioni PR on V.id_prenotazione = PR.id "
+					 + "join tipologie_visite TV on PR.id_tipologia_visita = TV.id "
+					 + "join tipologie_visite_specializzazioni TVS on TV.id = TVS.id_tipologia_visita "
+					 + "join medici M on PR.codice_medico = M.codice "
+					 + "join pazienti P on PR.codice_fiscale_paziente = P.codice_fiscale "
+			 		 + "order by TV.nome";
+
 		try {
 			ResultSet rs = statement.executeQuery(query);
 			
 			while(rs.next()) {
 				String diagnosi = rs.getString("diagnosi");
 				String terapia = rs.getString("terapia");
-				Prenotazione prenotazione = this.getPrenotazione(rs.getInt("id_prenotazione"));
 				
-				visite.add(new Visita(prenotazione, diagnosi, terapia));
+				Prenotazione prenotazione = this.getPrenotazione(rs);
+				String currentTV = rs.getString("TV.nome");
+				String previousTV = null;
+				
+				if(!rs.isFirst()) {
+					rs.previous();
+					previousTV = rs.getString("TV.nome");
+					rs.next();
+				}
+				if(!rs.isFirst() && previousTV.equals(currentTV)) {
+					visite.get(visite.size()-1).getTipologiaVisita().getSpecializzazioniIdonee().add(new Specializzazione(rs.getString("TVS.nome_specializzazione")));
+				} else {
+					Visita visita = new Visita(prenotazione, diagnosi, terapia);
+					visite.add(visita);
+				}
 			}
 			
 			rs.close();
@@ -901,7 +921,7 @@ public class GestoreDatabase {
 		}
 
 		return visite;
-	}
+}
 
 		
 /*
@@ -989,58 +1009,101 @@ public class GestoreDatabase {
 
 
 	/*
-	 * 		WORKING IN PROGRESS
+	 * 		SD Registrazione	TEST OK
 	 */
-	public void insertPaziente(Paziente paziente) {
-
+	public void insertPaziente(Paziente p) {
+		String insert = "insert into pazienti "
+						+ "values ('" + p.getCodiceFiscale() + "', '" + p.getNome() + "', '" + p.getCognome() + "', '" + p.getEmail() + "', '" + p.getPassword() + "')";
+		try {
+			statement.executeUpdate(insert);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	
 	/*
-	 * 		WORKING IN PROGRESS
+	 * 		SD Prenota visita		DA TESTARE
 	 */
-	public void insertPrenotazione(Prenotazione prenotazione) {
-
+	public void insertPrenotazione(Prenotazione p) {
+		String insert = "insert into prenotazioni (giorno, ora, id_tipologia_visita, codice_medico, codice_fiscale_paziente) "
+						+ "values ('" + new SimpleDateFormat("YYYY-MM-dd").format(p.getGiorno()) + "', '" + new SimpleDateFormat("hh:mm:ss").format(p.getOra()) + "', '" + p.getTipologiaVisita().getId() + "', '" + p.getMedico().getCodice() + "', '" + p.getPaziente().getCodiceFiscale() + "')";
+		try {
+			statement.executeUpdate(insert);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	
 	/*
-	 * 		WORKING IN PROGRESS
+	 * 		SD Modifica prenotazione visita		TEST OK
 	 */
 	public void updatePrenotazione(int id, Date giorno, Date ora, TipologiaVisita tipologiaVisita, Medico medico) {
-
+		String update = "update prenotazioni set "
+						+ "giorno = '" + new SimpleDateFormat("YYYY-MM-dd").format(giorno) + "', ora = '" + new SimpleDateFormat("hh:mm:ss").format(ora) + "', id_tipologia_visita = '" + tipologiaVisita.getId() + "', codice_medico = '" + medico.getCodice() + "' "
+						+ "where id = '" + id + "'";
+		try {
+			statement.executeUpdate(update);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	
 	/*
-	 * 		WORKING IN PROGRESS
+	 * 		SD Elimina prenotazione visita		TEST OK
 	 */
 	public void deletePrenotazione(int id) {
-
+		String delete = "delete from prenotazioni "
+						+ "where id = '" + id + "'";
+		try {
+			statement.executeUpdate(delete);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	
 	/*
-	 * 		WORKING IN PROGRESS
+	 * 		SD Esegue visita		DA TESTARE
 	 */
-	public void insertVisita(Visita visita) {
-
+	public void insertVisita(Visita v) {
+		String insert = "insert into visite (diagnosi, terapia, id_prenotazione) "
+						+ "values ('" + v.getDiagnosi() + "', '" + v.getTerapia() + "', '" + v.getPrenotazione().getId() + "')";
+		try {
+			statement.executeUpdate(insert);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	
 	/*
-	 * 		WORKING IN PROGRESS
+	 * 		SD Genera fattura		DA TESTARE
 	 */
-	public void insertFattura(Fattura fattura) {
-
+	public void insertFattura(Fattura f) {
+		String insert = "insert into fatture (importo, id_visita, codice_fiscale_paziente) "
+						+ "values ('" + f.getImporto() + "', '" + f.getVisita().getId() + "', '" + f.getPaziente().getCodiceFiscale() + "')";
+		try {
+			statement.executeUpdate(insert);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	
 	/*
-	 * 		WORKING IN PROGRESS
+	 * 		SD Paga visita		DA TESTARE
 	 */
-	public void insertPagamento(Pagamento pagamento) {
-
+	public void insertPagamento(Pagamento p) {
+		String insert = "insert into pagamenti (data, metodo_pagamento, id_fattura) "
+						+ "values ('" + new SimpleDateFormat("YYYY-MM-dd").format(p.getDataPagamento()) + "', '" + p.getMetodoPagamento() + "', '" + p.getFattura().getId() + "')";
+		try {
+			statement.executeUpdate(insert);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	

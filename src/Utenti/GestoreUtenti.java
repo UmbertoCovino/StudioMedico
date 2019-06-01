@@ -43,8 +43,8 @@ public class GestoreUtenti {
 			PazienteHandler handler = new PazienteHandler();
 			Paziente paziente = (Paziente) handler.createElement(nome, cognome, email, password);
 			paziente.setCodiceFiscale(codiceFiscale);
-//			da implementare			
-//			gestoreDB.insertPaziente(paziente);
+			
+			gestoreDB.insertPaziente(paziente);
 		}
 	}
 

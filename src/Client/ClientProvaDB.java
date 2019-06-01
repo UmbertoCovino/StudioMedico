@@ -8,6 +8,7 @@ import java.util.Iterator;
 import Persistenza.GestoreDatabase;
 import Utenti.GestoreUtenti;
 import Utenti.Medico;
+import Utenti.Paziente;
 import Visite.Fattura;
 import Visite.Pagamento;
 import Visite.Prenotazione;
@@ -52,16 +53,16 @@ public class ClientProvaDB {
 			i.next().print(System.out);
 
 
-	//SD Elimina prenotazione visita	TESTATE DELETE
+	//SD Elimina prenotazione visita	TEST OK
 		ArrayList<Prenotazione> array = GestoreDatabase.getInstance().getPrenotazioni("CF1");
 		if(array.isEmpty())
 			System.out.print("Empty array");
 		Iterator<Prenotazione> i = array.iterator();
 		while(i.hasNext())
 			i.next().print(System.out);
-		
-		GestoreDatabase.getInstance().deletePrenotazione(0);
-
+*/		
+//		GestoreDatabase.getInstance().deletePrenotazione(2);
+/*
 
 	//SD Esegue visita		TESTARE INSERT
 		ArrayList<Prenotazione> array = GestoreDatabase.getInstance().getPrenotazioniFromDate("CF1", new Date(2019, 12, 12));
@@ -70,9 +71,9 @@ public class ClientProvaDB {
 		Iterator<Prenotazione> i = array.iterator();
 		while(i.hasNext())
 			i.next().print(System.out);
-
-		GestoreDatabase.getInstance().insertVisita(null);
-
+*/
+//		GestoreDatabase.getInstance().insertVisita(null);
+/*
 
 	//SD Genera fattura		TESTARE INSERT
 		ArrayList<Visita> array = GestoreDatabase.getInstance().getVisite("CF1");
@@ -81,20 +82,23 @@ public class ClientProvaDB {
 		Iterator<Visita> i = array.iterator();
 		while(i.hasNext())
 			i.next().print(System.out);
-
-		GestoreDatabase.getInstance().insertFattura(null);
-
+*/
+//		GestoreDatabase.getInstance().insertFattura(null);
+/*
 		
-	//SD Modifica prenotazione visita		TESTARE UPDATE
+	//SD Modifica prenotazione visita		TEST OK
 		ArrayList<Prenotazione> array = GestoreDatabase.getInstance().getPrenotazioni("CF1");
 		if(array.isEmpty())
 			System.out.print("Empty array");
 		Iterator<Prenotazione> i = array.iterator();
 		while(i.hasNext())
 			i.next().print(System.out);
-		
-		GestoreDatabase.getInstance().updatePrenotazione(0, null, null, null, null);
-
+*/		
+//		Date date = new Date();
+//		TipologiaVisita tipologiaVisita = GestoreDatabase.getInstance().getTipologiaVisita(1);
+//		Medico medico = GestoreDatabase.getInstance().getMedici(tipologiaVisita.getNome()).iterator().next();
+//		GestoreDatabase.getInstance().updatePrenotazione(2, date, date, tipologiaVisita, medico);
+/*
 		
 	//SD Paga visita 	TESTARE INSERT
 		ArrayList<Fattura> array1 = GestoreDatabase.getInstance().getFatture("CF1");
@@ -111,11 +115,11 @@ public class ClientProvaDB {
 		Iterator<Pagamento> i2 = array2.iterator();
 		while(i2.hasNext())
 			i2.next().print(System.out);
-
-		GestoreDatabase.getInstance().insertPagamento(null);
-
+*/
+//		GestoreDatabase.getInstance().insertPagamento(null);
+/*
 		
-	//SD Prenota visita		TESTARE ULTIMI DUE GET E INSERT
+	//SD Prenota visita		TESTARE ULTIMI DUE GET
 		ArrayList<TipologiaVisita> array = GestoreDatabase.getInstance().getTipologieVisite();
 		if(array.isEmpty())
 			System.out.print("Empty array");
@@ -132,10 +136,16 @@ public class ClientProvaDB {
 
 		GestoreDatabase.getInstance().getCalendarioDisponibilita(0, null);
 		GestoreDatabase.getInstance().getPrenotazioni(0, null);
-		GestoreDatabase.getInstance().insertPrenotazione(null);
-
+*/
+//		Date date = new Date();
+//		TipologiaVisita tipologiaVisita = GestoreDatabase.getInstance().getTipologiaVisita(2);
+//		Medico medico = GestoreDatabase.getInstance().getMedici(tipologiaVisita.getNome()).iterator().next();
+//		Paziente paziente = GestoreDatabase.getInstance().getPaziente("PI");
+//		Prenotazione prenotazione = new Prenotazione(date, date, tipologiaVisita, medico, paziente);
+//		GestoreDatabase.getInstance().insertPrenotazione(prenotazione);
+/*
 		
-	//SD Registrazione		TESTARE INSERT
+	//SD Registrazione		TEST OK
 		System.out.println("Proprietario "+GestoreDatabase.getInstance().isUtenteGiaPresente("admin@sm.com"));
 		System.out.println("Doc1 "+GestoreDatabase.getInstance().isUtenteGiaPresente("doc1@sm.com"));
 		System.out.println("MC "+GestoreDatabase.getInstance().isUtenteGiaPresente("mc@sm.com"));
@@ -144,7 +154,10 @@ public class ClientProvaDB {
 		System.out.println("MC "+GestoreDatabase.getInstance().isUtenteGiaPresente("mc@sm.com"));
 		System.out.println("Wrong mail "+GestoreDatabase.getInstance().isUtenteGiaPresente("sss"));
 
-		GestoreDatabase.getInstance().insertPaziente(null);
+		Paziente paziente = new Paziente("prova", "insert", "p@p.com", "insert");
+		paziente.setCodiceFiscale("PI");
+		GestoreDatabase.getInstance().insertPaziente(paziente);
+		GestoreUtenti.getInstance().registerPaziente("prova", "insert", "p@p.com", "insert", "PI");
 
 		
 	//SD Ricerca paziente		TEST OK

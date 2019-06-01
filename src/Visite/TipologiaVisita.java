@@ -6,19 +6,29 @@ import java.util.ArrayList;
 import Utenti.Specializzazione;
 
 public class TipologiaVisita {
+	private int id;
 	private String nome;
 	private float prezzoFisso;
 	private float costoManodopera;
 	private float costoEsercizio;
 	private ArrayList<Specializzazione> specializzazioniIdonee;
 	
-	public TipologiaVisita(String nome, float prezzoFisso, float costoManodopera, float costoEsercizio,
+	public TipologiaVisita(int id, String nome, float prezzoFisso, float costoManodopera, float costoEsercizio,
 			ArrayList<Specializzazione> specializzazioniIdonee) {
+		this.id = id;
 		this.nome = nome;
 		this.prezzoFisso = prezzoFisso;
 		this.costoManodopera = costoManodopera;
 		this.costoEsercizio = costoEsercizio;
 		this.specializzazioniIdonee = specializzazioniIdonee;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getNome() {
