@@ -12,4 +12,8 @@ public class ReportMedici extends Report {
 	public void setRisultato(ArrayList<RigaMedici> risultato) {
 		this.risultato = risultato;
 	}
+	
+	public void addRiga(RigaMedici riga) {
+		risultato.add(riga);
+	}
 }

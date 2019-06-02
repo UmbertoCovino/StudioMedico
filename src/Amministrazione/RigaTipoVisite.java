@@ -6,8 +6,15 @@ public class RigaTipoVisite {
 	private float costoManodopera;
 	private float costoEsercizio;
 	private int numeroVisite;
-	private ReportTipoVisite reportTipoVisite;
 	
+	public RigaTipoVisite(String nome, float prezzoFisso, float costoManodopera, float costoEsercizio, int numeroVisite) {
+		this.nome = nome;
+		this.prezzoFisso = prezzoFisso;
+		this.costoManodopera = costoManodopera;
+		this.costoEsercizio = costoEsercizio;
+		this.numeroVisite = numeroVisite;
+	}
+
 	public String getNome() {
 		return nome;
 	}
@@ -46,13 +53,5 @@ public class RigaTipoVisite {
 	
 	public void setNumeroVisite(int numeroVisite) {
 		this.numeroVisite = numeroVisite;
-	}
-	
-	public ReportTipoVisite getReportTipoVisite() {
-		return reportTipoVisite;
-	}
-	
-	public void setReportTipoVisite(ReportTipoVisite reportTipoVisite) {
-		this.reportTipoVisite = reportTipoVisite;
 	}
 }

@@ -7,8 +7,17 @@ public class RigaMedici {
 	private int codice;
 	private String nomeSpecializzazione;
 	private int numeroVisite;
-	private ReportMedici reportMedici;
-	
+		
+	public RigaMedici(String nome, String cognome, String email, int codice, String nomeSpecializzazione,
+			int numeroVisite) {
+		this.nome = nome;
+		this.cognome = cognome;
+		this.email = email;
+		this.codice = codice;
+		this.nomeSpecializzazione = nomeSpecializzazione;
+		this.numeroVisite = numeroVisite;
+	}
+
 	public String getNome() {
 		return nome;
 	}
@@ -55,13 +64,5 @@ public class RigaMedici {
 	
 	public void setNumeroVisite(int numeroVisite) {
 		this.numeroVisite = numeroVisite;
-	}
-	
-	public ReportMedici getReportMedici() {
-		return reportMedici;
-	}
-	
-	public void setReportMedici(ReportMedici reportMedici) {
-		this.reportMedici = reportMedici;
 	}
 }

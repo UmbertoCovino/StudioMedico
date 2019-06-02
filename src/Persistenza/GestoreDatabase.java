@@ -26,6 +26,12 @@ import Amministrazione.DisponibilitaGiornaliera;
 import Amministrazione.DisponibilitaGiornalieraBuilder;
 import Visite.Pagamento;
 import Amministrazione.Report;
+import Amministrazione.ReportDirector;
+import Amministrazione.ReportMedici;
+import Amministrazione.ReportMediciBuilder;
+import Amministrazione.ReportVisiteBuilder;
+import Amministrazione.ReportVisitePerMedico;
+import Amministrazione.ReportVisitePerMedicoBuilder;
 
 public class GestoreDatabase {
 	private final String DB_NAME = "studio_medico";
@@ -554,25 +560,127 @@ public class GestoreDatabase {
  **************************************** getREPORT ***************************************************************************************
  */
 	
+
+	/*
+	 * 		SD Report[1] 		TEST ?
+	 * 		Elenco di visite effettuare ordinate per medico
+	 */
 	public Report getReportVisite() {
-		ArrayList<Visita> visite = this.getVisite();
+		ReportMedici report = null;
 		
-		return null;
+		String query = "select PR.giorno as giorno, PR.ora as ora, TV.nome as nome_tipologia_visita, M.nome as nome_medico, P.nome as nome_paziente "
+						+ "from visite V "
+						+ "join prenotazioni PR on V.id_prenotazione = PR.id "
+						+ "join tipologie_visite TV on PR.id_tipologia_visita = TV.id "
+						+ "join medici M on PR.codice_medico = M.codice "
+						+ "join pazienti P on PR.codice_fiscale_paziente = P.codice_fiscale "
+						+ "order by nome_medico";
+		
+		try {
+			ResultSet rs = statement.executeQuery(query);
+			
+			while(rs.next()) {
+				report = (ReportMedici) ReportDirector.buildPart(new ReportVisiteBuilder(), rs);
+			}
+			
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return report;
 	}
 
-	
+
+	/*
+	 * 		SD Report[2] 		TEST ?
+	 * 		Elenco di visite effettuare ordinate per giorno con indicazione del medico
+	 */
+	@SuppressWarnings("null")
 	public Report getReportVisitePerMedico(int codiceMedico) {
-		return null;
+		ReportVisitePerMedico report = null;
+		
+		String query = "select PR.giorno as giorno, PR.ora as ora, TV.nome as nome_tipologia_visita, P.nome as nome_paziente,  M.codice, M.nome, M.cognome, M.email, M.nome_specializzazione"
+						+ "from visite V "
+						+ "join prenotazioni PR on V.id_prenotazione = PR.id "
+						+ "join tipologie_visite TV on PR.id_tipologia_visita = TV.id "
+						+ "join medici M on PR.codice_medico = M.codice "
+						+ "join pazienti P on PR.codice_fiscale_paziente = P.codice_fiscale "
+						+ "where M.codice = '" + codiceMedico + "'"
+						+ "order by giorno";
+			
+		try {
+			ResultSet rs = statement.executeQuery(query);
+			
+				if (rs.next()) {
+					report.setMedico(GestoreDatabase.getInstance().getMedico(rs));
+					do {
+						report = (ReportVisitePerMedico) ReportDirector.buildPart(new ReportVisitePerMedicoBuilder(), rs);
+					} while (rs.next());
+				}
+				
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return report;
 	}
 
-	
+
+	/*
+	 * 		SD Report[3] 		TEST ?
+	 * 		Elenco dei medici ordinati per numero di visite
+	 */
 	public Report getReportMedici() {
-		return null;
+		ReportMedici report = null;
+		
+		String query = "select M.nome as nome, M.cognome as cognome, M.email as email, M.codice as codice, M.nome_specializzazione as nome_specializzazione, count(*) as num_visite "
+						+ "from visite V "
+						+ "join prenotazioni PR on V.id_prenotazione = PR.id "
+						+ "join medici M on PR.codice_medico = M.codice";
+		
+		try {
+			ResultSet rs = statement.executeQuery(query);
+			
+			while(rs.next()) {
+				report = (ReportMedici) ReportDirector.buildPart(new ReportMediciBuilder(), rs);
+			}
+			
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return report;
 	}
 	
-	
+
+	/*
+	 * 		SD Report[4] 		TEST ?
+	 * 		Elenco delle tipologie di visite ordinate per numerosita
+	 */
 	public Report getReportTipologieVisite() {
-		return null;
+		ReportMedici report = null;
+		
+		String query = "select TV.nome as nome, TV.prezzo_fisso as prezzo_fisso, TV.costo_manodopera as costo_manodopera, TV.costo_esercizio as costo_esercizio, count(*) as num_visite "
+				+ "from visite V "
+				+ "join prenotazioni PR on V.id_prenotazione = PR.id "
+				+ "join tipologie_visite TV on PR.id_tipologia_visita = TV.id";
+		
+		try {
+			ResultSet rs = statement.executeQuery(query);
+			
+			while(rs.next()) {
+				report = (ReportMedici) ReportDirector.buildPart(new ReportVisiteBuilder(), rs);
+			}
+			
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return report;
 	}
 
 

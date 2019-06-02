@@ -12,4 +12,8 @@ public class ReportVisite extends Report {
 	public void setRisultato(ArrayList<RigaVisite> risultato) {
 		this.risultato = risultato;
 	}
+
+	public void addRiga(RigaVisite riga) {
+		risultato.add(riga);
+	}
 }

@@ -22,4 +22,8 @@ public class ReportVisitePerMedico extends Report {
 	public void setRisultato(ArrayList<RigaVisitePerMedico> risultato) {
 		this.risultato = risultato;
 	}
+
+	public void addRiga(RigaVisitePerMedico riga) {
+		risultato.add(riga);
+	}
 }

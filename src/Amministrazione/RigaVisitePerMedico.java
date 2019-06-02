@@ -7,8 +7,14 @@ public class RigaVisitePerMedico {
 	private Date ora;
 	private String nomeTipologiaVisita;
 	private String nomePaziente;
-	private ReportVisitePerMedico reportVisitePerMedico;
 	
+	public RigaVisitePerMedico(Date giorno, Date ora, String nomeTipologiaVisita, String nomePaziente) {
+		this.giorno = giorno;
+		this.ora = ora;
+		this.nomeTipologiaVisita = nomeTipologiaVisita;
+		this.nomePaziente = nomePaziente;
+	}
+
 	public Date getGiorno() {
 		return giorno;
 	}
@@ -39,13 +45,5 @@ public class RigaVisitePerMedico {
 	
 	public void setNomePaziente(String nomePaziente) {
 		this.nomePaziente = nomePaziente;
-	}
-	
-	public ReportVisitePerMedico getReportVisitePerMedico() {
-		return reportVisitePerMedico;
-	}
-	
-	public void setReportVisitePerMedico(ReportVisitePerMedico reportVisitePerMedico) {
-		this.reportVisitePerMedico = reportVisitePerMedico;
 	}
 }
