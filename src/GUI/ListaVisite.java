@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.TreeMap;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -14,6 +16,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import Visite.GUIControllerVisite;
@@ -23,10 +27,10 @@ public class ListaVisite extends Frame {
 	protected static final int STORICO_VISITE_OPERATION = 1,
 							   GENERATE_FATTURA_OPERATION = 2;
 	private int operationType;
+	private Map<Integer, Visita> visite;
 
 	private JLabel visiteLabel;
-//	private JList<Visita> visiteList;
-	private JTable visiteList;
+	private JTable visiteTable;
 	private JScrollPane visiteScrollPane;
 	private JButton confirmButton;
 	private JButton cancelButton;
@@ -35,48 +39,27 @@ public class ListaVisite extends Frame {
 		super("Lista visite effettuate", parentFrame);
 		
 		this.operationType = operationType;
+		this.visite = new TreeMap<Integer, Visita>();
 		
-		setExtraFrameWidth(100);
+		for (Visita visita: visite) {
+			this.visite.put(visita.getId(), visita);
+		}
+		
+		setExtraFrameWidth(400);
 		
 		// dichiarazione elementi
 		visiteLabel = new JLabel("Visite");
 		
-//		visiteList = new JList<>(visite.toArray(new Visita[visite.size()]));
-//		
-//		visiteScrollPane = new JScrollPane(visiteList);
-		
-		//////// ATTTEEEENZIONNEEEEE ///////////////////////////////////////////////////
-		
 		DefaultTableModel tableModel = new DefaultTableModel();
-		visiteList = new JTable(tableModel);
-		visiteList.setDefaultEditor(Object.class, null);
-		visiteList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-//		//visiteList.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		visiteTable = new JTable(tableModel);
+		buildTable(visite);
 		
-		tableModel.addColumn("Nome tipologia visita");
-		tableModel.addColumn("Nome medico");
-		tableModel.addColumn("Giorno");
-		tableModel.addColumn("Ora");
-		tableModel.addColumn("Diagnosi");
-		tableModel.addColumn("Terapia");
-		
-		for (Visita visita: visite) {
-			tableModel.addRow(new Object[]{visita.getTipologiaVisita().getNome(),
-					visita.getMedico().getNome() + " " + visita.getMedico().getCognome(),
-					visita.getGiorno(),
-					visita.getOra(),
-					visita.getDiagnosi(),
-					visita.getTerapia()});
-		}
-		
-		visiteScrollPane = new JScrollPane(visiteList);
-		
-		////////ATTTEEEENZIONNEEEEE ///////////////////////////////////////////////////
+		visiteScrollPane = new JScrollPane(visiteTable);
 		
 		confirmButton = new JButton();
 		cancelButton = new JButton();
 		
-		confirmButton.setVisible(false);
+		confirmButton.setEnabled(false);
 		
 		// aggiunta event handlers
 		addingEventHandlers();
@@ -88,26 +71,54 @@ public class ListaVisite extends Frame {
 		showFrame();
 	}
 
+	private void buildTable(ArrayList<Visita> visite) {
+		visiteTable.setDefaultEditor(Object.class, null);
+		visiteTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		visiteTable.getTableHeader().setReorderingAllowed(false);
+//		visiteTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		
+		DefaultTableModel tableModel = (DefaultTableModel) visiteTable.getModel();
+		
+		tableModel.addColumn("Id");
+		tableModel.addColumn("Tipologia visita");
+		tableModel.addColumn("Medico");
+		tableModel.addColumn("Giorno");
+		tableModel.addColumn("Ora");
+		tableModel.addColumn("Diagnosi");
+		tableModel.addColumn("Terapia");
+		
+		for (Visita visita: visite) {
+			tableModel.addRow(new Object[]{visita.getId(),
+					visita.getTipologiaVisita().getNome(),
+					visita.getMedico().getNome() + " " + visita.getMedico().getCognome(),
+					FramePaziente.DATE_SDF.format(visita.getGiorno()),
+					FramePaziente.TIME_SDF.format(visita.getOra()),
+					visita.getDiagnosi(),
+					visita.getTerapia()});
+		}
+	}
+
 	@Override
 	protected void addingEventHandlers() {
 		Frame thisFrame = this;
 		
 		if (operationType == STORICO_VISITE_OPERATION) {
 			cancelButton.setText("Esci");
-			
-			confirmButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					// non fa nulla
-				}
-			});
+			confirmButton.setVisible(false);
 		} else if (operationType == GENERATE_FATTURA_OPERATION) {
 			confirmButton.setText("Genera fattura");
 			cancelButton.setText("Annulla");
-			confirmButton.setVisible(true);
+			
+			visiteTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+				public void valueChanged(ListSelectionEvent e) {
+					if (!confirmButton.isEnabled())
+						confirmButton.setEnabled(true);
+				}
+			});
 			
 			confirmButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					GUIControllerVisite.getInstance().printFattura(getParentFrame(), visiteList.getSelectedValue());
+					GUIControllerVisite.getInstance().printFattura(getParentFrame(), visite.get(visiteTable.getValueAt(visiteTable.getSelectedRow(), 0)));
 
 					closeFrame();
 				}
@@ -131,7 +142,7 @@ public class ListaVisite extends Frame {
 		layout.setHorizontalGroup(
 			layout.createParallelGroup(GroupLayout.Alignment.CENTER)
 				.addComponent(visiteLabel, 0, 0, Short.MAX_VALUE)
-		   		.addComponent(visiteScrollPane, 0, 0, Short.MAX_VALUE)
+		   		.addComponent(visiteScrollPane, 0, visiteTable.getPreferredScrollableViewportSize().width, Short.MAX_VALUE)
 		   		.addGroup(layout.createSequentialGroup()
 			   			.addComponent(cancelButton)
 			   			.addComponent(confirmButton))
@@ -140,7 +151,7 @@ public class ListaVisite extends Frame {
 		layout.setVerticalGroup(
 			layout.createSequentialGroup()
 				.addComponent(visiteLabel)
-				.addComponent(visiteScrollPane)
+				.addComponent(visiteScrollPane, 0, visiteTable.getPreferredScrollableViewportSize().height - 150, Short.MAX_VALUE)
 				.addGap(getButtonsGap())
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
 						.addComponent(cancelButton)

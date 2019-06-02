@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.TreeMap;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -11,21 +13,26 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 
 import Visite.GUIControllerPrenotazioni;
 import Visite.Prenotazione;
+import Visite.Visita;
 
 public class ListaPrenotazioni extends Frame {
 	protected static final int MODIFY_OPERATION = 1,
 							   DELETE_OPERATION = 2,
 							   REGISTER_VISIT_OPERATION = 3;
 	private int operationType;
+	private Map<Integer, Prenotazione> prenotazioni;
 	
 	private JLabel prenotazioniLabel;
-	private JList<Prenotazione> prenotazioniList;
+	private JTable prenotazioniTable;
 	private JScrollPane prenotazioniScrollPane;
 	private JButton confirmButton;
 	private JButton cancelButton;
@@ -34,15 +41,22 @@ public class ListaPrenotazioni extends Frame {
 		super("Lista prenotazioni effettuate", parentFrame);
 		
 		this.operationType = operationType;
+		this.prenotazioni = new TreeMap<Integer, Prenotazione>();
 		
-		setExtraFrameWidth(100);
+		for (Prenotazione prenotazione: prenotazioni) {
+			this.prenotazioni.put(prenotazione.getId(), prenotazione);
+		}
+		
+		setExtraFrameWidth(300);
 		
 		// dichiarazione elementi
 		prenotazioniLabel = new JLabel("Prenotazioni");
 		
-		prenotazioniList = new JList<>(prenotazioni.toArray(new Prenotazione[prenotazioni.size()]));
+		DefaultTableModel tableModel = new DefaultTableModel();
+		prenotazioniTable = new JTable(tableModel);
+		buildTable(prenotazioni);
 		
-		prenotazioniScrollPane = new JScrollPane(prenotazioniList);
+		prenotazioniScrollPane = new JScrollPane(prenotazioniTable);
 		
 		confirmButton = new JButton();
 		cancelButton = new JButton("Annulla");
@@ -59,13 +73,38 @@ public class ListaPrenotazioni extends Frame {
 		showFrame();
 	}
 
+	private void buildTable(ArrayList<Prenotazione> prenotazioni) {
+		prenotazioniTable.setDefaultEditor(Object.class, null);
+		prenotazioniTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		prenotazioniTable.getTableHeader().setReorderingAllowed(false);
+//		prenotazioniTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		
+		DefaultTableModel tableModel = (DefaultTableModel) prenotazioniTable.getModel();
+		
+		tableModel.addColumn("Id");
+		tableModel.addColumn("Tipologia visita");
+		tableModel.addColumn("Medico");
+		tableModel.addColumn("Giorno");
+		tableModel.addColumn("Ora");
+		
+		for (Prenotazione prenotazione: prenotazioni) {
+			tableModel.addRow(new Object[]{prenotazione.getId(),
+					prenotazione.getTipologiaVisita().getNome(),
+					prenotazione.getMedico().getNome() + " " + prenotazione.getMedico().getCognome(),
+					FramePaziente.DATE_SDF.format(prenotazione.getGiorno()),
+					FramePaziente.TIME_SDF.format(prenotazione.getOra())});
+		}
+		
+	}
+
 	@Override
 	protected void addingEventHandlers() {
 		Frame thisFrame = this;
 		
-		prenotazioniList.addListSelectionListener(new ListSelectionListener() {
+		prenotazioniTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
-				confirmButton.setEnabled(true);
+				if (!confirmButton.isEnabled())
+					confirmButton.setEnabled(true);
 			}
 		});
 
@@ -74,7 +113,7 @@ public class ListaPrenotazioni extends Frame {
 			
 			confirmButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					GUIControllerPrenotazioni.getInstance().createFormModificaPrenotazione(getParentFrame(), prenotazioniList.getSelectedValue());
+					GUIControllerPrenotazioni.getInstance().createFormModificaPrenotazione(getParentFrame(), prenotazioni.get(prenotazioniTable.getValueAt(prenotazioniTable.getSelectedRow(), 0)));
 
 					closeFrame();
 				}
@@ -84,7 +123,7 @@ public class ListaPrenotazioni extends Frame {
 			
 			confirmButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					GUIControllerPrenotazioni.getInstance().deletePrenotazione(prenotazioniList.getSelectedValue().getId());
+					GUIControllerPrenotazioni.getInstance().deletePrenotazione(prenotazioni.get(prenotazioniTable.getValueAt(prenotazioniTable.getSelectedRow(), 0)).getId());
 
 					JOptionPane.showMessageDialog(thisFrame, "La prenotazione è stata cancellata con successo!", "Prenotazione cancellata", JOptionPane.INFORMATION_MESSAGE);
 					closeFrame();
@@ -95,7 +134,7 @@ public class ListaPrenotazioni extends Frame {
 			
 			confirmButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					GUIControllerPrenotazioni.getInstance().createFormRisultatoVisita(getParentFrame(), prenotazioniList.getSelectedValue());
+					GUIControllerPrenotazioni.getInstance().createFormRisultatoVisita(getParentFrame(), prenotazioni.get(prenotazioniTable.getValueAt(prenotazioniTable.getSelectedRow(), 0)));
 
 					closeFrame();
 				}
@@ -119,7 +158,7 @@ public class ListaPrenotazioni extends Frame {
 		layout.setHorizontalGroup(
 			layout.createParallelGroup(GroupLayout.Alignment.CENTER)
 				.addComponent(prenotazioniLabel, 0, 0, Short.MAX_VALUE)
-		   		.addComponent(prenotazioniScrollPane, 0, 0, Short.MAX_VALUE)
+		   		.addComponent(prenotazioniScrollPane, 0, prenotazioniTable.getPreferredScrollableViewportSize().width, Short.MAX_VALUE)
 		   		.addGroup(layout.createSequentialGroup()
 		   			.addComponent(cancelButton)
 		   			.addComponent(confirmButton))
@@ -128,7 +167,7 @@ public class ListaPrenotazioni extends Frame {
 		layout.setVerticalGroup(
 			layout.createSequentialGroup()
 				.addComponent(prenotazioniLabel)
-				.addComponent(prenotazioniScrollPane)
+				.addComponent(prenotazioniScrollPane, 0, prenotazioniTable.getPreferredScrollableViewportSize().height - 150, Short.MAX_VALUE)
 				.addGap(getButtonsGap())
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
 					.addComponent(cancelButton)
