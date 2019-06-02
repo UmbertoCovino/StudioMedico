@@ -578,10 +578,8 @@ public class GestoreDatabase {
 		
 		try {
 			ResultSet rs = statement.executeQuery(query);
+			report = (ReportMedici) ReportDirector.buildPart(new ReportVisiteBuilder(), rs);
 			
-			while(rs.next()) {
-				report = (ReportMedici) ReportDirector.buildPart(new ReportVisiteBuilder(), rs);
-			}
 			
 			rs.close();
 		} catch (SQLException e) {
@@ -611,14 +609,11 @@ public class GestoreDatabase {
 			
 		try {
 			ResultSet rs = statement.executeQuery(query);
-			
-				if (rs.next()) {
-					report.setMedico(GestoreDatabase.getInstance().getMedico(rs));
-					do {
-						report = (ReportVisitePerMedico) ReportDirector.buildPart(new ReportVisitePerMedicoBuilder(), rs);
-					} while (rs.next());
-				}
-				
+			if (rs.next()) {
+				report.setMedico(GestoreDatabase.getInstance().getMedico(rs));
+				report = (ReportVisitePerMedico) ReportDirector.buildPart(new ReportVisitePerMedicoBuilder(), rs);
+			}
+								
 			rs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -642,11 +637,8 @@ public class GestoreDatabase {
 		
 		try {
 			ResultSet rs = statement.executeQuery(query);
-			
-			while(rs.next()) {
-				report = (ReportMedici) ReportDirector.buildPart(new ReportMediciBuilder(), rs);
-			}
-			
+			report = (ReportMedici) ReportDirector.buildPart(new ReportMediciBuilder(), rs);
+						
 			rs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -670,11 +662,8 @@ public class GestoreDatabase {
 		
 		try {
 			ResultSet rs = statement.executeQuery(query);
-			
-			while(rs.next()) {
-				report = (ReportMedici) ReportDirector.buildPart(new ReportVisiteBuilder(), rs);
-			}
-			
+			report = (ReportMedici) ReportDirector.buildPart(new ReportVisiteBuilder(), rs);
+					
 			rs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
