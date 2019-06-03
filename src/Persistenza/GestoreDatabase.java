@@ -597,6 +597,7 @@ public class GestoreDatabase {
 	 * 		SD Report[2] 		TEST ?
 	 * 		Elenco di visite effettuare ordinate per giorno con indicazione del medico
 	 */
+	
 	@SuppressWarnings("null")
 	public Report getReportVisitePerMedico(int codiceMedico) {
 		ReportVisitePerMedico report = null;

@@ -8,6 +8,7 @@ public class ReportVisitePerMedico extends Report {
 	private ArrayList<RigaVisitePerMedico> risultato;
 	
 	public ReportVisitePerMedico() {
+		medico = new Medico();
 		risultato = new ArrayList<RigaVisitePerMedico>();
 	}
 	
