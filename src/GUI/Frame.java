@@ -10,7 +10,7 @@ public abstract class Frame extends JFrame {
 	private int buttonsGap;
 	private Frame parentFrame;
 	
-	private Frame(String title) {
+	protected Frame(String title) {
 		super(title);
 		
 		maxFrameWidth = 9999;

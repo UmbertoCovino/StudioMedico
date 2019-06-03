@@ -31,8 +31,8 @@ public class FormVisualizzazioneReport extends Frame {
 	private JScrollPane reportRigheScrollPane;
 	private JButton exitButton;
 
-	public FormVisualizzazioneReport(Frame parentFrame, Report report) {
-		super("Lista visite effettuate", parentFrame);
+	public FormVisualizzazioneReport(Report report) {
+		super("Lista visite effettuate");
 		
 		setExtraFrameWidth(100);
 		

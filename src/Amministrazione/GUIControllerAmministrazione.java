@@ -25,12 +25,12 @@ public class GUIControllerAmministrazione {
 		new FormCreazioneReport(parentFrame);
 	}
 
-	public void createFormVisualizzazioneReport(Frame parentFrame, Report report) {
-		new FormVisualizzazioneReport(parentFrame, report);
+	public void createFormVisualizzazioneReport(Report report) {
+		new FormVisualizzazioneReport(report);
 	}
 
 	public void createReport(String tipologia) {
-		gestoreAmministrazione.createReport(tipologia);
+		this.createFormVisualizzazioneReport(gestoreAmministrazione.createReport(tipologia));
 	}
 
 	public ArrayList<Medico> getMedici() {
@@ -38,6 +38,6 @@ public class GUIControllerAmministrazione {
 	}
 
 	public void createReport(String tipologia, Medico medico) {
-		gestoreAmministrazione.createReport(tipologia, medico);
+		this.createFormVisualizzazioneReport(gestoreAmministrazione.createReport(tipologia, medico));
 	}
 }
