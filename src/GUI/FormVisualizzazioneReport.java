@@ -70,79 +70,64 @@ public class FormVisualizzazioneReport extends Frame {
 			
 			tableModel.addColumn("Tipologia visita");
 			tableModel.addColumn("Medico");
+			tableModel.addColumn("Paziente");
 			tableModel.addColumn("Giorno");
 			tableModel.addColumn("Ora");
-			tableModel.addColumn("Diagnosi");
-			tableModel.addColumn("Terapia");
 			
-			for (Visita visita: visite) {
-				tableModel.addRow(new Object[]{visita.getId(),
-						visita.getTipologiaVisita().getNome(),
-						visita.getMedico().getNome() + " " + visita.getMedico().getCognome(),
-						FramePaziente.DATE_SDF.format(visita.getGiorno()),
-						FramePaziente.TIME_SDF.format(visita.getOra()),
-						visita.getDiagnosi(),
-						visita.getTerapia()});
+			for (RigaVisite riga: risultato) {
+				tableModel.addRow(new Object[]{riga.getNomeTipologiaVisita(),
+						riga.getNomeMedico(),
+						riga.getNomePaziente(),
+						FramePaziente.DATE_SDF.format(riga.getGiorno()),
+						FramePaziente.TIME_SDF.format(riga.getOra())});
 			}
 		} else if (report instanceof ReportVisitePerMedico) {
 			ArrayList<RigaVisitePerMedico> risultato = ((ReportVisitePerMedico) report).getRisultato();
 			
-			tableModel.addColumn("Id");
 			tableModel.addColumn("Tipologia visita");
-			tableModel.addColumn("Medico");
+			tableModel.addColumn("Paziente");
 			tableModel.addColumn("Giorno");
 			tableModel.addColumn("Ora");
-			tableModel.addColumn("Diagnosi");
-			tableModel.addColumn("Terapia");
 			
-			for (Visita visita: visite) {
-				tableModel.addRow(new Object[]{visita.getId(),
-						visita.getTipologiaVisita().getNome(),
-						visita.getMedico().getNome() + " " + visita.getMedico().getCognome(),
-						FramePaziente.DATE_SDF.format(visita.getGiorno()),
-						FramePaziente.TIME_SDF.format(visita.getOra()),
-						visita.getDiagnosi(),
-						visita.getTerapia()});
+			for (RigaVisitePerMedico riga: risultato) {
+				tableModel.addRow(new Object[]{riga.getNomeTipologiaVisita(),
+						riga.getNomePaziente(),
+						FramePaziente.DATE_SDF.format(riga.getGiorno()),
+						FramePaziente.TIME_SDF.format(riga.getOra())});
 			}
 		} else if (report instanceof ReportMedici) {
 			ArrayList<RigaMedici> risultato = ((ReportMedici) report).getRisultato();
 			
-			tableModel.addColumn("Id");
-			tableModel.addColumn("Tipologia visita");
-			tableModel.addColumn("Medico");
-			tableModel.addColumn("Giorno");
-			tableModel.addColumn("Ora");
-			tableModel.addColumn("Diagnosi");
-			tableModel.addColumn("Terapia");
+			tableModel.addColumn("Nome");
+			tableModel.addColumn("Cognome");
+			tableModel.addColumn("Email");
+			tableModel.addColumn("Codice");
+			tableModel.addColumn("Specializzazione");
+			tableModel.addColumn("Numero visite");
 			
-			for (Visita visita: visite) {
-				tableModel.addRow(new Object[]{visita.getId(),
-						visita.getTipologiaVisita().getNome(),
-						visita.getMedico().getNome() + " " + visita.getMedico().getCognome(),
-						FramePaziente.DATE_SDF.format(visita.getGiorno()),
-						FramePaziente.TIME_SDF.format(visita.getOra()),
-						visita.getDiagnosi(),
-						visita.getTerapia()});
+			for (RigaMedici riga: risultato) {
+				tableModel.addRow(new Object[]{riga.getNome(),
+						riga.getCognome(),
+						riga.getEmail(),
+						riga.getCodice(),
+						riga.getNomeSpecializzazione(),
+						riga.getNumeroVisite()});
 			}
 		} else if (report instanceof ReportTipoVisite) {
 			ArrayList<RigaTipoVisite> risultato = ((ReportTipoVisite) report).getRisultato();
 			
-			tableModel.addColumn("Id");
-			tableModel.addColumn("Tipologia visita");
-			tableModel.addColumn("Medico");
-			tableModel.addColumn("Giorno");
-			tableModel.addColumn("Ora");
-			tableModel.addColumn("Diagnosi");
-			tableModel.addColumn("Terapia");
+			tableModel.addColumn("Nome");
+			tableModel.addColumn("Prezzo fisso");
+			tableModel.addColumn("Costo manodopera");
+			tableModel.addColumn("Costo esercizio");
+			tableModel.addColumn("Numero visite");
 			
-			for (Visita visita: visite) {
-				tableModel.addRow(new Object[]{visita.getId(),
-						visita.getTipologiaVisita().getNome(),
-						visita.getMedico().getNome() + " " + visita.getMedico().getCognome(),
-						FramePaziente.DATE_SDF.format(visita.getGiorno()),
-						FramePaziente.TIME_SDF.format(visita.getOra()),
-						visita.getDiagnosi(),
-						visita.getTerapia()});
+			for (RigaTipoVisite riga: risultato) {
+				tableModel.addRow(new Object[]{riga.getNome(),
+						String.format("� %.2f", riga.getPrezzoFisso()),
+						String.format("� %.2f", riga.getCostoManodopera()),
+						String.format("� %.2f", riga.getCostoEsercizio()),
+						riga.getNumeroVisite()});
 			}
 		}
 	}
