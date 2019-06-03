@@ -124,19 +124,19 @@ public class GestoreDatabase {
 		
 		try {
 			ResultSet rs = statement.executeQuery(query);
-			if(rs.next())
+			if(rs.next()) {
 				utente = this.getMedico(rs);
-				
-			else {
+				utente.setPassword(rs.getString("password"));
+			} else {
 				query = "select * "
 					  + "from pazienti P "
 					  + "where email = '" + email + "'";
 				
 				rs = statement.executeQuery(query);
-				if(rs.next()) 
+				if(rs.next()) {
 					utente = this.getPaziente(rs);
-				
-				else {
+					utente.setPassword(rs.getString("password"));
+				} else {
 					query = "select * "
 						  + "from proprietari "
 						  + "where email = '" + email + "'";

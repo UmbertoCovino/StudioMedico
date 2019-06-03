@@ -54,6 +54,7 @@ public class GestoreUtenti {
 			utente.setPassword("");
 			return utente;
 		}
+		
 		return null;
 	}
 
