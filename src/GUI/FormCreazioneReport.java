@@ -26,7 +26,7 @@ public class FormCreazioneReport extends Frame {
 	private static final String[] TIPOLOGIE_REPORT = new String[]{"Elenco di visite effettuate ordinate per medico",
 																  "Elenco di visite effettuate ordinate per giorno con indicazione del medico", 
 																  "Elenco dei medici ordinati per numero di visite",
-																  "Elenco delle tipologie di visite ordinate per numerositï¿½"};
+																  "Elenco delle tipologie di visite ordinate per numerosità"};
 	
 	private JLabel tipologiaReportLabel;
 	private JLabel mediciLabel;
@@ -105,9 +105,9 @@ public class FormCreazioneReport extends Frame {
 
 	protected boolean dataIsValid() {
 		if (tipologiaReportComboBox.getSelectedItem() == null) {
-			JOptionPane.showMessageDialog(this, "Il campo tipologia report non puï¿½ essere vuoto.", "Attenzione", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Il campo tipologia report non può essere vuoto.", "Attenzione", JOptionPane.WARNING_MESSAGE);
 		} else if (tipologiaReportComboBox.getSelectedIndex() == 1 && medicoComboBox.getSelectedItem() == null) {
-			JOptionPane.showMessageDialog(this, "Il campo medico non puï¿½ essere vuoto.", "Attenzione", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Il campo medico non può essere vuoto.", "Attenzione", JOptionPane.WARNING_MESSAGE);
 		} else
 			return true;
 		

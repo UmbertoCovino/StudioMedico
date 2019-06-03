@@ -45,7 +45,7 @@ public class FormModificaPrenotazione extends Frame {
 		// dichiarazione elementi
 		tipologiaVisitaLabel = new JLabel("Tipologia visita");
 		medicoLabel = new JLabel("Medico");
-		calendarioLabel = new JLabel("Calendario disponibilitï¿½");
+		calendarioLabel = new JLabel("Calendario disponibilità");
 		orarioLabel = new JLabel("Orari disponibili per il giorno selezionato");
 		
 		tipologiaVisitaComboBox = new JComboBox<>();
@@ -105,11 +105,11 @@ public class FormModificaPrenotazione extends Frame {
 					GUIControllerPrenotazioni.getInstance().notifyData(
 							prenotazioneId,
 							((DisponibilitaGiornaliera) calendarioComboBox.getSelectedItem()).getGiorno(),
-							(java.util.Date) orarioComboBox.getSelectedItem(),
+							(Date) orarioComboBox.getSelectedItem(),
 							(TipologiaVisita) tipologiaVisitaComboBox.getSelectedItem(),
 							(Medico) medicoComboBox.getSelectedItem());
 
-					JOptionPane.showMessageDialog(thisFrame, "La prenotazione ï¿½ stata modificata con successo!", "Prenotazione modificata", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(thisFrame, "La prenotazione è stata modificata con successo!", "Prenotazione modificata", JOptionPane.INFORMATION_MESSAGE);
 					closeFrame();
 				}
 			}

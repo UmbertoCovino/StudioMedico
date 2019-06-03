@@ -83,7 +83,7 @@ public class ListaFatture extends Frame {
 		tableModel.addColumn("Medico");
 		tableModel.addColumn("Giorno");
 		tableModel.addColumn("Ora");
-		tableModel.addColumn("Importo (ï¿½)");
+		tableModel.addColumn("Importo");
 		
 		for (Fattura fattura: fatture) {
 			tableModel.addRow(new Object[]{fattura.getId(),
@@ -91,7 +91,7 @@ public class ListaFatture extends Frame {
 					fattura.getVisita().getMedico().getNome() + " " + fattura.getVisita().getMedico().getCognome(),
 					FramePaziente.DATE_SDF.format(fattura.getVisita().getGiorno()),
 					FramePaziente.TIME_SDF.format(fattura.getVisita().getOra()),
-					String.format("ï¿½ %.2f", fattura.getImporto())});
+					String.format("€ %.2f", fattura.getImporto())});
 		}
 		
 	}

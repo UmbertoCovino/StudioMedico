@@ -46,7 +46,7 @@ public class FormPrenotazioneVisita extends Frame {
 		// dichiarazione elementi
 		tipologiaVisitaLabel = new JLabel("Tipologia visita");
 		medicoLabel = new JLabel("Medico");
-		calendarioLabel = new JLabel("Calendario disponibilitï¿½");
+		calendarioLabel = new JLabel("Calendario disponibilità");
 		orarioLabel = new JLabel("Orari disponibili per il giorno selezionato");
 		
 		tipologiaVisitaComboBox = new JComboBox<>();
@@ -109,7 +109,7 @@ public class FormPrenotazioneVisita extends Frame {
 							(TipologiaVisita) tipologiaVisitaComboBox.getSelectedItem(),
 							(Medico) medicoComboBox.getSelectedItem());
 
-					JOptionPane.showMessageDialog(thisFrame, "La prenotazione ï¿½ stato aggiunta con successo!", "Prenotazione aggiunta", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(thisFrame, "La prenotazione è stata aggiunta con successo!", "Prenotazione aggiunta", JOptionPane.INFORMATION_MESSAGE);
 					closeFrame();
 				}
 			}
