@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 
 import Amministrazione.CalendarioDisponibilita;
 import Amministrazione.Disponibilita;
+import Amministrazione.DisponibilitaGiornaliera;
 import Utenti.Medico;
 import Visite.GUIControllerPrenotazioni;
 import Visite.TipologiaVisita;
@@ -29,8 +30,8 @@ public class FormModificaPrenotazione extends Frame {
 	private JLabel orarioLabel;
 	private JComboBox<TipologiaVisita> tipologiaVisitaComboBox;
 	private JComboBox<Medico> medicoComboBox;
-	private JComboBox<Date> calendarioComboBox;
-	private JComboBox<Date> orarioComboBox;
+	private JComboBox<DisponibilitaGiornaliera> calendarioComboBox;
+	private JComboBox<Time> orarioComboBox;
 	private JButton confirmButton;
 	private JButton cancelButton;
 
@@ -44,12 +45,12 @@ public class FormModificaPrenotazione extends Frame {
 		// dichiarazione elementi
 		tipologiaVisitaLabel = new JLabel("Tipologia visita");
 		medicoLabel = new JLabel("Medico");
-		calendarioLabel = new JLabel("Calendario disponibilità");
+		calendarioLabel = new JLabel("Calendario disponibilitï¿½");
 		orarioLabel = new JLabel("Orari disponibili per il giorno selezionato");
 		
 		tipologiaVisitaComboBox = new JComboBox<>();
 		medicoComboBox = new JComboBox<>();
-		calendarioComboBox = new JComboBox<Date>();
+		calendarioComboBox = new JComboBox<>();
 		orarioComboBox = new JComboBox<>();
 		
 		confirmButton = new JButton("Conferma");
@@ -94,7 +95,7 @@ public class FormModificaPrenotazione extends Frame {
 		
 		calendarioComboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				updateOrari(((Disponibilita) calendarioComboBox.getSelectedItem()));
+				updateOrari(((DisponibilitaGiornaliera) calendarioComboBox.getSelectedItem()));
 			}
 		});
 		
@@ -103,12 +104,12 @@ public class FormModificaPrenotazione extends Frame {
 				if (dataIsValid()) {
 					GUIControllerPrenotazioni.getInstance().notifyData(
 							prenotazioneId,
-							(Date) calendarioComboBox.getSelectedItem(),
-							(Date) orarioComboBox.getSelectedItem(),
+							((DisponibilitaGiornaliera) calendarioComboBox.getSelectedItem()).getGiorno(),
+							(java.util.Date) orarioComboBox.getSelectedItem(),
 							(TipologiaVisita) tipologiaVisitaComboBox.getSelectedItem(),
 							(Medico) medicoComboBox.getSelectedItem());
 
-					JOptionPane.showMessageDialog(thisFrame, "La prenotazione è stata modificata con successo!", "Prenotazione modificata", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(thisFrame, "La prenotazione ï¿½ stata modificata con successo!", "Prenotazione modificata", JOptionPane.INFORMATION_MESSAGE);
 					closeFrame();
 				}
 			}
@@ -141,11 +142,11 @@ public class FormModificaPrenotazione extends Frame {
 	}
 
 	protected void updateCalendarioDisponibilita(CalendarioDisponibilita calendarioDisponibilita) {
-		calendarioComboBox.setModel(new DefaultComboBoxModel<Date>((calendarioDisponibilita.getOrari().toArray(new Date[calendarioDisponibilita.getOrari().size()]))));
+		calendarioComboBox.setModel(new DefaultComboBoxModel<DisponibilitaGiornaliera>((calendarioDisponibilita.getOrari().toArray(new DisponibilitaGiornaliera[calendarioDisponibilita.getOrari().size()]))));
 	}
 
 	protected void updateOrari(Disponibilita disponibilita) {
-		ArrayList<Date> orari = new ArrayList<>();
+		ArrayList<Time> orari = new ArrayList<>();
 
 		long minutesFromInizioToFine = ((disponibilita.getOraFine().getTime() - disponibilita.getOraInizio().getTime()) / 1000) / 60;
 		long numberOfHalfHours = minutesFromInizioToFine / 30;
@@ -154,13 +155,13 @@ public class FormModificaPrenotazione extends Frame {
 		halfHours.setTime(disponibilita.getOraInizio());
 
 		for (int i = 0; i < numberOfHalfHours; i++) {
-			orari.add(halfHours.getTime());
+			orari.add((Time) halfHours.getTime());
 //			orari.add(FramePaziente.TIME_SDF.format(halfHours.getTime());
 
 			halfHours.set(Calendar.MINUTE, halfHours.get(Calendar.MINUTE) + 30);
 		}
 
-		orarioComboBox.setModel(new DefaultComboBoxModel<Date>(orari.toArray(new Date[orari.size()])));
+		orarioComboBox.setModel(new DefaultComboBoxModel<Time>(orari.toArray(new Time[orari.size()])));
 	}
 
 	@Override

@@ -21,4 +21,9 @@ public class DisponibilitaGiornaliera extends Disponibilita {
 	public void setPresenza(boolean presenza) {
 		this.presenza = presenza;
 	}
+	
+	@Override
+	public String toString() {
+		return GUI.FramePaziente.DATE_SDF.format(giorno);
+	}
 }

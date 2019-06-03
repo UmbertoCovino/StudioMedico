@@ -31,4 +31,9 @@ public class Medico extends Utente {
 		super.print(out);
 		specializzazione.print(out);
 	}
+
+	@Override
+	public String toString() {
+		return getNome() + " " + getCognome() + ", " + specializzazione;
+	}
 }

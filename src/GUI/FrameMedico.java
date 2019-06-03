@@ -36,6 +36,7 @@ public class FrameMedico extends Frame {
 		generaFatturaButton = new JButton("Genera fattura");
 		registraPagamentoVisitaButton = new JButton("Registra pagamento visita");
 		
+		pazienteLabel = new JLabel();
 		pazienteLabel.setVisible(false);
 		
 		registraVisitaButton.setEnabled(false);

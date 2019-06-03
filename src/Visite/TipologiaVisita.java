@@ -78,4 +78,9 @@ public class TipologiaVisita {
 		out.println(costoEsercizio);
 		out.println("Specializzazioni idonee: " + specializzazioniIdonee.toString());
 	}
+
+	@Override
+	public String toString() {
+		return nome;
+	}
 }
