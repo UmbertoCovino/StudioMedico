@@ -11,6 +11,7 @@ public class ReportTipoVisiteBuilder extends ReportBuilder {
 	}
 
 	public Report createRows(String tipologiaReport, ResultSet rs) throws SQLException {
+		report = new ReportTipoVisite();
 		report.setTipologia(tipologiaReport);
 		while(rs.next()) {
 			this.report.addRiga(new RigaTipoVisite(rs.getString("nome"), rs.getFloat("prezzo_fisso"), rs.getFloat("costo_manodopera"), rs.getFloat("costo_esercizio"), rs.getInt("num_visite")));

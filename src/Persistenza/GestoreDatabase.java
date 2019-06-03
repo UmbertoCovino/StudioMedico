@@ -29,6 +29,9 @@ import Amministrazione.Report;
 import Amministrazione.ReportDirector;
 import Amministrazione.ReportMedici;
 import Amministrazione.ReportMediciBuilder;
+import Amministrazione.ReportTipoVisite;
+import Amministrazione.ReportTipoVisiteBuilder;
+import Amministrazione.ReportVisite;
 import Amministrazione.ReportVisiteBuilder;
 import Amministrazione.ReportVisitePerMedico;
 import Amministrazione.ReportVisitePerMedicoBuilder;
@@ -48,7 +51,7 @@ public class GestoreDatabase {
 		try {
 			Class.forName(REFERENCED_LIBRARY);
 		
-			String url = "jdbc:mysql://localhost:3306/" + DB_NAME + "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false";
+			String url = "jdbc:mysql://localhost:3306/" + DB_NAME + "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true";
 			
 			this.connection = DriverManager.getConnection(url, DB_USER, DB_PASSWORD);
 			this.statement= this.connection.createStatement();
@@ -124,19 +127,19 @@ public class GestoreDatabase {
 		
 		try {
 			ResultSet rs = statement.executeQuery(query);
-			if(rs.next())
+			if(rs.next()) {
 				utente = this.getMedico(rs);
-				
-			else {
+				utente.setPassword(rs.getString("password"));
+			} else {
 				query = "select * "
 					  + "from pazienti P "
 					  + "where email = '" + email + "'";
 				
 				rs = statement.executeQuery(query);
-				if(rs.next()) 
+				if(rs.next()) {
 					utente = this.getPaziente(rs);
-				
-				else {
+					utente.setPassword(rs.getString("password"));
+				} else {
 					query = "select * "
 						  + "from proprietari "
 						  + "where email = '" + email + "'";
@@ -566,7 +569,7 @@ public class GestoreDatabase {
 	 * 		Elenco di visite effettuare ordinate per medico
 	 */
 	public Report getReportVisite() {
-		ReportMedici report = null;
+		ReportVisite report = null;
 		
 		String query = "select PR.giorno as giorno, PR.ora as ora, TV.nome as nome_tipologia_visita, M.nome as nome_medico, P.nome as nome_paziente "
 						+ "from visite V "
@@ -578,7 +581,7 @@ public class GestoreDatabase {
 		
 		try {
 			ResultSet rs = statement.executeQuery(query);
-			report = (ReportMedici) ReportDirector.buildPart(new ReportVisiteBuilder(), rs);
+			report = (ReportVisite) ReportDirector.buildPart(new ReportVisiteBuilder(), rs);
 			
 			
 			rs.close();
@@ -653,7 +656,7 @@ public class GestoreDatabase {
 	 * 		Elenco delle tipologie di visite ordinate per numerosita
 	 */
 	public Report getReportTipologieVisite() {
-		ReportMedici report = null;
+		ReportTipoVisite report = null;
 		
 		String query = "select TV.nome as nome, TV.prezzo_fisso as prezzo_fisso, TV.costo_manodopera as costo_manodopera, TV.costo_esercizio as costo_esercizio, count(*) as num_visite "
 				+ "from visite V "
@@ -662,7 +665,7 @@ public class GestoreDatabase {
 		
 		try {
 			ResultSet rs = statement.executeQuery(query);
-			report = (ReportMedici) ReportDirector.buildPart(new ReportVisiteBuilder(), rs);
+			report = (ReportTipoVisite) ReportDirector.buildPart(new ReportTipoVisiteBuilder(), rs);
 					
 			rs.close();
 		} catch (SQLException e) {

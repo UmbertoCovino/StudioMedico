@@ -5,6 +5,10 @@ import java.util.ArrayList;
 public class ReportVisite extends Report {
 	private ArrayList<RigaVisite> risultato;
 
+	public ReportVisite() {
+		risultato = new ArrayList<RigaVisite>();
+	}
+	
 	public ArrayList<RigaVisite> getRisultato() {
 		return risultato;
 	}

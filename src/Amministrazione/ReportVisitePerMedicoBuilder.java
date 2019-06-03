@@ -11,6 +11,7 @@ public class ReportVisitePerMedicoBuilder extends ReportBuilder {
 	}
 
 	public Report createRows(String tipologiaReport, ResultSet rs) throws SQLException {
+		report = new ReportVisitePerMedico();
 		report.setTipologia(tipologiaReport);
 		do {
 			this.report.addRiga(new RigaVisitePerMedico(rs.getDate("giorno"), rs.getDate("ora"), rs.getString("nome_tipologia_visita"), rs.getString("nome_paziente")));

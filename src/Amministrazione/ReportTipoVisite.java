@@ -4,6 +4,12 @@ import java.util.ArrayList;
 
 public class ReportTipoVisite extends Report {
 	private ArrayList<RigaTipoVisite> risultato;
+	
+	
+
+	public ReportTipoVisite() {
+		risultato = new ArrayList<RigaTipoVisite>();
+	}
 
 	public ArrayList<RigaTipoVisite> getRisultato() {
 		return risultato;
