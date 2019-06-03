@@ -115,7 +115,7 @@ public class ListaPrenotazioni extends Frame {
 				public void actionPerformed(ActionEvent e) {
 					GUIControllerPrenotazioni.getInstance().createFormModificaPrenotazione(getParentFrame(), prenotazioni.get(prenotazioniTable.getValueAt(prenotazioniTable.getSelectedRow(), 0)));
 
-					closeFrame();
+					closeFrameWithoutVisualizeParent();
 				}
 			});
 		} else if (operationType == DELETE_OPERATION) {
@@ -136,7 +136,7 @@ public class ListaPrenotazioni extends Frame {
 				public void actionPerformed(ActionEvent e) {
 					GUIControllerPrenotazioni.getInstance().createFormRisultatoVisita(getParentFrame(), prenotazioni.get(prenotazioniTable.getValueAt(prenotazioniTable.getSelectedRow(), 0)));
 
-					closeFrame();
+					closeFrameWithoutVisualizeParent();
 				}
 			});
 		}

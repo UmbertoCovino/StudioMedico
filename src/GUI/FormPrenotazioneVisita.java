@@ -57,6 +57,13 @@ public class FormPrenotazioneVisita extends Frame {
 		confirmButton = new JButton("Conferma");
 		cancelButton = new JButton("Annulla");
 		
+		tipologiaVisitaComboBox.setEnabled(false);
+		medicoComboBox.setEnabled(false);
+		calendarioComboBox.setEnabled(false);
+		orarioComboBox.setEnabled(false);
+
+		confirmButton.setEnabled(false);
+		
 		// caricamento dati in tipologiaVisitaComboBox
 		updateTipologieVisite(GUIControllerPrenotazioni.getInstance().getTipologieVisite());
 		
@@ -72,6 +79,8 @@ public class FormPrenotazioneVisita extends Frame {
 
 	private void updateTipologieVisite(ArrayList<TipologiaVisita> tipologieVisite) {
 		tipologiaVisitaComboBox.setModel(new DefaultComboBoxModel<TipologiaVisita>(tipologieVisite.toArray(new TipologiaVisita[tipologieVisite.size()])));
+		tipologiaVisitaComboBox.setSelectedIndex(-1);
+		tipologiaVisitaComboBox.setEnabled(true);
 	}
 
 	@Override
@@ -82,21 +91,28 @@ public class FormPrenotazioneVisita extends Frame {
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<Medico> medici = GUIControllerPrenotazioni.getInstance().getMedici(((TipologiaVisita) tipologiaVisitaComboBox.getSelectedItem()).getNome());
 				updateMedici(medici);
-			}
-		});
-		
-		medicoComboBox.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				CalendarioDisponibilita calendarioDisponibilita = GUIControllerPrenotazioni.getInstance().getCalendarioDisponibilita(
-						((Medico) medicoComboBox.getSelectedItem()).getCodice(),
-						((TipologiaVisita) tipologiaVisitaComboBox.getSelectedItem()).getNome());
-				updateCalendarioDisponibilita(calendarioDisponibilita);
-			}
-		});
-		
-		calendarioComboBox.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				updateOrari(((DisponibilitaGiornaliera) calendarioComboBox.getSelectedItem()));
+				medicoComboBox.setSelectedIndex(-1);
+				medicoComboBox.setEnabled(true);
+				
+				medicoComboBox.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						CalendarioDisponibilita calendarioDisponibilita = GUIControllerPrenotazioni.getInstance().getCalendarioDisponibilita(
+								((Medico) medicoComboBox.getSelectedItem()).getCodice(),
+								((TipologiaVisita) tipologiaVisitaComboBox.getSelectedItem()).getNome());
+						updateCalendarioDisponibilita(calendarioDisponibilita);
+						calendarioComboBox.setSelectedIndex(-1);
+						calendarioComboBox.setEnabled(true);
+				
+						calendarioComboBox.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								updateOrari(((DisponibilitaGiornaliera) calendarioComboBox.getSelectedItem()));
+								orarioComboBox.setSelectedIndex(-1);
+								orarioComboBox.setEnabled(true);
+								confirmButton.setEnabled(true);
+							}
+						});
+					}
+				});
 			}
 		});
 		
@@ -123,13 +139,13 @@ public class FormPrenotazioneVisita extends Frame {
 	}
 
 	protected boolean dataIsValid() {
-		if (tipologiaVisitaComboBox.getSelectedItem() == null) {
+		if (tipologiaVisitaComboBox.getSelectedIndex() == -1) {
 			JOptionPane.showMessageDialog(this, "Bisogna selezionare una tipologia di visita.", "Attenzione", JOptionPane.WARNING_MESSAGE);
-		} else if (medicoComboBox.getSelectedItem() == null) {
+		} else if (medicoComboBox.getSelectedIndex() == -1) {
 			JOptionPane.showMessageDialog(this, "Bisogna selezionare un medico.", "Attenzione", JOptionPane.WARNING_MESSAGE);
-		} else if (calendarioComboBox.getSelectedItem() == null) {
+		} else if (calendarioComboBox.getSelectedIndex() == -1) {
 			JOptionPane.showMessageDialog(this, "Bisogna selezionare un giorno.", "Attenzione", JOptionPane.WARNING_MESSAGE);
-		} else if (orarioComboBox.getSelectedItem() == null) {
+		} else if (orarioComboBox.getSelectedIndex() == -1) {
 			JOptionPane.showMessageDialog(this, "Bisogna selezionare un orario.", "Attenzione", JOptionPane.WARNING_MESSAGE);
 		} else
 			return true;

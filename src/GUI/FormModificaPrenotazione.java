@@ -56,11 +56,19 @@ public class FormModificaPrenotazione extends Frame {
 		confirmButton = new JButton("Conferma");
 		cancelButton = new JButton("Annulla");
 		
+		tipologiaVisitaComboBox.setEnabled(false);
+		medicoComboBox.setEnabled(false);
+		calendarioComboBox.setEnabled(false);
+		orarioComboBox.setEnabled(false);
+
+		confirmButton.setEnabled(false);
+		
 		// caricamento dati in tipologiaVisitaComboBox
 		updateTipologieVisite(GUIControllerPrenotazioni.getInstance().getTipologieVisite());
 		
 		// aggiunta event handlers
 		addingEventHandlers();
+		settingPrenotazioneData(tipologiaVisita, medico, giorno, ora);
 		
 		// posizionamento elementi
 		elementsPositioning();
@@ -71,6 +79,27 @@ public class FormModificaPrenotazione extends Frame {
 
 	private void updateTipologieVisite(ArrayList<TipologiaVisita> tipologieVisite) {
 		tipologiaVisitaComboBox.setModel(new DefaultComboBoxModel<TipologiaVisita>(tipologieVisite.toArray(new TipologiaVisita[tipologieVisite.size()])));
+		tipologiaVisitaComboBox.setSelectedIndex(-1);
+		tipologiaVisitaComboBox.setEnabled(true);
+	}
+
+	private void settingPrenotazioneData(TipologiaVisita tipologiaVisita, Medico medico, Date giorno, Date ora) {
+		for (int i = 0; i < tipologiaVisitaComboBox.getModel().getSize(); i++)
+            if (tipologiaVisitaComboBox.getModel().getElementAt(i).getId() == tipologiaVisita.getId())
+            	tipologiaVisitaComboBox.setSelectedItem(tipologiaVisitaComboBox.getItemAt(i));
+//        tipologiaVisitaComboBox.actionPerformed(new ActionEvent(arg0, arg1, arg2));
+        
+		for (int i = 0; i < medicoComboBox.getModel().getSize(); i++)
+            if (medicoComboBox.getModel().getElementAt(i).getCodice() == medico.getCodice())
+            	medicoComboBox.setSelectedItem(medicoComboBox.getItemAt(i));
+		
+		for (int i = 0; i < calendarioComboBox.getModel().getSize(); i++)
+            if (calendarioComboBox.getModel().getElementAt(i).getGiorno().equals(giorno))
+            	calendarioComboBox.setSelectedItem(calendarioComboBox.getItemAt(i));
+		
+		for (int i = 0; i < orarioComboBox.getModel().getSize(); i++)
+            if (orarioComboBox.getModel().getElementAt(i).equals(ora))
+            	orarioComboBox.setSelectedItem(orarioComboBox.getItemAt(i));
 	}
 
 	@Override
@@ -81,21 +110,28 @@ public class FormModificaPrenotazione extends Frame {
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<Medico> medici = GUIControllerPrenotazioni.getInstance().getMedici(((TipologiaVisita) tipologiaVisitaComboBox.getSelectedItem()).getNome());
 				updateMedici(medici);
-			}
-		});
-		
-		medicoComboBox.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				CalendarioDisponibilita calendarioDisponibilita = GUIControllerPrenotazioni.getInstance().getCalendarioDisponibilita(
-						((Medico) medicoComboBox.getSelectedItem()).getCodice(),
-						((TipologiaVisita) tipologiaVisitaComboBox.getSelectedItem()).getNome());
-				updateCalendarioDisponibilita(calendarioDisponibilita);
-			}
-		});
-		
-		calendarioComboBox.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				updateOrari(((DisponibilitaGiornaliera) calendarioComboBox.getSelectedItem()));
+				medicoComboBox.setSelectedIndex(-1);
+				medicoComboBox.setEnabled(true);
+				
+				medicoComboBox.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						CalendarioDisponibilita calendarioDisponibilita = GUIControllerPrenotazioni.getInstance().getCalendarioDisponibilita(
+								((Medico) medicoComboBox.getSelectedItem()).getCodice(),
+								((TipologiaVisita) tipologiaVisitaComboBox.getSelectedItem()).getNome());
+						updateCalendarioDisponibilita(calendarioDisponibilita);
+						calendarioComboBox.setSelectedIndex(-1);
+						calendarioComboBox.setEnabled(true);
+				
+						calendarioComboBox.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								updateOrari(((DisponibilitaGiornaliera) calendarioComboBox.getSelectedItem()));
+								orarioComboBox.setSelectedIndex(-1);
+								orarioComboBox.setEnabled(true);
+								confirmButton.setEnabled(true);
+							}
+						});
+					}
+				});
 			}
 		});
 		

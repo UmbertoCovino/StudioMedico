@@ -124,6 +124,10 @@ public abstract class Frame extends JFrame {
 		this.dispose();
 	}
 
+	protected void closeFrameWithoutVisualizeParent() {
+		this.dispose();
+	}
+
 	protected void showFrame() {
 		pack();
 		setMinimumSize(new Dimension(getWidth(), getHeight()));
