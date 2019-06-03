@@ -31,4 +31,9 @@ public class ReportVisitePerMedico extends Report {
 	public void addRiga(RigaVisitePerMedico riga) {
 		risultato.add(riga);
 	}
+
+	@Override
+	public String toString() {
+		return "ReportVisitePerMedico [medico=" + medico + ", risultato=" + risultato + "]";
+	}
 }

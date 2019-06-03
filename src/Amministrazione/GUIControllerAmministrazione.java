@@ -38,6 +38,8 @@ public class GUIControllerAmministrazione {
 	}
 
 	public void createReport(String tipologia, Medico medico) {
-		this.createFormVisualizzazioneReport(gestoreAmministrazione.createReport(tipologia, medico));
+		ReportVisitePerMedico report = (ReportVisitePerMedico) gestoreAmministrazione.createReport(tipologia, medico);
+		System.out.println(report.toString());
+		this.createFormVisualizzazioneReport(report);
 	}
 }

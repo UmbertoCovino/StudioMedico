@@ -597,25 +597,27 @@ public class GestoreDatabase {
 	 * 		SD Report[2] 		TEST ?
 	 * 		Elenco di visite effettuare ordinate per giorno con indicazione del medico
 	 */
-	
 	@SuppressWarnings("null")
 	public Report getReportVisitePerMedico(int codiceMedico) {
 		ReportVisitePerMedico report = null;
 		
-		String query = "select PR.giorno as giorno, PR.ora as ora, TV.nome as nome_tipologia_visita, P.nome as nome_paziente,  M.codice, M.nome, M.cognome, M.email, M.nome_specializzazione"
+		String query = "select PR.giorno as giorno, PR.ora as ora, TV.nome as nome_tipologia_visita, P.nome as nome_paziente, M.codice, M.nome, M.cognome, M.email, M.nome_specializzazione "
 						+ "from visite V "
 						+ "join prenotazioni PR on V.id_prenotazione = PR.id "
 						+ "join tipologie_visite TV on PR.id_tipologia_visita = TV.id "
 						+ "join medici M on PR.codice_medico = M.codice "
 						+ "join pazienti P on PR.codice_fiscale_paziente = P.codice_fiscale "
-						+ "where M.codice = '" + codiceMedico + "'"
+						+ "where M.codice = '" + codiceMedico + "' "
 						+ "order by giorno";
-			
+		
+		System.out.println(query);
 		try {
 			ResultSet rs = statement.executeQuery(query);
 			if (rs.next()) {
-				report.setMedico(GestoreDatabase.getInstance().getMedico(rs));
+				System.out.println("ci sono");
 				report = (ReportVisitePerMedico) ReportDirector.buildPart(new ReportVisitePerMedicoBuilder(), rs);
+				rs.previous();
+				report.setMedico(GestoreDatabase.getInstance().getMedico(rs));
 			}
 								
 			rs.close();
