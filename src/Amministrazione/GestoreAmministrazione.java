@@ -22,13 +22,13 @@ public class GestoreAmministrazione {
 	public Report createReport(String tipologia) {
 		Report report;
 		switch(tipologia) {
-			case "Elenco di visite effettuare ordinate per medico":
+			case "Elenco di visite effettuate ordinate per medico":
 				report = gestoreDB.getReportVisite();
 				break;
 			case "Elenco dei medici ordinati per numero di visite":
 				report = gestoreDB.getReportMedici();
 				break;
-			case "Elenco delle tipologie di visite ordinate per numerosita":
+			case "Elenco delle tipologie di visite ordinate per numerosit�":
 				report = gestoreDB.getReportTipologieVisite();
 				break;
 			default:
