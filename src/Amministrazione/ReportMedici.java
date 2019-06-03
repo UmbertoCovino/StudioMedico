@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 public class ReportMedici extends Report {
 	private ArrayList<RigaMedici> risultato;
+	
+	public ReportMedici() {
+		risultato = new ArrayList<RigaMedici>();
+	}
 
 	public ArrayList<RigaMedici> getRisultato() {
 		return risultato;
