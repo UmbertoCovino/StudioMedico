@@ -971,7 +971,6 @@ public class GestoreDatabase {
 			
 			if(rs.next()) {					
 				Medico medico = this.getMedico(rs.getInt("codice_medico"));
-				
 			}
 			
 			rs.close();
@@ -1087,9 +1086,9 @@ public class GestoreDatabase {
 					 	+ "join tipologie_visite_specializzazioni TVS on TV.id = TVS.id_tipologia_visita "
 					 	+ "join medici M on PR.codice_medico = M.codice "
 					 	+ "join pazienti P on PR.codice_fiscale_paziente = P.codice_fiscale "
-					 	+ "where PR.codice_medico = '" + codiceMedico + "' and TV.nome > '" + nomeTipologiaVisita + "' "
+					 	+ "where PR.codice_medico = '" + codiceMedico + "' and TV.nome = '" + nomeTipologiaVisita + "' "
 			 		 	+ "order by TV.nome";
-		
+//		select * from prenotazioni PR join tipologie_visite TV on PR.id_tipologia_visita = TV.id join tipologie_visite_specializzazioni TVS on TV.id = TVS.id_tipologia_visita join medici M on PR.codice_medico = M.codice join pazienti P on PR.codice_fiscale_paziente = P.codice_fiscale where PR.codice_medico = '' and TV.nome = '' order by TV.nome;
 		try {
 			ResultSet rs = statement.executeQuery(query);
 		
