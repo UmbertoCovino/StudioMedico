@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 
+import Amministrazione.DisponibilitaGiornaliera;
 import Persistenza.GestoreDatabase;
 import Utenti.GestoreUtenti;
 import Utenti.Medico;
@@ -133,8 +134,15 @@ public class ClientProvaDB {
 		Iterator<Medico> i = array.iterator();
 		while(i.hasNext())
 			i.next().print(System.out);
-
-		GestoreDatabase.getInstance().getCalendarioDisponibilita(0, null);
+*/
+		
+		ArrayList<DisponibilitaGiornaliera> array = GestoreDatabase.getInstance().getCalendarioDisponibilita(1).getOrari();
+		if(array.isEmpty())
+			System.out.print("Empty array");
+		Iterator<DisponibilitaGiornaliera> i = array.iterator();
+		while(i.hasNext())
+			i.next().print(System.out);
+/*
 		GestoreDatabase.getInstance().getPrenotazioni(0, null);
 */
 //		Date date = new Date();
