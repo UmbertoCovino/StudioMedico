@@ -1,5 +1,7 @@
 create database studio_medico;
 
+use studio_medico
+
 create table proprietari (
 	id int(10) primary key auto_increment,
 	nome varchar(80) not null,

@@ -1039,7 +1039,8 @@ public class GestoreDatabase {
 	/*
 	 * 		SD Prenota Visita 	WORKING IN PROGRESS 	DA TESTARE
 	 */
-	public CalendarioDisponibilita getCalendarioDisponibilita(int codiceMedico, String nomeTipologiaVisita) {
+	@SuppressWarnings("deprecation")
+	public CalendarioDisponibilita getCalendarioDisponibilita(int codiceMedico) {
 		CalendarioDisponibilita calendarioDisponibilita = null;
 		
 		String query = "select * "
@@ -1047,7 +1048,7 @@ public class GestoreDatabase {
 					 + "join disponibilita D on CD.id = D.id_calendario_disponibilita "
 					 + "join medici M on CD.codice_medico = M.codice "
 					 + "where codice_medico = '" + codiceMedico + "'";
-//		select * from calendario_disponibilita CD join disponibilita D on CD.id = D.id_calendario_disponibilita where codice_medico = '';
+//		select * from calendario_disponibilita CD join disponibilita D on CD.id = D.id_calendario_disponibilita join medici M on CD.codice_medico = M.codice where codice_medico = '';
 		try {
 			ResultSet rs = statement.executeQuery(query);
 			if(rs.next()) {
@@ -1062,12 +1063,6 @@ public class GestoreDatabase {
 				
 				if(!disponibilita.isEmpty())
 					anno = disponibilita.get(1).getGiorno().getYear();
-				
-				ArrayList<Prenotazione> prenotazioni = this.getPrenotazioni(codiceMedico, nomeTipologiaVisita);
-				for(DisponibilitaGiornaliera d: disponibilita)
-					for(Prenotazione p: prenotazioni) {
-//						if(d.getGiorno().equals(p.getGiorno()) && d.getOraInizio())
-					}
 				
 				calendarioDisponibilita = new CalendarioDisponibilita(anno, medico, disponibilita);
 			}
