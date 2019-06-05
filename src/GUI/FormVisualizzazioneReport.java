@@ -124,9 +124,9 @@ public class FormVisualizzazioneReport extends Frame {
 			
 			for (RigaTipoVisite riga: risultato) {
 				tableModel.addRow(new Object[]{riga.getNome(),
-						String.format("ï¿½ %.2f", riga.getPrezzoFisso()),
-						String.format("ï¿½ %.2f", riga.getCostoManodopera()),
-						String.format("ï¿½ %.2f", riga.getCostoEsercizio()),
+						String.format("€ %.2f", riga.getPrezzoFisso()),
+						String.format("€ %.2f", riga.getCostoManodopera()),
+						String.format("€ %.2f", riga.getCostoEsercizio()),
 						riga.getNumeroVisite()});
 			}
 		}
