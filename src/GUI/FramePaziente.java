@@ -11,6 +11,7 @@ import Utenti.Paziente;
 import Visite.GUIControllerPrenotazioni;
 import Visite.GUIControllerVisite;
 
+@SuppressWarnings("serial")
 public class FramePaziente extends Frame {
 	public static final SimpleDateFormat DATE_SDF = new SimpleDateFormat("EEEEEEEEEE d MMMMMMMMMMMMM yyyy");
 	public static final SimpleDateFormat TIME_SDF = new SimpleDateFormat("HH:mm");

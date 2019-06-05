@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -23,8 +22,8 @@ import Amministrazione.RigaMedici;
 import Amministrazione.RigaTipoVisite;
 import Amministrazione.RigaVisite;
 import Amministrazione.RigaVisitePerMedico;
-import Visite.Visita;
 
+@SuppressWarnings("serial")
 public class FormVisualizzazioneReport extends Frame {
 	private JLabel reportLabel;
 	private JTable reportRigheTable;

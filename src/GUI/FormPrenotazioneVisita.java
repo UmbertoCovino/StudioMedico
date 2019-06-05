@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
@@ -18,9 +19,14 @@ import Amministrazione.Disponibilita;
 import Amministrazione.DisponibilitaGiornaliera;
 import Utenti.Medico;
 import Visite.GUIControllerPrenotazioni;
+import Visite.Prenotazione;
 import Visite.TipologiaVisita;
 
 class Time extends java.util.Date {
+
+	public Time(java.util.Date d) {
+		super(d.getYear(), d.getMonth(), d.getDay(), d.getHours(), d.getMinutes(), d.getSeconds());
+	}
 
 	@Override
 	public String toString() {
@@ -97,15 +103,19 @@ public class FormPrenotazioneVisita extends Frame {
 				medicoComboBox.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						CalendarioDisponibilita calendarioDisponibilita = GUIControllerPrenotazioni.getInstance().getCalendarioDisponibilita(
+								((Medico) medicoComboBox.getSelectedItem()).getCodice());
+						ArrayList<Prenotazione> prenotazioniPerMedico = GUIControllerPrenotazioni.getInstance().getPrenotazioni(
 								((Medico) medicoComboBox.getSelectedItem()).getCodice(),
 								((TipologiaVisita) tipologiaVisitaComboBox.getSelectedItem()).getNome());
-						updateCalendarioDisponibilita(calendarioDisponibilita);
+						
+						updateCalendarioDisponibilita(calendarioDisponibilita, prenotazioniPerMedico);
 						calendarioComboBox.setSelectedIndex(-1);
 						calendarioComboBox.setEnabled(true);
 				
 						calendarioComboBox.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
-								updateOrari(((DisponibilitaGiornaliera) calendarioComboBox.getSelectedItem()));
+								updateOrari(((DisponibilitaGiornaliera) calendarioComboBox.getSelectedItem()),
+										filterPrenotationsByDay(prenotazioniPerMedico, ((DisponibilitaGiornaliera) calendarioComboBox.getSelectedItem()).getGiorno()));
 								orarioComboBox.setSelectedIndex(-1);
 								orarioComboBox.setEnabled(true);
 								confirmButton.setEnabled(true);
@@ -138,6 +148,16 @@ public class FormPrenotazioneVisita extends Frame {
 		});
 	}
 
+	private ArrayList<Prenotazione> filterPrenotationsByDay(ArrayList<Prenotazione> prenotazioniPerMedico, Date giorno) {
+		ArrayList<Prenotazione> prenotazioniGiornaliere = new ArrayList<>();
+		
+		for (Prenotazione prenotazione: prenotazioniGiornaliere)
+			if (prenotazione.getGiorno().getDay() == giorno.getDay())
+				prenotazioniGiornaliere.add(prenotazione);
+		
+		return prenotazioniGiornaliere;
+	}
+
 	protected boolean dataIsValid() {
 		if (tipologiaVisitaComboBox.getSelectedIndex() == -1) {
 			JOptionPane.showMessageDialog(this, "Bisogna selezionare una tipologia di visita.", "Attenzione", JOptionPane.WARNING_MESSAGE);
@@ -157,11 +177,29 @@ public class FormPrenotazioneVisita extends Frame {
 		medicoComboBox.setModel(new DefaultComboBoxModel<Medico>(medici.toArray(new Medico[medici.size()])));
 	}
 
-	protected void updateCalendarioDisponibilita(CalendarioDisponibilita calendarioDisponibilita) {
-		calendarioComboBox.setModel(new DefaultComboBoxModel<DisponibilitaGiornaliera>((calendarioDisponibilita.getOrari().toArray(new DisponibilitaGiornaliera[calendarioDisponibilita.getOrari().size()]))));
+	protected void updateCalendarioDisponibilita(CalendarioDisponibilita calendarioDisponibilita, ArrayList<Prenotazione> prenotazioni) {
+		// disponibilità filtrate sulla base delle prenotazioni: se un giorno è saturo di prenotazioni, esso non viene aggiunto alla ComboBox
+		// quindi per ogni disponibilità nel calendario controllo se in quel giorno il numero di pren. è == al maxNumVisite 
+		ArrayList<DisponibilitaGiornaliera> disponibilitaFiltrate = new ArrayList<>(calendarioDisponibilita.getOrari());
+		
+		for (DisponibilitaGiornaliera disponibilita: disponibilitaFiltrate)
+			if (getNumberOfPrenotationsInThisDay(prenotazioni, disponibilita.getGiorno()) == disponibilita.getMaxNumVisite())
+				disponibilitaFiltrate.remove(disponibilita);
+		
+		calendarioComboBox.setModel(new DefaultComboBoxModel<DisponibilitaGiornaliera>(disponibilitaFiltrate.toArray(new DisponibilitaGiornaliera[calendarioDisponibilita.getOrari().size()])));
+	}
+	
+	private int getNumberOfPrenotationsInThisDay(ArrayList<Prenotazione> prenotazioni, Date giorno) {
+		int numberOfPrenotationsInThisDay = 0;
+		
+		for (Prenotazione prenotazione: prenotazioni)
+			if (prenotazione.getGiorno().getDay() == giorno.getDay());
+				numberOfPrenotationsInThisDay++;
+		
+		return numberOfPrenotationsInThisDay;
 	}
 
-	protected void updateOrari(Disponibilita disponibilita) {
+	protected void updateOrari(Disponibilita disponibilita, ArrayList<Prenotazione> prenotazioni) {
 		ArrayList<Time> orari = new ArrayList<>();
 
 		long minutesFromInizioToFine = ((disponibilita.getOraFine().getTime() - disponibilita.getOraInizio().getTime()) / 1000) / 60;
@@ -171,11 +209,18 @@ public class FormPrenotazioneVisita extends Frame {
 		halfHours.setTime(disponibilita.getOraInizio());
 
 		for (int i = 0; i < numberOfHalfHours; i++) {
-			orari.add((Time) halfHours.getTime());
+			orari.add(new Time(halfHours.getTime()));
 //			orari.add(FramePaziente.TIME_SDF.format(halfHours.getTime());
 
 			halfHours.set(Calendar.MINUTE, halfHours.get(Calendar.MINUTE) + 30);
 		}
+		
+		// filtro l'array di halfHours sulla base delle prenotazioni esistenti; per ogni mezza ora in "orari" controllo se c'è già una prenotazione
+		// in quello stesso orario: in tal caso rimuovo lo slot "mezzaorale" da "orari"
+		for (Time orario: orari)
+			for (Prenotazione prenotazione: prenotazioni)
+				if (prenotazione.getGiorno().getHours() == orario.getHours() && prenotazione.getGiorno().getMinutes() == orario.getMinutes())
+					orari.remove(orario);
 
 		orarioComboBox.setModel(new DefaultComboBoxModel<Time>(orari.toArray(new Time[orari.size()])));
 	}

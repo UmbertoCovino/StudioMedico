@@ -8,15 +8,12 @@ import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
-
-import Utenti.GUIControllerUtenti;
 import Visite.GUIControllerPrenotazioni;
 import Visite.Prenotazione;
 
+@SuppressWarnings("serial")
 public class FormRisultatoVisita extends Frame {
 	private Prenotazione prenotazione;
 	

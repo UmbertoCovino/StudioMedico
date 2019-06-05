@@ -1,6 +1,5 @@
 package GUI;
 
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -10,7 +9,9 @@ import javax.swing.JButton;
 import Amministrazione.GUIControllerAmministrazione;
 import Utenti.Utente;
 
+@SuppressWarnings("serial")
 public class FrameProprietario extends Frame {
+	@SuppressWarnings("unused")
 	private Utente proprietario;
 	
 	private JButton creaReportButton;

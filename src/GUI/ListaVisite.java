@@ -4,15 +4,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -23,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
 import Visite.GUIControllerVisite;
 import Visite.Visita;
 
+@SuppressWarnings("serial")
 public class ListaVisite extends Frame {
 	protected static final int STORICO_VISITE_OPERATION = 1,
 							   GENERATE_FATTURA_OPERATION = 2;

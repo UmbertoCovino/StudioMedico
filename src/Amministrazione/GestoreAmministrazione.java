@@ -3,6 +3,8 @@ package Amministrazione;
 import Persistenza.GestoreDatabase;
 
 import java.util.ArrayList;
+
+import GUI.FormCreazioneReport;
 import Utenti.Medico;
 
 public class GestoreAmministrazione {
@@ -20,20 +22,15 @@ public class GestoreAmministrazione {
 	}
 
 	public Report createReport(String tipologia) {
-		Report report;
-		switch(tipologia) {
-			case "Elenco di visite effettuate ordinate per medico":
-				report = gestoreDB.getReportVisite();
-				break;
-			case "Elenco dei medici ordinati per numero di visite":
-				report = gestoreDB.getReportMedici();
-				break;
-			case "Elenco delle tipologie di visite ordinate per numerosit�":
+		Report report = null;
+		
+		if (tipologia.equals(FormCreazioneReport.TIPOLOGIE_REPORT[0]))
+			report = gestoreDB.getReportVisite();
+		else if (tipologia.equals(FormCreazioneReport.TIPOLOGIE_REPORT[2]))
+			report = gestoreDB.getReportMedici();
+		else if (tipologia.equals(FormCreazioneReport.TIPOLOGIE_REPORT[3]))
 				report = gestoreDB.getReportTipologieVisite();
-				break;
-			default:
-				report = null;
-		}
+		
 		return report;
 	}
 
@@ -43,15 +40,10 @@ public class GestoreAmministrazione {
 
 	public Report createReport(String tipologia, Medico medico) {
 		Report report = null;
-		System.out.println(tipologia);
-		System.out.println("Elenco di visite effettuare ordinate per giorno con indicazione del medico");
-		System.out.println(tipologia.equals("Elenco di visite effettuate ordinate per giorno con indicazione del medico"));
-		System.out.println();
-		System.out.println();
-		if(tipologia.equals("Elenco di visite effettuate ordinate per giorno con indicazione del medico")) {
+
+		if (tipologia.equals(FormCreazioneReport.TIPOLOGIE_REPORT[1]))
 			report = gestoreDB.getReportVisitePerMedico(medico.getCodice());
-			System.out.println("ci sono");
-		}
+
 		return report;
 	}
 }

@@ -8,12 +8,12 @@ import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import Utenti.GUIControllerUtenti;
 import Utenti.Paziente;
 
+@SuppressWarnings("serial")
 public class FormRichiestaPaziente extends Frame {
 	private JLabel codiceFiscaleLabel;
 	private JTextField codiceFiscaleTextField;

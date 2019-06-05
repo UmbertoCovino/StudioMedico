@@ -1,32 +1,24 @@
 package GUI;
 
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
-import java.util.Arrays;
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-
 import Amministrazione.GUIControllerAmministrazione;
-import Utenti.GUIControllerUtenti;
 import Utenti.Medico;
-import Visite.GUIControllerPrenotazioni;
-import Visite.TipologiaVisita;
 
+@SuppressWarnings("serial")
 public class FormCreazioneReport extends Frame {
-	private static final String[] TIPOLOGIE_REPORT = new String[]{"Elenco di visite effettuate ordinate per medico",
-																  "Elenco di visite effettuate ordinate per giorno con indicazione del medico", 
-																  "Elenco dei medici ordinati per numero di visite",
-																  "Elenco delle tipologie di visite ordinate per numerosità"};
+	public static final String[] TIPOLOGIE_REPORT = new String[]{"Elenco di visite effettuate ordinate per medico",
+																 "Elenco di visite effettuate ordinate per giorno con indicazione del medico", 
+																 "Elenco dei medici ordinati per numero di visite",
+																 "Elenco delle tipologie di visite ordinate per numerosità"};
 	
 	private JLabel tipologiaReportLabel;
 	private JLabel mediciLabel;

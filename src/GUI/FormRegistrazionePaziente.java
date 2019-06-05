@@ -15,6 +15,7 @@ import Utenti.CodiceFiscaleGiaRegistratoException;
 import Utenti.EmailGiaRegistrataException;
 import Utenti.GUIControllerUtenti;
 
+@SuppressWarnings("serial")
 public class FormRegistrazionePaziente extends Frame {
 	private JLabel nomeLabel;
 	private JLabel cognomeLabel;

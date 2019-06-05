@@ -13,7 +13,9 @@ import Utenti.Paziente;
 import Visite.GUIControllerPrenotazioni;
 import Visite.GUIControllerVisite;
 
+@SuppressWarnings("serial")
 public class FrameMedico extends Frame {
+	@SuppressWarnings("unused")
 	private Medico medico;
 	private Paziente paziente;
 	

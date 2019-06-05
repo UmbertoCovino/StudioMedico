@@ -2,8 +2,6 @@ package GUI;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
-
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -16,6 +14,7 @@ import Utenti.Medico;
 import Utenti.Paziente;
 import Utenti.Utente;
 
+@SuppressWarnings("serial")
 public class FrameLogin extends Frame {
 	private JLabel emailLabel;
 	private JLabel passwordLabel;

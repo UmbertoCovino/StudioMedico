@@ -9,13 +9,10 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-
-import Utenti.GUIControllerUtenti;
 import Visite.Fattura;
 import Visite.GUIControllerVisite;
 
+@SuppressWarnings("serial")
 public class FormPagamento extends Frame {
 	private static final String[] METODI_DI_PAGAMENTO = new String[]{"Contanti",
 																  	 "Bonifico bancario", 

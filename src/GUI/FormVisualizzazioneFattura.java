@@ -7,13 +7,9 @@ import java.awt.event.WindowEvent;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-
-import Utenti.GUIControllerUtenti;
 import Visite.Fattura;
 
+@SuppressWarnings("serial")
 public class FormVisualizzazioneFattura extends Frame {
 	private JLabel idLabel;
 	private JLabel idValueLabel;

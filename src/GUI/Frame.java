@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+@SuppressWarnings("serial")
 public abstract class Frame extends JFrame {
 	private int maxFrameWidth;
 	private int extraFrameWidth;
@@ -49,8 +50,6 @@ public abstract class Frame extends JFrame {
 		
 		this.parentFrame = parentFrame;
 		parentFrame.setVisible(false);
-    	
-		Frame thisFrame = this;
 		
 		addWindowListener(new java.awt.event.WindowAdapter() {
 	        @Override

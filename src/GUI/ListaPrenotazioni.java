@@ -10,11 +10,9 @@ import java.util.TreeMap;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -22,12 +20,12 @@ import javax.swing.table.DefaultTableModel;
 
 import Visite.GUIControllerPrenotazioni;
 import Visite.Prenotazione;
-import Visite.Visita;
 
+@SuppressWarnings("serial")
 public class ListaPrenotazioni extends Frame {
-	protected static final int MODIFY_OPERATION = 1,
-							   DELETE_OPERATION = 2,
-							   REGISTER_VISIT_OPERATION = 3;
+	public static final int MODIFY_OPERATION = 1,
+							DELETE_OPERATION = 2,
+							REGISTER_VISIT_OPERATION = 3;
 	private int operationType;
 	private Map<Integer, Prenotazione> prenotazioni;
 	

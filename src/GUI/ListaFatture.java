@@ -10,22 +10,17 @@ import java.util.TreeMap;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import Visite.Fattura;
-import Visite.GUIControllerPrenotazioni;
 import Visite.GUIControllerVisite;
-import Visite.Prenotazione;
-import Visite.Visita;
 
+@SuppressWarnings("serial")
 public class ListaFatture extends Frame {
 	private Map<Integer, Fattura> fatture;
 	

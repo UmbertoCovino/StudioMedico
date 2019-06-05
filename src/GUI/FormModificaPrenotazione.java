@@ -21,6 +21,7 @@ import Utenti.Medico;
 import Visite.GUIControllerPrenotazioni;
 import Visite.TipologiaVisita;
 
+@SuppressWarnings("serial")
 public class FormModificaPrenotazione extends Frame {
 	private int prenotazioneId;
 	
