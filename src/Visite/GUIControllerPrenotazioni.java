@@ -66,8 +66,8 @@ public class GUIControllerPrenotazioni {
 		return gestorePrenotazioni.getCalendarioDisponibilita(codiceMedico);
 	}
 	
-	public ArrayList<Prenotazione> getPrenotazione(int codiceMedico, String nomeTipologiaVisita){
-		return gestorePrenotazioni.getPrenotazione(codiceMedico, nomeTipologiaVisita);
+	public ArrayList<Prenotazione> getPrenotazioni(int codiceMedico, String nomeTipologiaVisita){
+		return gestorePrenotazioni.getPrenotazioni(codiceMedico, nomeTipologiaVisita);
 	}
 
 	public ArrayList<Medico> getMedici(String nomeTipologiaVisita) {

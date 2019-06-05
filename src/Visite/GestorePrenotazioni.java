@@ -57,7 +57,7 @@ public class GestorePrenotazioni {
 		return gestoreDB.getCalendarioDisponibilita(codiceMedico);
 	}
 	
-	public ArrayList<Prenotazione> getPrenotazione(int codiceMedico, String nomeTipologiaVisita){
+	public ArrayList<Prenotazione> getPrenotazioni(int codiceMedico, String nomeTipologiaVisita){
 		return gestoreDB.getPrenotazioni(codiceMedico, nomeTipologiaVisita);
 	}
 
