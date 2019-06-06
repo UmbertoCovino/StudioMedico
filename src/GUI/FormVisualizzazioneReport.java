@@ -31,12 +31,12 @@ public class FormVisualizzazioneReport extends Frame {
 	private JButton exitButton;
 
 	public FormVisualizzazioneReport(Report report) {
-		super("Lista visite effettuate");
+		super("Risultato report");
 		
 		setExtraFrameWidth(100);
 		
 		// dichiarazione elementi
-		reportLabel = new JLabel("Visite");
+		reportLabel = new JLabel(report.getTipologia());
 		
 		DefaultTableModel tableModel = new DefaultTableModel();
 		reportRigheTable = new JTable(tableModel);

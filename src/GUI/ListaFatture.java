@@ -106,7 +106,7 @@ public class ListaFatture extends Frame {
 			public void actionPerformed(ActionEvent e) {
 				GUIControllerVisite.getInstance().createFormPagamento(getParentFrame(), fatture.get(fattureTable.getValueAt(fattureTable.getSelectedRow(), 0)));
 
-				closeFrame();
+				closeFrameWithoutVisualizeParent();
 			}
 		});
 		

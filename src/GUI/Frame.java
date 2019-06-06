@@ -135,6 +135,12 @@ public abstract class Frame extends JFrame {
 		setVisible(true);
 	}
 
+	protected void refreshFrameDims() {
+		pack();
+		setMinimumSize(new Dimension(getWidth(), getHeight()));
+		setSize(new Dimension(getWidth() + extraFrameWidth, getHeight()));
+	}
+
 	protected abstract void addingEventHandlers();
 
 	protected abstract void elementsPositioning();

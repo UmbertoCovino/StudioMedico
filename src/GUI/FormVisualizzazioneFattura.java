@@ -1,5 +1,6 @@
 package GUI;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -24,7 +25,7 @@ public class FormVisualizzazioneFattura extends Frame {
 	public FormVisualizzazioneFattura(Frame parentFrame, Fattura fattura) {
 		super("Visualizzazione fattura", parentFrame);
 		
-		setExtraFrameWidth(100);
+		setExtraFrameWidth(20);
 		
 		// dichiarazione elementi
 		idLabel = new JLabel("Fattura N.");
@@ -33,10 +34,10 @@ public class FormVisualizzazioneFattura extends Frame {
 		pazienteLabel = new JLabel("Intestata a");
 		
 		idValueLabel = new JLabel(fattura.getId() + "");
-		importoValueLabel = new JLabel(fattura.getImporto() + "");
+		importoValueLabel = new JLabel(String.format("€ %.2f", fattura.getImporto()));
 		visitaValueLabel = new JLabel(fattura.getVisita().getTipologiaVisita().getNome() + ", il " +
 				fattura.getVisita().getGiorno() + " alle " +
-				fattura.getVisita().getOra() + ", dal medico " +
+				FramePaziente.TIME_SDF.format(fattura.getVisita().getOra()) + ", dal medico " +
 				fattura.getVisita().getMedico().getNome() + " " +
 				fattura.getVisita().getMedico().getCognome());
 		pazienteValueLabel = new JLabel(fattura.getPaziente().getNome() + " " +
@@ -45,6 +46,11 @@ public class FormVisualizzazioneFattura extends Frame {
 				fattura.getPaziente().getEmail());
 		
 		cancelButton = new JButton("Annulla");
+		
+		idValueLabel.setFont(idValueLabel.getFont().deriveFont(idValueLabel.getFont().getStyle() & ~Font.BOLD));
+		importoValueLabel.setFont(importoValueLabel.getFont().deriveFont(importoValueLabel.getFont().getStyle() & ~Font.BOLD));
+		visitaValueLabel.setFont(visitaValueLabel.getFont().deriveFont(visitaValueLabel.getFont().getStyle() & ~Font.BOLD));
+		pazienteValueLabel.setFont(pazienteValueLabel.getFont().deriveFont(pazienteValueLabel.getFont().getStyle() & ~Font.BOLD));
 		
 		// aggiunta event handlers
 		addingEventHandlers();
@@ -77,16 +83,18 @@ public class FormVisualizzazioneFattura extends Frame {
 		layout.setHorizontalGroup(
 			layout.createParallelGroup(GroupLayout.Alignment.CENTER)
 		   		.addGroup(layout.createSequentialGroup()
+					.addGap(0, 0, Short.MAX_VALUE)
 		   			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
 		   				.addComponent(idLabel)
 		   				.addComponent(importoLabel)
 		   				.addComponent(visitaLabel)
 		   				.addComponent(pazienteLabel))
-		   			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+		   			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 		   				.addComponent(idValueLabel)
 		   				.addComponent(importoValueLabel)
 		   				.addComponent(visitaValueLabel)
-		   				.addComponent(pazienteValueLabel)))
+		   				.addComponent(pazienteValueLabel))
+					.addGap(0, 0, Short.MAX_VALUE))
 		   		.addGroup(layout.createSequentialGroup()
 		   			.addComponent(cancelButton))
 		);

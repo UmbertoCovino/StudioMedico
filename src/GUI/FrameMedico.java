@@ -90,6 +90,7 @@ public class FrameMedico extends Frame {
 		if (paziente != null) {
 			pazienteLabel.setText("Dati paziente ricercato: " + paziente.getNome() + " " + paziente.getCognome() + ", " + paziente.getCodiceFiscale() + ", " + paziente.getEmail());
 			pazienteLabel.setVisible(true);
+			refreshFrameDims();
 			
 			registraVisitaButton.setEnabled(true);
 			generaFatturaButton.setEnabled(true);
