@@ -89,6 +89,7 @@ public class FormVisualizzazioneFattura extends Frame {
 		   				.addComponent(importoLabel)
 		   				.addComponent(visitaLabel)
 		   				.addComponent(pazienteLabel))
+					.addGap(10)
 		   			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 		   				.addComponent(idValueLabel)
 		   				.addComponent(importoValueLabel)

@@ -1,5 +1,6 @@
 package GUI;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -43,6 +44,9 @@ public class FormCreazioneReport extends Frame {
 		mediciLabel.setVisible(false);
 		medicoComboBox.setVisible(false);
 		
+		tipologiaReportComboBox.setSelectedItem(null);
+		confirmButton.setEnabled(false);
+		
 		// aggiunta event handlers
 		addingEventHandlers();
 		
@@ -58,21 +62,35 @@ public class FormCreazioneReport extends Frame {
 		Frame thisFrame = this;
 		
 		tipologiaReportComboBox.addActionListener(new ActionListener() {
+			private Dimension savedSize;
+
 			public void actionPerformed(ActionEvent e) {
 				if (tipologiaReportComboBox.getSelectedIndex() == 1) {
 					ArrayList<Medico> medici = GUIControllerAmministrazione.getInstance().getMedici();
 					updateMedici(medici);
 					
+					savedSize = thisFrame.getMinimumSize();
+					medicoComboBox.setSelectedItem(null);
 					mediciLabel.setVisible(true);
 					medicoComboBox.setVisible(true);
-					pack();
+					confirmButton.setEnabled(false);
+					refreshFrameDims();
 				} else {
+					confirmButton.setEnabled(true);
+					
 					if (mediciLabel.isVisible() && medicoComboBox.isVisible()) {
 						mediciLabel.setVisible(false);
 						medicoComboBox.setVisible(false);
-						pack();
+						thisFrame.setMinimumSize(savedSize);
+						refreshFrameDims();
 					}
 				}
+			}
+		});
+		
+		medicoComboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				confirmButton.setEnabled(true);
 			}
 		});
 		

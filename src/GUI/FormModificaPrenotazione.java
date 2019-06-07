@@ -266,7 +266,6 @@ public class FormModificaPrenotazione extends Frame {
 			halfHours.set(Calendar.MINUTE, halfHours.get(Calendar.MINUTE) + 30);
 		}
 		
-		System.out.println(orari);
 		// filtro l'array di halfHours sulla base delle prenotazioni esistenti; per ogni mezza ora in "orari" controllo se c'è già una prenotazione
 		// in quello stesso orario: in tal caso rimuovo lo slot "mezzaorale" da "orari"
 		ArrayList<Time> orariFiltrati = new ArrayList<>(orari);
