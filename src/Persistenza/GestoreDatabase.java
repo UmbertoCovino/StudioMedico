@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+
 import Utenti.Medico;
 import Utenti.MedicoHandler;
 import Visite.Prenotazione;
@@ -597,7 +599,6 @@ public class GestoreDatabase {
 	 * 		SD Report[2] 		TEST ?
 	 * 		Elenco di visite effettuare ordinate per giorno con indicazione del medico
 	 */
-	@SuppressWarnings("null")
 	public Report getReportVisitePerMedico(int codiceMedico) {
 		ReportVisitePerMedico report = null;
 		
@@ -701,7 +702,7 @@ public class GestoreDatabase {
 	private Prenotazione getPrenotazione(ResultSet rs) throws SQLException {
 		int id = rs.getInt("PR.id");
 		Date giorno = rs.getDate("PR.giorno");
-		Date ora = rs.getTime("PR.ora");
+		Date ora = rs.getTime("PR.ora", Calendar.getInstance());
 		Medico medico = this.getMedico(rs);
 		Paziente paziente = this.getPaziente(rs);
 		TipologiaVisita tipologiaVisita = this.getTipologiaVisita(rs);
@@ -970,7 +971,7 @@ public class GestoreDatabase {
 			ResultSet rs = statement.executeQuery(query);
 			
 			if(rs.next()) {					
-				Medico medico = this.getMedico(rs.getInt("codice_medico"));
+//				Medico medico = this.getMedico(rs.getInt("codice_medico"));
 			}
 			
 			rs.close();
@@ -1146,7 +1147,7 @@ public class GestoreDatabase {
 	public void insertPrenotazione(Prenotazione p) {
 		String insert = "insert into prenotazioni (giorno, ora, id_tipologia_visita, codice_medico, codice_fiscale_paziente) "
 						+ "values ('" + new SimpleDateFormat("YYYY-MM-dd").format(p.getGiorno()) + "', "
-						+ "'" + new SimpleDateFormat("hh:mm:ss").format(p.getOra()) + "', "
+						+ "'" + new SimpleDateFormat("HH:mm:SS").format(p.getOra()) + "', "
 						+ "'" + p.getTipologiaVisita().getId() + "', '" + p.getMedico().getCodice() + "', '" + p.getPaziente().getCodiceFiscale() + "')";
 		try {
 			statement.executeUpdate(insert);
@@ -1162,7 +1163,7 @@ public class GestoreDatabase {
 	public void updatePrenotazione(int id, Date giorno, Date ora, TipologiaVisita tipologiaVisita, Medico medico) {
 		String update = "update prenotazioni set "
 						+ "giorno = '" + new SimpleDateFormat("YYYY-MM-dd").format(giorno) + "', "
-						+ "ora = '" + new SimpleDateFormat("hh:mm:ss").format(ora) + "', "
+						+ "ora = '" + new SimpleDateFormat("HH:mm:SS").format(ora) + "', "
 						+ "id_tipologia_visita = '" + tipologiaVisita.getId() + "', codice_medico = '" + medico.getCodice() + "' where id = '" + id + "'";
 		try {
 			statement.executeUpdate(update);
