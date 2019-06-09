@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+
 import Visite.Fattura;
 import Visite.GUIControllerVisite;
 
@@ -20,7 +21,7 @@ public class FormPagamento extends Frame {
 															  		 "Assegno"};
 	
 	private JLabel metodoPagamentoLabel;
-	private JComboBox<String> metodoPagamentoComboBox;
+	private JComboBox<Object> metodoPagamentoComboBox;
 	private JButton confirmButton;
 	private JButton cancelButton;
 
@@ -32,10 +33,12 @@ public class FormPagamento extends Frame {
 		// dichiarazione elementi
 		metodoPagamentoLabel = new JLabel("Metodo di pagamento");
 		
-		metodoPagamentoComboBox = new JComboBox<>(METODI_DI_PAGAMENTO);
+		metodoPagamentoComboBox = new JComboBox<>();
 		
 		confirmButton = new JButton("Conferma");
 		cancelButton = new JButton("Annulla");
+		
+		fillComboBox(metodoPagamentoComboBox, METODI_DI_PAGAMENTO);
 		
 		// aggiunta event handlers
 		addingEventHandlers();
@@ -53,10 +56,12 @@ public class FormPagamento extends Frame {
 		
 		confirmButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				GUIControllerVisite.getInstance().notifyData(((String) metodoPagamentoComboBox.getSelectedItem()).trim());
-
-				JOptionPane.showMessageDialog(thisFrame, "Il pagamento è stato registrato con successo!", "Pagamento registrato", JOptionPane.INFORMATION_MESSAGE);
-				closeFrame();
+				if (dataIsValid()) {
+					GUIControllerVisite.getInstance().notifyData(((String) metodoPagamentoComboBox.getSelectedItem()).trim());
+	
+					JOptionPane.showMessageDialog(thisFrame, "Il pagamento è stato registrato con successo!", "Pagamento registrato", JOptionPane.INFORMATION_MESSAGE);
+					closeFrame();
+				}
 			}
 		});
 		
@@ -65,6 +70,15 @@ public class FormPagamento extends Frame {
 				thisFrame.dispatchEvent(new WindowEvent(thisFrame, WindowEvent.WINDOW_CLOSING));
 			}
 		});
+	}
+
+	protected boolean dataIsValid() {
+		if (metodoPagamentoComboBox.getSelectedIndex() == 0) {
+			JOptionPane.showMessageDialog(this, "Bisogna selezionare un metodo di pagamento.", "Attenzione", JOptionPane.WARNING_MESSAGE);
+		} else
+			return true;
+		
+		return false;
 	}
 
 	@Override

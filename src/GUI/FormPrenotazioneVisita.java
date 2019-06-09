@@ -41,10 +41,10 @@ public class FormPrenotazioneVisita extends Frame {
 	private JLabel medicoLabel;
 	private JLabel calendarioLabel;
 	private JLabel orarioLabel;
-	private JComboBox<TipologiaVisita> tipologiaVisitaComboBox;
-	private JComboBox<Medico> medicoComboBox;
-	private JComboBox<DisponibilitaGiornaliera> calendarioComboBox;
-	private JComboBox<Time> orarioComboBox;
+	private JComboBox<Object> tipologiaVisitaComboBox;
+	private JComboBox<Object> medicoComboBox;
+	private JComboBox<Object> calendarioComboBox;
+	private JComboBox<Object> orarioComboBox;
 	private JButton confirmButton;
 	private JButton cancelButton;
 	
@@ -71,8 +71,6 @@ public class FormPrenotazioneVisita extends Frame {
 		medicoComboBox.setEnabled(false);
 		calendarioComboBox.setEnabled(false);
 		orarioComboBox.setEnabled(false);
-
-		confirmButton.setEnabled(false);
 		
 		// caricamento dati in tipologiaVisitaComboBox
 		updateTipologieVisite(GUIControllerPrenotazioni.getInstance().getTipologieVisite());
@@ -88,8 +86,7 @@ public class FormPrenotazioneVisita extends Frame {
 	}
 
 	private void updateTipologieVisite(ArrayList<TipologiaVisita> tipologieVisite) {
-		tipologiaVisitaComboBox.setModel(new DefaultComboBoxModel<TipologiaVisita>(tipologieVisite.toArray(new TipologiaVisita[tipologieVisite.size()])));
-		tipologiaVisitaComboBox.setSelectedItem(null);
+		fillComboBox(tipologiaVisitaComboBox, castArrayList(tipologieVisite));
 		tipologiaVisitaComboBox.setEnabled(true);
 	}
 
@@ -102,19 +99,18 @@ public class FormPrenotazioneVisita extends Frame {
 				ArrayList<Medico> medici = GUIControllerPrenotazioni.getInstance().getMedici(((TipologiaVisita) tipologiaVisitaComboBox.getSelectedItem()).getNome());
 				updateMedici(medici);
 				
-				confirmButton.setEnabled(false);
-				medicoComboBox.setSelectedItem(null);
 				medicoComboBox.setEnabled(true);
-				((DefaultComboBoxModel<DisponibilitaGiornaliera>) calendarioComboBox.getModel()).removeAllElements();
+				((DefaultComboBoxModel<Object>) calendarioComboBox.getModel()).removeAllElements();
 				calendarioComboBox.setEnabled(false);
-				((DefaultComboBoxModel<Time>) orarioComboBox.getModel()).removeAllElements();
+				((DefaultComboBoxModel<Object>) orarioComboBox.getModel()).removeAllElements();
 				orarioComboBox.setEnabled(false);
+				refreshFrameDims();
 			}
 		});
 				
 		medicoComboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (medicoComboBox.getSelectedItem() != null) {
+				if (medicoComboBox.getSelectedIndex() != 0) {
 					CalendarioDisponibilita calendarioDisponibilita = GUIControllerPrenotazioni.getInstance().getCalendarioDisponibilita(
 							((Medico) medicoComboBox.getSelectedItem()).getCodice());
 					prenotazioniPerMedico = GUIControllerPrenotazioni.getInstance().getPrenotazioni(
@@ -123,31 +119,29 @@ public class FormPrenotazioneVisita extends Frame {
 					
 					updateCalendarioDisponibilita(calendarioDisponibilita, prenotazioniPerMedico);
 
-					confirmButton.setEnabled(false);
-					calendarioComboBox.setSelectedItem(null);
 					calendarioComboBox.setEnabled(true);
-					((DefaultComboBoxModel<Time>) orarioComboBox.getModel()).removeAllElements();
+					((DefaultComboBoxModel<Object>) orarioComboBox.getModel()).removeAllElements();
 					orarioComboBox.setEnabled(false);
+					refreshFrameDims();
 				}
 			}
 		});
 		
 		calendarioComboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (calendarioComboBox.getSelectedItem() != null) {
+				if (calendarioComboBox.getSelectedIndex() != 0) {
 					updateOrari(((DisponibilitaGiornaliera) calendarioComboBox.getSelectedItem()),
 							filterPrenotationsByDay(prenotazioniPerMedico, ((DisponibilitaGiornaliera) calendarioComboBox.getSelectedItem()).getGiorno()));
 
-					confirmButton.setEnabled(false);
-					orarioComboBox.setSelectedItem(null);
 					orarioComboBox.setEnabled(true);
+					refreshFrameDims();
 				}
 			}
 		});
 		
 		orarioComboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (orarioComboBox.getSelectedItem() != null) {
+				if (orarioComboBox.getSelectedIndex() != 0) {
 					confirmButton.setEnabled(true);
 				}
 			}
@@ -185,15 +179,14 @@ public class FormPrenotazioneVisita extends Frame {
 		return prenotazioniGiornaliere;
 	}
 
-	// inutile però per sicurezza è meglio tenerlo
 	protected boolean dataIsValid() {
-		if (tipologiaVisitaComboBox.getSelectedItem() == null) {
+		if (tipologiaVisitaComboBox.getSelectedIndex() == 0) {
 			JOptionPane.showMessageDialog(this, "Bisogna selezionare una tipologia di visita.", "Attenzione", JOptionPane.WARNING_MESSAGE);
-		} else if (medicoComboBox.getSelectedItem() == null) {
+		} else if (medicoComboBox.getSelectedIndex() == 0) {
 			JOptionPane.showMessageDialog(this, "Bisogna selezionare un medico.", "Attenzione", JOptionPane.WARNING_MESSAGE);
-		} else if (calendarioComboBox.getSelectedItem() == null) {
+		} else if (calendarioComboBox.getSelectedIndex() == 0) {
 			JOptionPane.showMessageDialog(this, "Bisogna selezionare un giorno.", "Attenzione", JOptionPane.WARNING_MESSAGE);
-		} else if (orarioComboBox.getSelectedItem() == null) {
+		} else if (orarioComboBox.getSelectedIndex() == 0) {
 			JOptionPane.showMessageDialog(this, "Bisogna selezionare un orario.", "Attenzione", JOptionPane.WARNING_MESSAGE);
 		} else
 			return true;
@@ -202,7 +195,7 @@ public class FormPrenotazioneVisita extends Frame {
 	}
 
 	protected void updateMedici(ArrayList<Medico> medici) {
-		medicoComboBox.setModel(new DefaultComboBoxModel<Medico>(medici.toArray(new Medico[medici.size()])));
+		fillComboBox(medicoComboBox, castArrayList(medici));
 	}
 
 	protected void updateCalendarioDisponibilita(CalendarioDisponibilita calendarioDisponibilita, ArrayList<Prenotazione> prenotazioni) {
@@ -214,7 +207,7 @@ public class FormPrenotazioneVisita extends Frame {
 			if (getNumberOfPrenotationsInThisDay(prenotazioni, disponibilita.getGiorno()) == disponibilita.getMaxNumVisite())
 				disponibilitaFiltrate.remove(disponibilita);
 		
-		calendarioComboBox.setModel(new DefaultComboBoxModel<DisponibilitaGiornaliera>(disponibilitaFiltrate.toArray(new DisponibilitaGiornaliera[calendarioDisponibilita.getOrari().size()])));
+		fillComboBox(calendarioComboBox, castArrayList(disponibilitaFiltrate));
 	}
 	
 	private int getNumberOfPrenotationsInThisDay(ArrayList<Prenotazione> prenotazioni, Date giorno) {
@@ -251,7 +244,7 @@ public class FormPrenotazioneVisita extends Frame {
 				if (prenotazione.getOra().getHours() == orario.getHours() && prenotazione.getOra().getMinutes() == orario.getMinutes())
 					orariFiltrati.remove(orario);
 
-		orarioComboBox.setModel(new DefaultComboBoxModel<Time>(orariFiltrati.toArray(new Time[orariFiltrati.size()])));
+		fillComboBox(orarioComboBox, castArrayList(orariFiltrati));
 	}
 
 	@Override

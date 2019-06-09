@@ -118,7 +118,7 @@ public class ListaVisite extends Frame {
 				public void actionPerformed(ActionEvent e) {
 					GUIControllerVisite.getInstance().printFattura(getParentFrame(), visite.get(visiteTable.getValueAt(visiteTable.getSelectedRow(), 0)));
 
-					closeFrameWithoutVisualizeParent();
+					closeFrame();
 				}
 			});
 		}

@@ -45,7 +45,7 @@ public class FormVisualizzazioneFattura extends Frame {
 				fattura.getPaziente().getCodiceFiscale() + ", " +
 				fattura.getPaziente().getEmail());
 		
-		cancelButton = new JButton("Annulla");
+		cancelButton = new JButton("Esci");
 		
 		idValueLabel.setFont(idValueLabel.getFont().deriveFont(idValueLabel.getFont().getStyle() & ~Font.BOLD));
 		importoValueLabel.setFont(importoValueLabel.getFont().deriveFont(importoValueLabel.getFont().getStyle() & ~Font.BOLD));

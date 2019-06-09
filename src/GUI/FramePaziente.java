@@ -6,6 +6,8 @@ import java.text.SimpleDateFormat;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 import Utenti.Paziente;
 import Visite.GUIControllerPrenotazioni;
@@ -18,6 +20,7 @@ public class FramePaziente extends Frame {
 	
 	private Paziente paziente;
 	
+	private JLabel pazienteLabel;
 	private JButton prenotaVisitaButton;
 	private JButton modificaPrenotazioneVisitaButton;
 	private JButton eliminaPrenotazioneVisitaButton;
@@ -28,9 +31,11 @@ public class FramePaziente extends Frame {
 		
 		this.paziente = paziente;
 		
-		setExtraFrameWidth(50);
+		setExtraFrameWidth(10);
 		
 		// dichiarazione elementi
+		pazienteLabel = new JLabel("<html><center><h3>Benvenuto " + paziente.getNome() + " " + paziente.getCognome() + "!</h3>Questa è la tua area riservata. Da qui puoi utilizzare i servizi del sistema.</center></html>", SwingConstants.CENTER);
+		
 		prenotaVisitaButton = new JButton("Prenota visita");
 		modificaPrenotazioneVisitaButton = new JButton("Modifica prenotazione visita");
 		eliminaPrenotazioneVisitaButton = new JButton("Elimina prenotazione visita");
@@ -84,6 +89,7 @@ public class FramePaziente extends Frame {
 		
 		layout.setHorizontalGroup(
 			layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+				.addComponent(pazienteLabel)
 				.addGroup(layout.createSequentialGroup()
 					.addGap(0, 0, Short.MAX_VALUE)
 					.addComponent(prenotaVisitaButton)
@@ -95,6 +101,8 @@ public class FramePaziente extends Frame {
 		
 		layout.setVerticalGroup(
 			layout.createSequentialGroup()
+				.addComponent(pazienteLabel)
+				.addGap(20)
 				.addComponent(prenotaVisitaButton)
 	   			.addComponent(modificaPrenotazioneVisitaButton)
 	   			.addComponent(eliminaPrenotazioneVisitaButton)

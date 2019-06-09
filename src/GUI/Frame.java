@@ -1,6 +1,10 @@
 package GUI;
 
 import java.awt.Dimension;
+import java.util.ArrayList;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -139,6 +143,38 @@ public abstract class Frame extends JFrame {
 		pack();
 		setMinimumSize(new Dimension(getWidth(), getHeight()));
 		setSize(new Dimension(getWidth() + extraFrameWidth, getHeight()));
+	}
+
+	protected void fillComboBox(JComboBox<Object> comboBox, Object[] array) {
+		DefaultComboBoxModel<Object> dcbm = new DefaultComboBoxModel<Object>();
+		
+		dcbm.addElement("<html><span style='font-weight:normal'><i>Seleziona un elemento...</i></span></html>");
+		
+		for (Object object: array)
+			dcbm.addElement(object);
+		
+		comboBox.setModel(dcbm);
+	}
+
+	protected void fillComboBox(JComboBox<Object> comboBox, ArrayList<Object> arrayList) {
+		DefaultComboBoxModel<Object> dcbm = new DefaultComboBoxModel<Object>();
+		
+		dcbm.addElement("<html><span style='font-weight:normal'><i>Seleziona un elemento...</i></span></html>");
+		
+		for (Object object: arrayList)
+			dcbm.addElement(object);
+		
+		comboBox.setModel(dcbm);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static <newType, oldType> ArrayList<newType> castArrayList(ArrayList<oldType> list) {
+	    ArrayList<newType> newlyCastedArrayList = new ArrayList<newType>();
+	    
+	    for (oldType listObject : list)
+	        newlyCastedArrayList.add((newType) listObject);
+	    
+	    return newlyCastedArrayList;
 	}
 
 	protected abstract void addingEventHandlers();

@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -23,8 +22,8 @@ public class FormCreazioneReport extends Frame {
 	
 	private JLabel tipologiaReportLabel;
 	private JLabel mediciLabel;
-	private JComboBox<String> tipologiaReportComboBox;
-	private JComboBox<Medico> medicoComboBox;
+	private JComboBox<Object> tipologiaReportComboBox;
+	private JComboBox<Object> medicoComboBox;
 	private JButton confirmButton;
 	private JButton cancelButton;
 
@@ -35,17 +34,16 @@ public class FormCreazioneReport extends Frame {
 		tipologiaReportLabel = new JLabel("Tipologia report");
 		mediciLabel = new JLabel("Medico");
 		
-		tipologiaReportComboBox = new JComboBox<>(TIPOLOGIE_REPORT);
+		tipologiaReportComboBox = new JComboBox<>();
 		medicoComboBox = new JComboBox<>();
 		
 		confirmButton = new JButton("Conferma");
 		cancelButton = new JButton("Annulla");
+
+		fillComboBox(tipologiaReportComboBox, TIPOLOGIE_REPORT);
 		
 		mediciLabel.setVisible(false);
 		medicoComboBox.setVisible(false);
-		
-		tipologiaReportComboBox.setSelectedItem(null);
-		confirmButton.setEnabled(false);
 		
 		// aggiunta event handlers
 		addingEventHandlers();
@@ -65,19 +63,15 @@ public class FormCreazioneReport extends Frame {
 			private Dimension savedSize;
 
 			public void actionPerformed(ActionEvent e) {
-				if (tipologiaReportComboBox.getSelectedIndex() == 1) {
+				if (tipologiaReportComboBox.getSelectedIndex() == 2) {
 					ArrayList<Medico> medici = GUIControllerAmministrazione.getInstance().getMedici();
 					updateMedici(medici);
 					
 					savedSize = thisFrame.getMinimumSize();
-					medicoComboBox.setSelectedItem(null);
 					mediciLabel.setVisible(true);
 					medicoComboBox.setVisible(true);
-					confirmButton.setEnabled(false);
 					refreshFrameDims();
 				} else {
-					confirmButton.setEnabled(true);
-					
 					if (mediciLabel.isVisible() && medicoComboBox.isVisible()) {
 						mediciLabel.setVisible(false);
 						medicoComboBox.setVisible(false);
@@ -88,16 +82,10 @@ public class FormCreazioneReport extends Frame {
 			}
 		});
 		
-		medicoComboBox.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				confirmButton.setEnabled(true);
-			}
-		});
-		
 		confirmButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (dataIsValid()) {
-					if (tipologiaReportComboBox.getSelectedIndex() == 1) {
+					if (tipologiaReportComboBox.getSelectedIndex() == 2) {
 						GUIControllerAmministrazione.getInstance().createReport((String) tipologiaReportComboBox.getSelectedItem(), (Medico) medicoComboBox.getSelectedItem());
 					} else {
 						GUIControllerAmministrazione.getInstance().createReport((String) tipologiaReportComboBox.getSelectedItem());
@@ -114,9 +102,9 @@ public class FormCreazioneReport extends Frame {
 	}
 
 	protected boolean dataIsValid() {
-		if (tipologiaReportComboBox.getSelectedItem() == null) {
+		if (tipologiaReportComboBox.getSelectedIndex() == 0) {
 			JOptionPane.showMessageDialog(this, "Il campo tipologia report non può essere vuoto.", "Attenzione", JOptionPane.WARNING_MESSAGE);
-		} else if (tipologiaReportComboBox.getSelectedIndex() == 1 && medicoComboBox.getSelectedItem() == null) {
+		} else if (tipologiaReportComboBox.getSelectedIndex() == 2 && medicoComboBox.getSelectedIndex() == 0) {
 			JOptionPane.showMessageDialog(this, "Il campo medico non può essere vuoto.", "Attenzione", JOptionPane.WARNING_MESSAGE);
 		} else
 			return true;
@@ -125,7 +113,7 @@ public class FormCreazioneReport extends Frame {
 	}
 	
 	protected void updateMedici(ArrayList<Medico> medici) {
-		medicoComboBox.setModel(new DefaultComboBoxModel<Medico>(medici.toArray(new Medico[medici.size()])));
+		fillComboBox(medicoComboBox, castArrayList(medici));
 	}
 
 	@Override
