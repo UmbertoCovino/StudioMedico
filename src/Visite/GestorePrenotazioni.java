@@ -69,7 +69,7 @@ public class GestorePrenotazioni {
 		return gestoreDB.getTipologieVisite();
 	}
 
-	public ArrayList<Prenotazione> getPrenotazioniFromDate(String codiceFiscalePaziente, Date date) {
-		return gestoreDB.getPrenotazioniFromDate(codiceFiscalePaziente, date);
+	public ArrayList<Prenotazione> getPrenotazioniFromDate(String codiceFiscalePaziente, int codiceMedico, Date date) {
+		return gestoreDB.getPrenotazioniFromDate(codiceFiscalePaziente, codiceMedico, date);
 	}
 }
