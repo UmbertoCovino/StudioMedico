@@ -31,6 +31,10 @@ public class GestoreVisite {
 	public ArrayList<Visita> getVisite(String codiceFiscalePaziente) {
 		return gestoreDB.getVisite(codiceFiscalePaziente);
 	}
+	
+	public ArrayList<Visita> getVisiteByMedico(String codiceFiscalePaziente, int codiceMedico) {
+		return gestoreDB.getVisiteByMedico(codiceFiscalePaziente, codiceMedico);
+	}
 
 	public void printFattura(Visita visita) {
 		Fattura fattura = new Fattura(visita);

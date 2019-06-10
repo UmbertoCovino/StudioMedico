@@ -355,7 +355,7 @@ public class GestoreDatabase {
 	/*
 	 * 		SD Esegue visita		TEST OK 
 	 */
-	public ArrayList<Prenotazione> getPrenotazioniFromDate(String codiceFiscalePaziente, Date date) {
+	public ArrayList<Prenotazione> getPrenotazioniFromDate(String codiceFiscalePaziente, int codiceMedico, Date date) {
 		ArrayList<Prenotazione> prenotazioni = new ArrayList<Prenotazione>();
 		
 		String query = "select * "
@@ -364,7 +364,11 @@ public class GestoreDatabase {
 					 	+ "join tipologie_visite_specializzazioni TVS on TV.id = TVS.id_tipologia_visita "
 					 	+ "join medici M on PR.codice_medico = M.codice "
 					 	+ "join pazienti P on PR.codice_fiscale_paziente = P.codice_fiscale "
-					 	+ "where PR.codice_fiscale_paziente = '" + codiceFiscalePaziente + "' and PR.giorno > '" + new SimpleDateFormat("YYYY-MM-dd").format(date) + "' "
+					 	+ "left join visite V on PR.id = V.id_prenotazione "
+					 	+ "where PR.codice_fiscale_paziente = '" + codiceFiscalePaziente + "' "
+					 			+ "and V.id_prenotazione is NULL "
+					 			+ "and M.codice = '" + codiceMedico + "' "
+					 			+ "and PR.giorno > '" + new SimpleDateFormat("YYYY-MM-dd").format(date) + "' "
 			 		 	+ "order by TV.nome";
 		
 		try {
@@ -409,7 +413,7 @@ public class GestoreDatabase {
  */	
 	
 	/*
-	 * 		SD Visualizza storico visite e Genera fattura		 TEST OK
+	 * 		SD Visualizza storico visite		 TEST OK
 	 */
 	public ArrayList<Visita> getVisite(String codiceFiscalePaziente) {
 		ArrayList<Visita> visite = new ArrayList<Visita>();
@@ -421,9 +425,63 @@ public class GestoreDatabase {
 					 + "join tipologie_visite_specializzazioni TVS on TV.id = TVS.id_tipologia_visita "
 					 + "join medici M on PR.codice_medico = M.codice "
 					 + "join pazienti P on PR.codice_fiscale_paziente = P.codice_fiscale "
-					 + "where PR.codice_fiscale_paziente = '" + codiceFiscalePaziente + "'"
-			 		 + "order by TV.nome";
+					 + "left join fatture F on V.id = F.id_visita "
+					 + "where PR.codice_fiscale_paziente = '" + codiceFiscalePaziente + "' "
+					 + "order by TV.nome";
+//		select * from visite V join prenotazioni PR on V.id_prenotazione = PR.id join tipologie_visite TV on PR.id_tipologia_visita = TV.id join tipologie_visite_specializzazioni TVS on TV.id = TVS.id_tipologia_visita join medici M on PR.codice_medico = M.codice join pazienti P on PR.codice_fiscale_paziente = P.codice_fiscale left join fatture F on V.id = F.id_visita where PR.codice_fiscale_paziente = '' and F.id_visita is NULL and M.codice = '' order by TV.nome;
+		try {
+			ResultSet rs = statement.executeQuery(query);
+			
+			while(rs.next()) {
+				int id = rs.getInt("V.id");
+				String diagnosi = rs.getString("diagnosi");
+				String terapia = rs.getString("terapia");
+				
+				Prenotazione prenotazione = this.getPrenotazione(rs);
+				String currentTV = rs.getString("TV.nome");
+				String previousTV = null;
+				
+				if(!rs.isFirst()) {
+					rs.previous();
+					previousTV = rs.getString("TV.nome");
+					rs.next();
+				}
+				
+				if(!rs.isFirst() && previousTV.equals(currentTV)) {
+					visite.get(visite.size()-1).getTipologiaVisita().getSpecializzazioniIdonee().add(new Specializzazione(rs.getString("TVS.nome_specializzazione")));
+				} else {
+					Visita visita = new Visita(id, prenotazione, diagnosi, terapia);
+					visite.add(visita);
+				}
+			}
+			
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
+		return visite;
+	}	
+	
+	/*
+	 * 		SD Genera fattura		 TEST OK
+	 */
+	public ArrayList<Visita> getVisiteByMedico(String codiceFiscalePaziente, int codiceMedico) {
+		ArrayList<Visita> visite = new ArrayList<Visita>();
+		
+		String query = "select * "
+					 + "from visite V "
+					 + "join prenotazioni PR on V.id_prenotazione = PR.id "
+					 + "join tipologie_visite TV on PR.id_tipologia_visita = TV.id "
+					 + "join tipologie_visite_specializzazioni TVS on TV.id = TVS.id_tipologia_visita "
+					 + "join medici M on PR.codice_medico = M.codice "
+					 + "join pazienti P on PR.codice_fiscale_paziente = P.codice_fiscale "
+					 + "left join fatture F on V.id = F.id_visita "
+					 + "where PR.codice_fiscale_paziente = '" + codiceFiscalePaziente + "' "
+					 		+ "and F.id_visita is NULL "
+							+ "and M.codice = '" + codiceMedico + "' "
+					 + "order by TV.nome";
+//		select * from visite V join prenotazioni PR on V.id_prenotazione = PR.id join tipologie_visite TV on PR.id_tipologia_visita = TV.id join tipologie_visite_specializzazioni TVS on TV.id = TVS.id_tipologia_visita join medici M on PR.codice_medico = M.codice join pazienti P on PR.codice_fiscale_paziente = P.codice_fiscale left join fatture F on V.id = F.id_visita where PR.codice_fiscale_paziente = '' and F.id_visita is NULL and M.codice = '' order by TV.nome;
 		try {
 			ResultSet rs = statement.executeQuery(query);
 			
@@ -457,8 +515,9 @@ public class GestoreDatabase {
 
 		return visite;
 	}
-
 	
+		
+
 	/*
 	 * 		SD Paga visita		TEST OK
 	 */
@@ -473,10 +532,12 @@ public class GestoreDatabase {
 					 	+ "join tipologie_visite_specializzazioni TVS on TV.id = TVS.id_tipologia_visita "
 					 	+ "join medici M on PR.codice_medico = M.codice "
 					 	+ "join pazienti P on PR.codice_fiscale_paziente = P.codice_fiscale "
+					 	+ "left join pagamenti PA on F.id = PA.id_fattura "
 					 	+ "where F.codice_fiscale_paziente = '" + codiceFiscalePaziente + "' "
+					 			+ "and PA.id_fattura is NULL "
 			 		 	+ "order by TV.nome";
-
-		try {
+//		select * from fatture F join visite V on F.id_visita = V.id join prenotazioni PR on V.id_prenotazione = PR.id join tipologie_visite TV on PR.id_tipologia_visita = TV.id join tipologie_visite_specializzazioni TVS on TV.id = TVS.id_tipologia_visita join medici M on PR.codice_medico = M.codice join pazienti P on PR.codice_fiscale_paziente = P.codice_fiscale left join pagamenti PA on F.id = PA.id_fattura where F.codice_fiscale_paziente = 'CF1' order by TV.nome;
+			try {
 			ResultSet rs = statement.executeQuery(query);
 			
 			while(rs.next()) {
@@ -508,7 +569,7 @@ public class GestoreDatabase {
 
 	
 	/*
-	 * 		SD Paga visita 		TEST OK
+	 * 		SD Paga visita 		TEST OK		NOT USED
 	 */
 	public ArrayList<Pagamento> getPagamentiFatture(ArrayList<Integer> idFatture) {
 		ArrayList<Pagamento> pagamenti = new ArrayList<Pagamento>();

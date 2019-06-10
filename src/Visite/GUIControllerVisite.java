@@ -35,6 +35,11 @@ public class GUIControllerVisite {
 		ArrayList<Visita> visite = gestoreVisite.getVisite(codiceFiscalePaziente);
 		new ListaVisite(parentFrame, operationType, visite);
 	}
+	
+	public void createListaVisiteByMedico(Frame parentFrame, String codiceFiscalePaziente, int codiceMedico, int operationType) {
+		ArrayList<Visita> visite = gestoreVisite.getVisiteByMedico(codiceFiscalePaziente, codiceMedico);
+		new ListaVisite(parentFrame, operationType, visite);
+	}
 
 	public void printFattura(Frame parentFrame, Visita visita) {
 		this.parentFrame = parentFrame;
