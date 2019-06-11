@@ -2,7 +2,7 @@ insert into proprietari (nome, cognome, email, password)
 values ('admin', 'admin', 'admin@sm.com', 'admin');
 
 insert into pazienti
-values ('XXXXXXXXXXXXXXXX', 'Marco', 'Cortese', 'mc@sm.com', 'mc'),
+values ('CRTMRC96T27F839K', 'Marco', 'Cortese', 'mc@sm.com', 'mc'),
 	   ('CVNMRT96A18A783J', 'Umberto', 'Covino', 'uc@sm.com', 'uc');
 
 insert into specializzazioni

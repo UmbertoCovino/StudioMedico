@@ -246,7 +246,7 @@ public class GestoreDatabase {
 			while(rs.next()) {
 				int id = rs.getInt("PR.id");
 				Date giorno = rs.getDate("PR.giorno");
-				Date ora = rs.getTime("PR.ora");
+				Date ora = rs.getTime("PR.ora", Calendar.getInstance());
 				Medico medico = this.getMedico(rs);
 				Paziente paziente = this.getPaziente(rs);
 				
@@ -380,7 +380,7 @@ public class GestoreDatabase {
 			while(rs.next()) {
 				int id = rs.getInt("PR.id");
 				Date giorno = rs.getDate("PR.giorno");
-				Date ora = rs.getTime("PR.ora");
+				Date ora = rs.getTime("PR.ora", Calendar.getInstance());
 				Medico medico = this.getMedico(rs);
 				Paziente paziente = this.getPaziente(rs);
 				
@@ -898,7 +898,7 @@ public class GestoreDatabase {
 			
 			if(rs.next()) {
 				Date giorno = rs.getDate("giorno");
-				Date ora = rs.getTime("ora");
+				Date ora = rs.getTime("ora", Calendar.getInstance());
 				TipologiaVisita tipologiaVisita = this.getTipologiaVisita(rs.getInt("id_tipologia_visita"));
 				Medico medico = this.getMedico(rs.getInt("codice_medico"));
 				Paziente paziente = this.getPaziente(rs.getString("codice_fiscale_paziente"));
@@ -1160,7 +1160,7 @@ public class GestoreDatabase {
 			while(rs.next()) {
 				int id = rs.getInt("PR.id");
 				Date giorno = rs.getDate("PR.giorno");
-				Date ora = rs.getTime("PR.ora");
+				Date ora = rs.getTime("PR.ora", Calendar.getInstance());
 				Medico medico = this.getMedico(rs);
 				Paziente paziente = this.getPaziente(rs);
 				
