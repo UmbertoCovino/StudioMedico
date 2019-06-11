@@ -48,8 +48,8 @@ public class GestorePrenotazioni {
 		return gestoreDB.getPrenotazioni(codiceFiscalePaziente);
 	}
 	
-	public ArrayList<Prenotazione> getPrenotazioniFromDate(String codiceFiscalePaziente, int codiceMedico, Date date) {
-		return gestoreDB.getPrenotazioniFromDate(codiceFiscalePaziente, codiceMedico, date);
+	public ArrayList<Prenotazione> getPrenotazioniByMedico(String codiceFiscalePaziente, int codiceMedico) {
+		return gestoreDB.getPrenotazioniByMedico(codiceFiscalePaziente, codiceMedico);
 	}
 
 	public void createVisita(Prenotazione prenotazione, String diagnosi, String terapia) {

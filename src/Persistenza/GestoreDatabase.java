@@ -358,7 +358,7 @@ public class GestoreDatabase {
 	/*
 	 * 		SD Esegue visita		TEST OK 
 	 */
-	public ArrayList<Prenotazione> getPrenotazioniFromDate(String codiceFiscalePaziente, int codiceMedico, Date date) {
+	public ArrayList<Prenotazione> getPrenotazioniByMedico(String codiceFiscalePaziente, int codiceMedico) {
 		ArrayList<Prenotazione> prenotazioni = new ArrayList<Prenotazione>();
 		
 		String query = "select * "
@@ -371,7 +371,6 @@ public class GestoreDatabase {
 					 	+ "where PR.codice_fiscale_paziente = '" + codiceFiscalePaziente + "' "
 					 			+ "and V.id_prenotazione is NULL "
 					 			+ "and M.codice = '" + codiceMedico + "' "
-					 			+ "and PR.giorno >= '" + new SimpleDateFormat("YYYY-MM-dd").format(date) + "' "
 			 		 	+ "order by TV.nome";
 		
 		try {
