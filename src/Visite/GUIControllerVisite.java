@@ -36,7 +36,7 @@ public class GUIControllerVisite {
 		new ListaVisite(parentFrame, operationType, visite);
 	}
 	
-	public void createListaVisiteByMedico(Frame parentFrame, String codiceFiscalePaziente, int codiceMedico, int operationType) {
+	public void createListaVisite(Frame parentFrame, String codiceFiscalePaziente, int codiceMedico, int operationType) {
 		ArrayList<Visita> visite = gestoreVisite.getVisiteByMedico(codiceFiscalePaziente, codiceMedico);
 		new ListaVisite(parentFrame, operationType, visite);
 	}
