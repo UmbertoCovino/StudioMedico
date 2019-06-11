@@ -371,6 +371,7 @@ public class GestoreDatabase {
 					 	+ "where PR.codice_fiscale_paziente = '" + codiceFiscalePaziente + "' "
 					 			+ "and V.id_prenotazione is NULL "
 					 			+ "and M.codice = '" + codiceMedico + "' "
+					 			+ "and PR.giorno <= curdate() "
 			 		 	+ "order by TV.nome";
 		
 		try {
@@ -1310,18 +1311,19 @@ public class GestoreDatabase {
 	}
 
 	public int getIdFattura(Fattura fattura) {
-		int id = (Integer) null;
+		int id = 0;
 		
 		String query = "select * "
 					 	+ "from fatture "
-					 	+ "where importo = '" + fattura.getImporto() + "' "
-					 			+ "and id_visita = '" + fattura.getVisita().getId() + "' "
-					 			+ "and codice_fiscale_paziente = '" + fattura.getPaziente().getCodiceFiscale() + "' ";
+					 	+ "where id_visita = '" + fattura.getVisita().getId() + "'";
+		System.out.println(fattura.getVisita().getId());
 		
 			try {
 				ResultSet rs = statement.executeQuery(query);
 				
-				id = rs.getInt("id");
+				if (rs.next()) {
+					id = rs.getInt("id");
+				}
 				rs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
