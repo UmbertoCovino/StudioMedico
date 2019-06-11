@@ -47,6 +47,10 @@ public class GestorePrenotazioni {
 	public ArrayList<Prenotazione> getPrenotazioni(String codiceFiscalePaziente) {
 		return gestoreDB.getPrenotazioni(codiceFiscalePaziente);
 	}
+	
+	public ArrayList<Prenotazione> getPrenotazioniFromDate(String codiceFiscalePaziente, int codiceMedico, Date date) {
+		return gestoreDB.getPrenotazioniFromDate(codiceFiscalePaziente, codiceMedico, date);
+	}
 
 	public void createVisita(Prenotazione prenotazione, String diagnosi, String terapia) {
 		Visita visita = new Visita(prenotazione, diagnosi, terapia);
@@ -67,9 +71,5 @@ public class GestorePrenotazioni {
 
 	public ArrayList<TipologiaVisita> getTipologieVisite() {
 		return gestoreDB.getTipologieVisite();
-	}
-
-	public ArrayList<Prenotazione> getPrenotazioniFromDate(String codiceFiscalePaziente, int codiceMedico, Date date) {
-		return gestoreDB.getPrenotazioniFromDate(codiceFiscalePaziente, codiceMedico, date);
 	}
 }
