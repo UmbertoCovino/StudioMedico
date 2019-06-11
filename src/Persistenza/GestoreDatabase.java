@@ -237,7 +237,7 @@ public class GestoreDatabase {
 					 	+ "left join visite V on PR.id = V.id_prenotazione "
 					 	+ "where PR.codice_fiscale_paziente = '" + codiceFiscalePaziente + "' "
 			 				+ "and V.id_prenotazione is NULL "
-					 		+ "and PR.giorno >= curdate() "					 	
+					 		+ "and PR.giorno > curdate() "					 	
 			 		 	+ "order by TV.nome";
 //		select * from prenotazioni PR join tipologie_visite TV on PR.id_tipologia_visita = TV.id join tipologie_visite_specializzazioni TVS on TV.id = TVS.id_tipologia_visita join medici M on PR.codice_medico = M.codice join pazienti P on PR.codice_fiscale_paziente = P.codice_fiscale left join visite V on PR.id = V.id_prenotazione where PR.codice_fiscale_paziente = '' and V.id_prenotazione is NULL and PR.giorno >= curdate() order by TV.nome;
 		try {
@@ -1112,7 +1112,8 @@ public class GestoreDatabase {
 					 + "from calendario_disponibilita CD "
 					 + "join disponibilita D on CD.id = D.id_calendario_disponibilita "
 					 + "join medici M on CD.codice_medico = M.codice "
-					 + "where codice_medico = '" + codiceMedico + "'";
+					 + "where codice_medico = '" + codiceMedico + "' "
+					 + "and D.giorno > curdate()";
 //		select * from calendario_disponibilita CD join disponibilita D on CD.id = D.id_calendario_disponibilita join medici M on CD.codice_medico = M.codice where codice_medico = '';
 		try {
 			ResultSet rs = statement.executeQuery(query);

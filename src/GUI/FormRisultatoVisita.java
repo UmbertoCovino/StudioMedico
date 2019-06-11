@@ -81,8 +81,12 @@ public class FormRisultatoVisita extends Frame {
 	protected boolean dataIsValid() {
 		if (diagnosiTextArea.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(this, "Il campo diagnosi non può essere vuoto.", "Attenzione", JOptionPane.WARNING_MESSAGE);
+		} else if (diagnosiTextArea.getText().length() > 200) {
+			JOptionPane.showMessageDialog(this, "La diagnosi non può essere più lunga di 200 caratteri.", "Attenzione", JOptionPane.WARNING_MESSAGE);
 		} else if (terapiaTextArea.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(this, "Il campo terapia non può essere vuoto.", "Attenzione", JOptionPane.WARNING_MESSAGE);
+		} else if (terapiaTextArea.getText().length() > 200) {
+			JOptionPane.showMessageDialog(this, "La terapia non può essere più lunga di 200 caratteri.", "Attenzione", JOptionPane.WARNING_MESSAGE);
 		} else
 			return true;
 		
