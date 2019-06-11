@@ -465,6 +465,7 @@ public class GestoreDatabase {
 		return visite;
 	}	
 	
+	
 	/*
 	 * 		SD Genera fattura		 TEST OK
 	 */
@@ -518,7 +519,6 @@ public class GestoreDatabase {
 		return visite;
 	}
 	
-		
 
 	/*
 	 * 		SD Paga visita		TEST OK
@@ -1047,7 +1047,7 @@ public class GestoreDatabase {
 
 
 	/*
-	 * 		USATO DA getReportVisite()	 DA TESTARE
+	 * 		SD ???	 DA TESTARE
 	 */
 	public ArrayList<Visita> getVisite() {
 		ArrayList<Visita> visite = new ArrayList<Visita>();
@@ -1306,5 +1306,26 @@ public class GestoreDatabase {
 	 */
 	public void insertCalendarioDisponibilita(CalendarioDisponibilita calendarioDisponibilita) {
 
+	}
+
+	public int getIdFattura(Fattura fattura) {
+		int id = (Integer) null;
+		
+		String query = "select * "
+					 	+ "from fatture "
+					 	+ "where importo = '" + fattura.getImporto() + "' "
+					 			+ "and id_visita = '" + fattura.getVisita().getId() + "' "
+					 			+ "and codice_fiscale_paziente = '" + fattura.getPaziente().getCodiceFiscale() + "' ";
+		
+			try {
+				ResultSet rs = statement.executeQuery(query);
+				
+				id = rs.getInt("id");
+				rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return id;
 	}
 }

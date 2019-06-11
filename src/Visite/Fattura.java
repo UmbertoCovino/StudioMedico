@@ -11,7 +11,6 @@ public class Fattura {
 	private Paziente paziente;
 	
 	public Fattura(Visita visita) {
-		this.id = visita.getId();
 		this.importo = visita.getTipologiaVisita().getCostoEsercizio() +
 						visita.getTipologiaVisita().getCostoManodopera() +
 						visita.getTipologiaVisita().getPrezzoFisso();
