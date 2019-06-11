@@ -19,7 +19,6 @@ import Visite.GUIControllerVisite;
 
 @SuppressWarnings("serial")
 public class FrameMedico extends Frame {
-	@SuppressWarnings("unused")
 	private Medico medico;
 	private Paziente paziente;
 
@@ -80,7 +79,7 @@ public class FrameMedico extends Frame {
 		
 		registraVisitaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				GUIControllerPrenotazioni.getInstance().createListaPrenotazioni(thisFrame, paziente.getCodiceFiscale(), ListaPrenotazioni.REGISTER_VISIT_OPERATION);
+				GUIControllerPrenotazioni.getInstance().createListaPrenotazioni(thisFrame, paziente.getCodiceFiscale(), medico.getCodice(), ListaPrenotazioni.REGISTER_VISIT_OPERATION);
 			}
 		});
 		
