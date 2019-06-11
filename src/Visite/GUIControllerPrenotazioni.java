@@ -37,7 +37,7 @@ public class GUIControllerPrenotazioni {
 		new ListaPrenotazioni(parentFrame, operationType, prenotazioni);
 	}
 
-	public void createListaPrenotazioniByMedico(Frame parentFrame, String codiceFiscalePaziente, int codiceMedico, int operationType) {
+	public void createListaPrenotazioni(Frame parentFrame, String codiceFiscalePaziente, int codiceMedico, int operationType) {
 		ArrayList<Prenotazione> prenotazioni = gestorePrenotazioni.getPrenotazioniFromDate(codiceFiscalePaziente, codiceMedico, new Date());
 		new ListaPrenotazioni(parentFrame, operationType, prenotazioni);
 	}
