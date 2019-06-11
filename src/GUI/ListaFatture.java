@@ -39,10 +39,10 @@ public class ListaFatture extends Frame {
 			this.fatture.put(fattura.getId(), fattura);
 		}
 		
-		setExtraFrameWidth(100);
+		setExtraFrameWidth(125);
 		
 		// dichiarazione elementi
-		fattureLabel = new JLabel("Fatture delle visite in sospeso");
+		fattureLabel = new JLabel("Fatture delle visite in sospeso per il paziente " + ((fatture.isEmpty()) ? "" : fatture.get(0).getPaziente().getNome() + " " +  fatture.get(0).getPaziente().getCognome()));
 		
 		DefaultTableModel tableModel = new DefaultTableModel();
 		fattureTable = new JTable(tableModel);
@@ -63,6 +63,9 @@ public class ListaFatture extends Frame {
 		
 		// visualizzazione frame
 		showFrame();
+		
+		// per resizare le colonne
+		resizeColumnWidth(fattureTable);
 	}
 
 	private void buildTable(ArrayList<Fattura> fatture) {
@@ -127,7 +130,7 @@ public class ListaFatture extends Frame {
 		layout.setHorizontalGroup(
 			layout.createParallelGroup(GroupLayout.Alignment.CENTER)
 				.addComponent(fattureLabel, 0, 0, Short.MAX_VALUE)
-		   		.addComponent(fattureScrollPane,  0, fattureTable.getPreferredScrollableViewportSize().width, Short.MAX_VALUE)
+		   		.addComponent(fattureScrollPane, 0, fattureTable.getPreferredSize().width, Short.MAX_VALUE)
 		   		.addGroup(layout.createSequentialGroup()
 		   			.addComponent(cancelButton)
 		   			.addComponent(registraPagamentoButton))
@@ -136,7 +139,7 @@ public class ListaFatture extends Frame {
 		layout.setVerticalGroup(
 			layout.createSequentialGroup()
 				.addComponent(fattureLabel)
-				.addComponent(fattureScrollPane, 0, fattureTable.getPreferredScrollableViewportSize().height - 150, Short.MAX_VALUE)
+				.addComponent(fattureScrollPane, 0, fattureTable.getPreferredSize().height + 35, Short.MAX_VALUE)
 				.addGap(getButtonsGap())
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
 					.addComponent(cancelButton)

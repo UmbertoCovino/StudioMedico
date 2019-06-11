@@ -17,7 +17,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-
 import Visite.GUIControllerPrenotazioni;
 import Visite.Prenotazione;
 
@@ -28,6 +27,7 @@ public class ListaPrenotazioni extends Frame {
 							REGISTER_VISIT_OPERATION = 3;
 	private int operationType;
 	private Map<Integer, Prenotazione> prenotazioni;
+	private Object pazienteName;
 	
 	private JLabel prenotazioniLabel;
 	private JTable prenotazioniTable;
@@ -40,15 +40,16 @@ public class ListaPrenotazioni extends Frame {
 		
 		this.operationType = operationType;
 		this.prenotazioni = new TreeMap<Integer, Prenotazione>();
+		this.pazienteName = ((prenotazioni.isEmpty()) ? "" : prenotazioni.get(0).getPaziente().getNome() + " " + prenotazioni.get(0).getPaziente().getCognome() + " ");
 		
 		for (Prenotazione prenotazione: prenotazioni) {
 			this.prenotazioni.put(prenotazione.getId(), prenotazione);
 		}
 		
-		setExtraFrameWidth(300);
+		setExtraFrameWidth(125);
 		
 		// dichiarazione elementi
-		prenotazioniLabel = new JLabel("Prenotazioni");
+		prenotazioniLabel = new JLabel();
 		
 		DefaultTableModel tableModel = new DefaultTableModel();
 		prenotazioniTable = new JTable(tableModel);
@@ -69,6 +70,9 @@ public class ListaPrenotazioni extends Frame {
 		
 		// visualizzazione frame
 		showFrame();
+		
+		// per resizare le colonne
+		resizeColumnWidth(prenotazioniTable);
 	}
 
 	private void buildTable(ArrayList<Prenotazione> prenotazioni) {
@@ -92,7 +96,6 @@ public class ListaPrenotazioni extends Frame {
 					FramePaziente.DATE_SDF.format(prenotazione.getGiorno()),
 					FramePaziente.TIME_SDF.format(prenotazione.getOra())});
 		}
-		
 	}
 
 	@Override
@@ -107,6 +110,7 @@ public class ListaPrenotazioni extends Frame {
 		});
 
 		if (operationType == MODIFY_OPERATION) {
+			prenotazioniLabel.setText("Prenotazioni effettuate");
 			confirmButton.setText("Modifica");
 			
 			confirmButton.addActionListener(new ActionListener() {
@@ -117,6 +121,7 @@ public class ListaPrenotazioni extends Frame {
 				}
 			});
 		} else if (operationType == DELETE_OPERATION) {
+			prenotazioniLabel.setText("Prenotazioni effettuate");
 			confirmButton.setText("Elimina");
 			
 			confirmButton.addActionListener(new ActionListener() {
@@ -128,6 +133,7 @@ public class ListaPrenotazioni extends Frame {
 				}
 			});
 		} else if (operationType == REGISTER_VISIT_OPERATION) {
+			prenotazioniLabel.setText("Prenotazioni effettuate dal paziente " + pazienteName);
 			confirmButton.setText("Registra visita");
 			
 			confirmButton.addActionListener(new ActionListener() {
@@ -156,7 +162,7 @@ public class ListaPrenotazioni extends Frame {
 		layout.setHorizontalGroup(
 			layout.createParallelGroup(GroupLayout.Alignment.CENTER)
 				.addComponent(prenotazioniLabel, 0, 0, Short.MAX_VALUE)
-		   		.addComponent(prenotazioniScrollPane, 0, prenotazioniTable.getPreferredScrollableViewportSize().width, Short.MAX_VALUE)
+		   		.addComponent(prenotazioniScrollPane, 0, prenotazioniTable.getPreferredSize().width, Short.MAX_VALUE)
 		   		.addGroup(layout.createSequentialGroup()
 		   			.addComponent(cancelButton)
 		   			.addComponent(confirmButton))
@@ -165,7 +171,7 @@ public class ListaPrenotazioni extends Frame {
 		layout.setVerticalGroup(
 			layout.createSequentialGroup()
 				.addComponent(prenotazioniLabel)
-				.addComponent(prenotazioniScrollPane, 0, prenotazioniTable.getPreferredScrollableViewportSize().height - 150, Short.MAX_VALUE)
+				.addComponent(prenotazioniScrollPane, 0, prenotazioniTable.getPreferredSize().height + 35, Short.MAX_VALUE)
 				.addGap(getButtonsGap())
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
 					.addComponent(cancelButton)

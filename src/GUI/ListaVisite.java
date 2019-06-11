@@ -26,6 +26,7 @@ public class ListaVisite extends Frame {
 							   GENERATE_FATTURA_OPERATION = 2;
 	private int operationType;
 	private Map<Integer, Visita> visite;
+	private String pazienteName;
 
 	private JLabel visiteLabel;
 	private JTable visiteTable;
@@ -38,15 +39,16 @@ public class ListaVisite extends Frame {
 		
 		this.operationType = operationType;
 		this.visite = new TreeMap<Integer, Visita>();
+		this.pazienteName = ((visite.isEmpty()) ? "" : visite.get(0).getPaziente().getNome() + " " + visite.get(0).getPaziente().getCognome() + " ");
 		
 		for (Visita visita: visite) {
 			this.visite.put(visita.getId(), visita);
 		}
 		
-		setExtraFrameWidth(400);
+		setExtraFrameWidth(225);
 		
 		// dichiarazione elementi
-		visiteLabel = new JLabel("Visite");
+		visiteLabel = new JLabel();
 		
 		DefaultTableModel tableModel = new DefaultTableModel();
 		visiteTable = new JTable(tableModel);
@@ -67,6 +69,9 @@ public class ListaVisite extends Frame {
 		
 		// visualizzazione frame
 		showFrame();
+		
+		// per resizare le colonne
+		resizeColumnWidth(visiteTable);
 	}
 
 	private void buildTable(ArrayList<Visita> visite) {
@@ -101,9 +106,11 @@ public class ListaVisite extends Frame {
 		Frame thisFrame = this;
 		
 		if (operationType == STORICO_VISITE_OPERATION) {
+			visiteLabel.setText("Visite effettuate");
 			cancelButton.setText("Esci");
 			confirmButton.setVisible(false);
 		} else if (operationType == GENERATE_FATTURA_OPERATION) {
+			visiteLabel.setText("Visite effettuate dal paziente " + pazienteName + "con fattura da generare");
 			confirmButton.setText("Genera fattura");
 			cancelButton.setText("Annulla");
 			
@@ -140,7 +147,7 @@ public class ListaVisite extends Frame {
 		layout.setHorizontalGroup(
 			layout.createParallelGroup(GroupLayout.Alignment.CENTER)
 				.addComponent(visiteLabel, 0, 0, Short.MAX_VALUE)
-		   		.addComponent(visiteScrollPane, 0, visiteTable.getPreferredScrollableViewportSize().width, Short.MAX_VALUE)
+		   		.addComponent(visiteScrollPane, 0, visiteTable.getPreferredSize().width, Short.MAX_VALUE)
 		   		.addGroup(layout.createSequentialGroup()
 			   			.addComponent(cancelButton)
 			   			.addComponent(confirmButton))
@@ -149,7 +156,7 @@ public class ListaVisite extends Frame {
 		layout.setVerticalGroup(
 			layout.createSequentialGroup()
 				.addComponent(visiteLabel)
-				.addComponent(visiteScrollPane, 0, visiteTable.getPreferredScrollableViewportSize().height - 150, Short.MAX_VALUE)
+				.addComponent(visiteScrollPane, 0, visiteTable.getPreferredSize().height + 35, Short.MAX_VALUE)
 				.addGap(getButtonsGap())
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
 						.addComponent(cancelButton)

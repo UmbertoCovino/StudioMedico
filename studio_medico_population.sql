@@ -32,12 +32,14 @@ values ('2019-07-03', '16:00', '19:00', 6, 0, 1),
 insert into tipologie_visite (nome, prezzo_fisso, costo_manodopera, costo_esercizio)
 values ('Elettrocardiogramma', '50.00', '5.00', '5.00'),
 	   ('Visita odontoiatrica generica', '85.00', '10.00', '5.00'),
-	   ('Radiografia', '55.00', '8.00', '15.00');
+	   ('Radiografia', '55.00', '8.00', '15.00'),
+	   ('Visita cardiologica generica', '85.00', '10.00', '5.00');
 
 insert into tipologie_visite_specializzazioni
 values (1, 'cardiologo'),
 	   (2, 'dentista'),
-	   (3, 'ortopedico');
+	   (3, 'ortopedico'),
+	   (4, 'cardiologo');
 
 insert into prenotazioni (giorno, ora, id_tipologia_visita, codice_medico, codice_fiscale_paziente)
 values ('2019-05-05', '17:30', 1, 1, 'CVNMRT96A18A783J');

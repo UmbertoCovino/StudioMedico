@@ -1317,15 +1317,14 @@ public class GestoreDatabase {
 		String query = "select * "
 					 	+ "from fatture "
 					 	+ "where id_visita = '" + fattura.getVisita().getId() + "'";
-		System.out.println(fattura.getVisita().getId());
 		
-			try {
-				ResultSet rs = statement.executeQuery(query);
-				
-				if (rs.next()) {
-					id = rs.getInt("id");
-				}
-				rs.close();
+		try {
+			ResultSet rs = statement.executeQuery(query);
+			
+			if (rs.next()) {
+				id = rs.getInt("id");
+			}
+			rs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

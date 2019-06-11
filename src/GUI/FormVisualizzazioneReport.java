@@ -33,7 +33,7 @@ public class FormVisualizzazioneReport extends Frame {
 	public FormVisualizzazioneReport(Report report) {
 		super("Risultato report");
 		
-		setExtraFrameWidth(100);
+		setExtraFrameWidth(125);
 		
 		// dichiarazione elementi
 		reportLabel = new JLabel(report.getTipologia());
@@ -54,6 +54,9 @@ public class FormVisualizzazioneReport extends Frame {
 		
 		// visualizzazione frame
 		showFrame();
+		
+		// per resizare le colonne
+		resizeColumnWidth(reportRigheTable);
 	}
 
 	private void buildTable(Report report) {
@@ -152,14 +155,14 @@ public class FormVisualizzazioneReport extends Frame {
 		layout.setHorizontalGroup(
 			layout.createParallelGroup(GroupLayout.Alignment.CENTER)
 				.addComponent(reportLabel, 0, 0, Short.MAX_VALUE)
-		   		.addComponent(reportRigheScrollPane, 0, reportRigheTable.getPreferredScrollableViewportSize().width, Short.MAX_VALUE)
+		   		.addComponent(reportRigheScrollPane, 0, reportRigheTable.getPreferredSize().width, Short.MAX_VALUE)
 	   			.addComponent(exitButton)
 		);
 		
 		layout.setVerticalGroup(
 			layout.createSequentialGroup()
 				.addComponent(reportLabel)
-				.addComponent(reportRigheScrollPane, 0, reportRigheTable.getPreferredScrollableViewportSize().height - 150, Short.MAX_VALUE)
+				.addComponent(reportRigheScrollPane, 0, reportRigheTable.getPreferredSize().height + 35, Short.MAX_VALUE)
 				.addGap(getButtonsGap())
 				.addComponent(exitButton)
 		);
