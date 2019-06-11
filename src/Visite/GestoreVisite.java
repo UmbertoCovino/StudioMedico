@@ -39,6 +39,7 @@ public class GestoreVisite {
 	public void printFattura(Visita visita) {
 		Fattura fattura = new Fattura(visita);
 		gestoreDB.insertFattura(fattura);
+		fattura.setId(gestoreDB.getIdFattura(fattura));
 		GUIControllerVisite.getInstance().visualizzaFattura(fattura);
 	}
 
