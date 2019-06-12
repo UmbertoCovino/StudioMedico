@@ -44,7 +44,7 @@ public class FormVisualizzazioneReport extends Frame {
 		
 		reportRigheScrollPane = new JScrollPane(reportRigheTable);
 		
-		exitButton = new JButton("Annulla");
+		exitButton = new JButton("Esci");
 		
 		// aggiunta event handlers
 		addingEventHandlers();
