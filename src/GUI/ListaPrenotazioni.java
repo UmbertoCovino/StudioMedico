@@ -168,10 +168,16 @@ public class ListaPrenotazioni extends Frame {
 		   			.addComponent(confirmButton))
 		);
 		
+		int tableHeight = prenotazioniTable.getPreferredSize().height + 23;
+		if (tableHeight < 39)
+			tableHeight = 39;
+		else if (tableHeight > 500)
+			tableHeight = 500;
+		
 		layout.setVerticalGroup(
 			layout.createSequentialGroup()
 				.addComponent(prenotazioniLabel)
-				.addComponent(prenotazioniScrollPane, 0, prenotazioniTable.getPreferredSize().height + 35, Short.MAX_VALUE)
+				.addComponent(prenotazioniScrollPane, 0, tableHeight, Short.MAX_VALUE)
 				.addGap(getButtonsGap())
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
 					.addComponent(cancelButton)

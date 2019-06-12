@@ -73,7 +73,7 @@ public class FormRegistrazionePaziente extends Frame {
 								cognomeTextField.getText().trim(),
 								emailTextField.getText().trim(),
 								String.valueOf(passwordTextField.getPassword()),
-								codiceFiscaleTextField.getText().trim());
+								codiceFiscaleTextField.getText().trim().toUpperCase());
 						
 						JOptionPane.showMessageDialog(thisFrame, "La registrazione è andata a buon fine! Adesso puoi utilizzare le tue nuove credenziali per accedere.", "Registrazione effettuata con successo!", JOptionPane.INFORMATION_MESSAGE);
 						closeFrame();

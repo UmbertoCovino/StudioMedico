@@ -45,7 +45,7 @@ public class ListaVisite extends Frame {
 			this.visite.put(visita.getId(), visita);
 		}
 		
-		setExtraFrameWidth(225);
+		setExtraFrameWidth(350);
 		
 		// dichiarazione elementi
 		visiteLabel = new JLabel();
@@ -153,10 +153,16 @@ public class ListaVisite extends Frame {
 			   			.addComponent(confirmButton))
 		);
 		
+		int tableHeight = visiteTable.getPreferredSize().height + 23;
+		if (tableHeight < 39)
+			tableHeight = 39;
+		else if (tableHeight > 500)
+			tableHeight = 500;
+		
 		layout.setVerticalGroup(
 			layout.createSequentialGroup()
 				.addComponent(visiteLabel)
-				.addComponent(visiteScrollPane, 0, visiteTable.getPreferredSize().height + 35, Short.MAX_VALUE)
+				.addComponent(visiteScrollPane, 0, tableHeight, Short.MAX_VALUE)
 				.addGap(getButtonsGap())
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
 						.addComponent(cancelButton)

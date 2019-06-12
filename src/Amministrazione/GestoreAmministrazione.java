@@ -24,12 +24,28 @@ public class GestoreAmministrazione {
 	public Report createReport(String tipologia) {
 		Report report = null;
 		
-		if (tipologia.equals(FormCreazioneReport.TIPOLOGIE_REPORT[0]))
+		if (tipologia.equals(FormCreazioneReport.TIPOLOGIE_REPORT[0])) {
 			report = gestoreDB.getReportVisite();
-		else if (tipologia.equals(FormCreazioneReport.TIPOLOGIE_REPORT[2]))
+			
+			if (report == null) {
+				report = new ReportVisite();
+				report.setTipologia(tipologia);
+			}
+		} else if (tipologia.equals(FormCreazioneReport.TIPOLOGIE_REPORT[2])) {
 			report = gestoreDB.getReportMedici();
-		else if (tipologia.equals(FormCreazioneReport.TIPOLOGIE_REPORT[3]))
-				report = gestoreDB.getReportTipologieVisite();
+			
+			if (report == null) {
+				report = new ReportMedici();
+				report.setTipologia(tipologia);
+			}
+		} else if (tipologia.equals(FormCreazioneReport.TIPOLOGIE_REPORT[3])) {
+			report = gestoreDB.getReportTipologieVisite();
+			
+			if (report == null) {
+				report = new ReportTipoVisite();
+				report.setTipologia(tipologia);
+			}
+		}
 		
 		return report;
 	}
@@ -41,8 +57,14 @@ public class GestoreAmministrazione {
 	public Report createReport(String tipologia, Medico medico) {
 		Report report = null;
 
-		if (tipologia.equals(FormCreazioneReport.TIPOLOGIE_REPORT[1]))
+		if (tipologia.equals(FormCreazioneReport.TIPOLOGIE_REPORT[1])) {
 			report = gestoreDB.getReportVisitePerMedico(medico.getCodice());
+		
+			if (report == null) {
+				report = new ReportVisitePerMedico();
+				report.setTipologia(tipologia);
+			}
+		}
 
 		return report;
 	}

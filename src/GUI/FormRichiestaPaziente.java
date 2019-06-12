@@ -50,7 +50,7 @@ public class FormRichiestaPaziente extends Frame {
 		confirmButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (dataIsValid()) {
-					Paziente paziente = GUIControllerUtenti.getInstance().getPaziente(codiceFiscaleTextField.getText().trim());
+					Paziente paziente = GUIControllerUtenti.getInstance().getPaziente(codiceFiscaleTextField.getText().trim().toUpperCase());
 					
 					if (paziente != null) {
 						JOptionPane.showMessageDialog(thisFrame, "Il paziente è stato trovato con successo!", "Paziente trovato", JOptionPane.INFORMATION_MESSAGE);

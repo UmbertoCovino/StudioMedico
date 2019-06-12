@@ -159,10 +159,16 @@ public class FormVisualizzazioneReport extends Frame {
 	   			.addComponent(exitButton)
 		);
 		
+		int tableHeight = reportRigheTable.getPreferredSize().height + 23;
+		if (tableHeight < 39)
+			tableHeight = 39;
+		else if (tableHeight > 500)
+			tableHeight = 500;
+		
 		layout.setVerticalGroup(
 			layout.createSequentialGroup()
 				.addComponent(reportLabel)
-				.addComponent(reportRigheScrollPane, 0, reportRigheTable.getPreferredSize().height + 35, Short.MAX_VALUE)
+				.addComponent(reportRigheScrollPane, 0, tableHeight, Short.MAX_VALUE)
 				.addGap(getButtonsGap())
 				.addComponent(exitButton)
 		);

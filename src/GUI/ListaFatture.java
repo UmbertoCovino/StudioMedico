@@ -136,10 +136,16 @@ public class ListaFatture extends Frame {
 		   			.addComponent(registraPagamentoButton))
 		);
 		
+		int tableHeight = fattureTable.getPreferredSize().height + 23;
+		if (tableHeight < 39)
+			tableHeight = 39;
+		else if (tableHeight > 500)
+			tableHeight = 500;
+		
 		layout.setVerticalGroup(
 			layout.createSequentialGroup()
 				.addComponent(fattureLabel)
-				.addComponent(fattureScrollPane, 0, fattureTable.getPreferredSize().height + 35, Short.MAX_VALUE)
+				.addComponent(fattureScrollPane, 0, tableHeight, Short.MAX_VALUE)
 				.addGap(getButtonsGap())
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
 					.addComponent(cancelButton)
