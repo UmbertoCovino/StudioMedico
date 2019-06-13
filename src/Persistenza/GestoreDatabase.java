@@ -676,11 +676,9 @@ public class GestoreDatabase {
 						+ "where M.codice = '" + codiceMedico + "' "
 						+ "order by giorno";
 		
-		System.out.println(query);
 		try {
 			ResultSet rs = statement.executeQuery(query);
 			if (rs.next()) {
-				System.out.println("ci sono");
 				report = (ReportVisitePerMedico) ReportDirector.buildPart(new ReportVisitePerMedicoBuilder(), rs);
 				rs.previous();
 				report.setMedico(GestoreDatabase.getInstance().getMedico(rs));
