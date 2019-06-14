@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -57,9 +58,12 @@ public class FormVisualizzazioneFattura extends Frame {
 		
 		// posizionamento elementi
 		elementsPositioning();
+
+		// parentFrame perde il focus e visualizzazione frame
+		parentFrameOnBackAndShowThisFrame(parentFrame, this);
 		
 		// visualizzazione frame
-		showFrame();
+		//showFrame();
 	}
 
 	@Override
@@ -118,5 +122,20 @@ public class FormVisualizzazioneFattura extends Frame {
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
 					.addComponent(cancelButton))
 		);
+	}
+
+	private void parentFrameOnBackAndShowThisFrame(Frame parentFrame, Frame thisFrame) {
+		parentFrame.addWindowFocusListener(new WindowFocusListener() {
+	        @Override
+	        public void windowLostFocus(WindowEvent e) {
+	        }
+
+	        @Override
+	        public void windowGainedFocus(WindowEvent e) {
+				parentFrame.toBack();
+				parentFrame.removeWindowFocusListener(this);
+				thisFrame.showFrame();
+	        }
+	    });
 	}
 }
