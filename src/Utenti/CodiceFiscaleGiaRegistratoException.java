@@ -1,6 +1,6 @@
 package Utenti;
 
-public class CodiceFiscaleGiaRegistratoException extends RuntimeException {
+public class CodiceFiscaleGiaRegistratoException extends Exception {
 	/**
 	 * 
 	 */

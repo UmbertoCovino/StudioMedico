@@ -1,6 +1,6 @@
 package Utenti;
 
-public class EmailGiaRegistrataException extends RuntimeException {
+public class EmailGiaRegistrataException extends Exception {
 	/**
 	 * 
 	 */
