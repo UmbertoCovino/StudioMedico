@@ -62,7 +62,13 @@ public class GestorePrenotazioni {
 	}
 	
 	public ArrayList<Prenotazione> getPrenotazioni(int codiceMedico, String nomeTipologiaVisita){
-		return gestoreDB.getPrenotazioni(codiceMedico, nomeTipologiaVisita);
+		ArrayList<Prenotazione> prenotazioni = gestoreDB.getPrenotazioni(codiceMedico, nomeTipologiaVisita);
+		
+		System.out.println("\n\n--TUTTE LE PRENOTAZIONI--\n");
+		for(Prenotazione p: prenotazioni)
+			p.print(System.out);
+		
+		return prenotazioni;
 	}
 
 	public ArrayList<Medico> getMedici(String nomeTipologiaVisita) {
