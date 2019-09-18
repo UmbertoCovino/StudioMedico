@@ -249,19 +249,17 @@ public class GestoreDatabase {
 				Date ora = rs.getTime("PR.ora", Calendar.getInstance());
 				Medico medico = this.getMedico(rs);
 				Paziente paziente = this.getPaziente(rs);
-				
 				TipologiaVisita tipologiaVisita = this.getTipologiaVisita(rs);
-				String currentTV = rs.getString("TV.nome");
-				String previousTV = null;
+				
 				int previousId = 0;
 				
 				if(!rs.isFirst()) {
-					previousId = id;
 					rs.previous();
-					previousTV = rs.getString("TV.nome");
+					previousId = rs.getInt("PR.id");
 					rs.next();
 				}
-				if(!rs.isFirst() && previousId == id && previousTV.equals(currentTV)) {
+				
+				if(!rs.isFirst() && previousId == id) {
 					prenotazioni.get(prenotazioni.size()-1).getTipologiaVisita().getSpecializzazioniIdonee().add(new Specializzazione(rs.getString("TVS.nome_specializzazione")));
 				} else {
 					Prenotazione prenotazione = new Prenotazione(id, giorno, ora, tipologiaVisita, medico, paziente);
@@ -384,19 +382,18 @@ public class GestoreDatabase {
 				Date giorno = rs.getDate("PR.giorno");
 				Date ora = rs.getTime("PR.ora", Calendar.getInstance());
 				Medico medico = this.getMedico(rs);
-				Paziente paziente = this.getPaziente(rs);
-				
+				Paziente paziente = this.getPaziente(rs);				
 				TipologiaVisita tipologiaVisita = this.getTipologiaVisita(rs);
-				String currentTV = rs.getString("TV.nome");
-				String previousTV = null;
+
+				int previousId = 0;
 				
 				if(!rs.isFirst()) {
 					rs.previous();
-					previousTV = rs.getString("TV.nome");
+					previousId = rs.getInt("PR.id");
 					rs.next();
 				}
 				
-				if(!rs.isFirst() && previousTV.equals(currentTV)) {
+				if(!rs.isFirst() && previousId == id) {
 					prenotazioni.get(prenotazioni.size()-1).getTipologiaVisita().getSpecializzazioniIdonee().add(new Specializzazione(rs.getString("TVS.nome_specializzazione")));
 				} else {
 					Prenotazione prenotazione = new Prenotazione(id, giorno, ora, tipologiaVisita, medico, paziente);
@@ -441,18 +438,17 @@ public class GestoreDatabase {
 				int id = rs.getInt("V.id");
 				String diagnosi = rs.getString("diagnosi");
 				String terapia = rs.getString("terapia");
-				
 				Prenotazione prenotazione = this.getPrenotazione(rs);
-				String currentTV = rs.getString("TV.nome");
-				String previousTV = null;
+				
+				int previousId = 0;
 				
 				if(!rs.isFirst()) {
 					rs.previous();
-					previousTV = rs.getString("TV.nome");
+					previousId = rs.getInt("V.id");
 					rs.next();
 				}
 				
-				if(!rs.isFirst() && previousTV.equals(currentTV)) {
+				if(!rs.isFirst() && previousId == id) {
 					visite.get(visite.size()-1).getTipologiaVisita().getSpecializzazioniIdonee().add(new Specializzazione(rs.getString("TVS.nome_specializzazione")));
 				} else {
 					Visita visita = new Visita(id, prenotazione, diagnosi, terapia);
@@ -495,18 +491,17 @@ public class GestoreDatabase {
 				int id = rs.getInt("V.id");
 				String diagnosi = rs.getString("diagnosi");
 				String terapia = rs.getString("terapia");
-				
 				Prenotazione prenotazione = this.getPrenotazione(rs);
-				String currentTV = rs.getString("TV.nome");
-				String previousTV = null;
+				
+				int previousId = 0;
 				
 				if(!rs.isFirst()) {
 					rs.previous();
-					previousTV = rs.getString("TV.nome");
+					previousId = rs.getInt("V.id");
 					rs.next();
 				}
 				
-				if(!rs.isFirst() && previousTV.equals(currentTV)) {
+				if(!rs.isFirst() && previousId == id) {
 					visite.get(visite.size()-1).getTipologiaVisita().getSpecializzazioniIdonee().add(new Specializzazione(rs.getString("TVS.nome_specializzazione")));
 				} else {
 					Visita visita = new Visita(id, prenotazione, diagnosi, terapia);
@@ -549,15 +544,14 @@ public class GestoreDatabase {
 				int id = rs.getInt("F.id");
 				Visita visita = this.getVisita(rs);
 				
-				String currentTV = rs.getString("TV.nome");
-				String previousTV = null;
+				int previousId = 0;
 				
 				if(!rs.isFirst()) {
 					rs.previous();
-					previousTV = rs.getString("TV.nome");
+					previousId = rs.getInt("F.id");
 					rs.next();
 				}
-				if(!rs.isFirst() && previousTV.equals(currentTV)) {
+				if(!rs.isFirst() && previousId == id) {
 					fatture.get(fatture.size()-1).getVisita().getTipologiaVisita().getSpecializzazioniIdonee().add(new Specializzazione(rs.getString("TVS.nome_specializzazione")));
 				} else {
 					Fattura fattura = new Fattura(id, visita);
@@ -1166,23 +1160,22 @@ public class GestoreDatabase {
 				Date ora = rs.getTime("PR.ora", Calendar.getInstance());
 				Medico medico = this.getMedico(rs);
 				Paziente paziente = this.getPaziente(rs);
-				
 				TipologiaVisita tipologiaVisita = this.getTipologiaVisita(rs);
-//				String currentTV = rs.getString("TV.nome");
-//				String previousTV = null;
 				
-//				if(!rs.isFirst()) {
-//					rs.previous();
-//					previousTV = rs.getString("TV.nome");
-//					rs.next();
-//				}
-//				
-//				if(!rs.isFirst() && previousTV.equals(currentTV)) {
-//					prenotazioni.get(prenotazioni.size()-1).getTipologiaVisita().getSpecializzazioniIdonee().add(new Specializzazione(rs.getString("TVS.nome_specializzazione")));
-//				} else {
+				int previousId = 0;
+				
+				if(!rs.isFirst()) {
+					rs.previous();
+					previousId = rs.getInt("PR.id");
+					rs.next();
+				}
+				
+				if(!rs.isFirst() && previousId == id) {
+					prenotazioni.get(prenotazioni.size()-1).getTipologiaVisita().getSpecializzazioniIdonee().add(new Specializzazione(rs.getString("TVS.nome_specializzazione")));
+				} else {
 					Prenotazione prenotazione = new Prenotazione(id, giorno, ora, tipologiaVisita, medico, paziente);
 					prenotazioni.add(prenotazione);
-//				}
+				}
 			}
 			
 			rs.close();
