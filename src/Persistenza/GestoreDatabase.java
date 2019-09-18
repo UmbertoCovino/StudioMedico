@@ -430,7 +430,7 @@ public class GestoreDatabase {
 					 + "left join fatture F on V.id = F.id_visita "
 					 + "where PR.codice_fiscale_paziente = '" + codiceFiscalePaziente + "' "
 					 + "order by TV.nome";
-//		select * from visite V join prenotazioni PR on V.id_prenotazione = PR.id join tipologie_visite TV on PR.id_tipologia_visita = TV.id join tipologie_visite_specializzazioni TVS on TV.id = TVS.id_tipologia_visita join medici M on PR.codice_medico = M.codice join pazienti P on PR.codice_fiscale_paziente = P.codice_fiscale left join fatture F on V.id = F.id_visita where PR.codice_fiscale_paziente = '' and F.id_visita is NULL and M.codice = '' order by TV.nome;
+//		select * from visite V join prenotazioni PR on V.id_prenotazione = PR.id join tipologie_visite TV on PR.id_tipologia_visita = TV.id join tipologie_visite_specializzazioni TVS on TV.id = TVS.id_tipologia_visita join medici M on PR.codice_medico = M.codice join pazienti P on PR.codice_fiscale_paziente = P.codice_fiscale left join fatture F on V.id = F.id_visita where PR.codice_fiscale_paziente = '' order by TV.nome;
 		try {
 			ResultSet rs = statement.executeQuery(query);
 			
@@ -634,7 +634,7 @@ public class GestoreDatabase {
 	public Report getReportVisite() {
 		ReportVisite report = null;
 		
-		String query = "select PR.giorno as giorno, PR.ora as ora, TV.nome as nome_tipologia_visita, M.nome as nome_medico, P.nome as nome_paziente "
+		String query = "select PR.giorno as giorno, PR.ora as ora, TV.nome as nome_tipologia_visita, M.nome as nome_medico, M.cognome as cognome_medico, P.nome as nome_paziente, P.cognome as cognome_paziente "
 						+ "from visite V "
 						+ "join prenotazioni PR on V.id_prenotazione = PR.id "
 						+ "join tipologie_visite TV on PR.id_tipologia_visita = TV.id "
