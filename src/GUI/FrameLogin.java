@@ -83,7 +83,7 @@ public class FrameLogin extends Frame {
 	protected boolean dataIsValid() {
 		if (emailTextField.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(this, "Il campo email non può essere vuoto.", "Attenzione", JOptionPane.WARNING_MESSAGE);
-		} else if (!FormRegistrazionePaziente.isEmailValid(emailTextField.getText())) {
+		} else if (!FormRegistrazionePaziente.isEmailValid(emailTextField.getText().trim())) {
 			JOptionPane.showMessageDialog(this, "Il campo email deve contenere un indirizzo email valido.", "Attenzione", JOptionPane.WARNING_MESSAGE);
 		} else if (emailTextField.getText().length() > 80) {
 			JOptionPane.showMessageDialog(this, "L'email non può essere più lunga di 80 caratteri.", "Attenzione", JOptionPane.WARNING_MESSAGE);
