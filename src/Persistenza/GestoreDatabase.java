@@ -663,7 +663,7 @@ public class GestoreDatabase {
 	public Report getReportVisitePerMedico(int codiceMedico) {
 		ReportVisitePerMedico report = null;
 		
-		String query = "select PR.giorno as giorno, PR.ora as ora, TV.nome as nome_tipologia_visita, P.nome as nome_paziente, M.codice, M.nome, M.cognome, M.email, M.nome_specializzazione "
+		String query = "select PR.giorno as giorno, PR.ora as ora, TV.nome as nome_tipologia_visita, P.nome as nome_paziente, P.cognome as cognome_paziente, M.codice, M.nome, M.cognome, M.email, M.nome_specializzazione "
 						+ "from visite V "
 						+ "join prenotazioni PR on V.id_prenotazione = PR.id "
 						+ "join tipologie_visite TV on PR.id_tipologia_visita = TV.id "

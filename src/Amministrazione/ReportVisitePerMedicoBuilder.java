@@ -15,7 +15,7 @@ public class ReportVisitePerMedicoBuilder extends ReportBuilder {
 		report = new ReportVisitePerMedico();
 		report.setTipologia(tipologiaReport);
 		do {
-			this.report.addRiga(new RigaVisitePerMedico(rs.getDate("giorno"), rs.getTime("ora", Calendar.getInstance()), rs.getString("nome_tipologia_visita"), rs.getString("nome_paziente")));
+			this.report.addRiga(new RigaVisitePerMedico(rs.getDate("giorno"), rs.getTime("ora", Calendar.getInstance()), rs.getString("nome_tipologia_visita"), rs.getString("nome_paziente") + " " + rs.getString("cognome_paziente")));
 		} while(rs.next());
 		return buildPart();
 	}
