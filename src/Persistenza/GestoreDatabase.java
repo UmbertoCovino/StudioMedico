@@ -1152,6 +1152,7 @@ public class GestoreDatabase {
 					 	+ "join medici M on PR.codice_medico = M.codice "
 					 	+ "join pazienti P on PR.codice_fiscale_paziente = P.codice_fiscale "
 					 	+ "where PR.codice_medico = '" + codiceMedico + "' and TV.nome = '" + nomeTipologiaVisita + "' "
+					 	+ "and PR.giorno > curdate() "
 			 		 	+ "order by TV.nome";
 //		select * from prenotazioni PR join tipologie_visite TV on PR.id_tipologia_visita = TV.id join tipologie_visite_specializzazioni TVS on TV.id = TVS.id_tipologia_visita join medici M on PR.codice_medico = M.codice join pazienti P on PR.codice_fiscale_paziente = P.codice_fiscale where PR.codice_medico = '' and TV.nome = '' order by TV.nome;
 		try {
@@ -1166,25 +1167,9 @@ public class GestoreDatabase {
 				Paziente paziente = this.getPaziente(rs);
 				
 				TipologiaVisita tipologiaVisita = this.getTipologiaVisita(rs);
-				String currentTV = rs.getString("TV.nome");
-				String previousTV = null;
 				
-//				if(!rs.isFirst()) {
-//					rs.previous();
-//					previousTV = rs.getString("TV.nome");
-//					rs.next();
-//				}
-//				
-//				if(!rs.isFirst() && previousTV.equals(currentTV)) {
-//					prenotazioni.get(prenotazioni.size()-1).getTipologiaVisita().getSpecializzazioniIdonee().add(new Specializzazione(rs.getString("TVS.nome_specializzazione")));
-//				} else {
-					Prenotazione prenotazione = new Prenotazione(id, giorno, ora, tipologiaVisita, medico, paziente);
-					
-					prenotazione.print(System.out);
-					System.out.println();
-					
-					prenotazioni.add(prenotazione);
-//				}
+				Prenotazione prenotazione = new Prenotazione(id, giorno, ora, tipologiaVisita, medico, paziente);
+				prenotazioni.add(prenotazione);
 			}
 			
 			rs.close();
