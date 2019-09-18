@@ -251,20 +251,20 @@ public class GestoreDatabase {
 				Paziente paziente = this.getPaziente(rs);
 				
 				TipologiaVisita tipologiaVisita = this.getTipologiaVisita(rs);
-				String currentTV = rs.getString("TV.nome");
-				String previousTV = null;
-				
-				if(!rs.isFirst()) {
-					rs.previous();
-					previousTV = rs.getString("TV.nome");
-					rs.next();
-				}
-				if(!rs.isFirst() && previousTV.equals(currentTV)) {
-					prenotazioni.get(prenotazioni.size()-1).getTipologiaVisita().getSpecializzazioniIdonee().add(new Specializzazione(rs.getString("TVS.nome_specializzazione")));
-				} else {
+//				String currentTV = rs.getString("TV.nome");
+//				String previousTV = null;
+//				
+//				if(!rs.isFirst()) {
+//					rs.previous();
+//					previousTV = rs.getString("TV.nome");
+//					rs.next();
+//				}
+//				if(!rs.isFirst() && previousTV.equals(currentTV)) {
+//					prenotazioni.get(prenotazioni.size()-1).getTipologiaVisita().getSpecializzazioniIdonee().add(new Specializzazione(rs.getString("TVS.nome_specializzazione")));
+//				} else {
 					Prenotazione prenotazione = new Prenotazione(id, giorno, ora, tipologiaVisita, medico, paziente);
 					prenotazioni.add(prenotazione);
-				}
+//				}
 			}
 			
 			rs.close();
