@@ -211,7 +211,7 @@ public class FormModificaPrenotazione extends Frame {
 		ArrayList<Prenotazione> prenotazioniGiornaliere = new ArrayList<>();
 		
 		for (Prenotazione prenotazione: prenotazioniPerMedico)
-			if (prenotazione.getGiorno().getDay() == giorno.getDay())
+			if (prenotazione.getGiorno().equals(giorno))
 				prenotazioniGiornaliere.add(prenotazione);
 		
 		return prenotazioniGiornaliere;

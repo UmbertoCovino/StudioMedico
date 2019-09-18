@@ -37,6 +37,7 @@ values ('Elettrocardiogramma', '50.00', '5.00', '5.00'),
 
 insert into tipologie_visite_specializzazioni
 values (1, 'cardiologo'),
+	   (1, 'dentista'),
 	   (2, 'dentista'),
 	   (3, 'ortopedico'),
 	   (4, 'cardiologo');
