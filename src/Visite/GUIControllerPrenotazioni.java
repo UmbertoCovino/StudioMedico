@@ -4,6 +4,7 @@ import Utenti.Paziente;
 import java.util.Date;
 import Utenti.Medico;
 import Amministrazione.CalendarioDisponibilita;
+import Amministrazione.DisponibilitaGiornaliera;
 import GUI.FormModificaPrenotazione;
 import GUI.FormPrenotazioneVisita;
 import GUI.FormRisultatoVisita;
@@ -69,6 +70,14 @@ public class GUIControllerPrenotazioni {
 
 	public CalendarioDisponibilita getCalendarioDisponibilita(int codiceMedico) {
 		return gestorePrenotazioni.getCalendarioDisponibilita(codiceMedico);
+	}
+	
+	public CalendarioDisponibilita getCalendarioDisponibilitaFiltered(int codiceMedico, String nomeTipologiaVisita) {
+		return gestorePrenotazioni.getCalendarioDisponibilitaFiltered(codiceMedico, nomeTipologiaVisita);
+	}
+
+	public ArrayList<Date> getOrariFiltered(DisponibilitaGiornaliera disponibilita, int codiceMedico, String nomeTipologiaVisita) {
+		return gestorePrenotazioni.getOrariFiltered(disponibilita, codiceMedico, nomeTipologiaVisita);
 	}
 	
 	public ArrayList<Prenotazione> getPrenotazioni(int codiceMedico, String nomeTipologiaVisita){
