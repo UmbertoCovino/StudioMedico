@@ -238,8 +238,8 @@ public class GestoreDatabase {
 					 	+ "where PR.codice_fiscale_paziente = '" + codiceFiscalePaziente + "' "
 			 				+ "and V.id_prenotazione is NULL "
 					 		+ "and PR.giorno > curdate() "					 	
-			 		 	+ "order by TV.nome";
-//		select * from prenotazioni PR join tipologie_visite TV on PR.id_tipologia_visita = TV.id join tipologie_visite_specializzazioni TVS on TV.id = TVS.id_tipologia_visita join medici M on PR.codice_medico = M.codice join pazienti P on PR.codice_fiscale_paziente = P.codice_fiscale left join visite V on PR.id = V.id_prenotazione where PR.codice_fiscale_paziente = '' and V.id_prenotazione is NULL and PR.giorno >= curdate() order by TV.nome;
+			 		 	+ "order by PR.id, TV.nome";
+//		select * from prenotazioni PR join tipologie_visite TV on PR.id_tipologia_visita = TV.id join tipologie_visite_specializzazioni TVS on TV.id = TVS.id_tipologia_visita join medici M on PR.codice_medico = M.codice join pazienti P on PR.codice_fiscale_paziente = P.codice_fiscale left join visite V on PR.id = V.id_prenotazione where PR.codice_fiscale_paziente = '' and V.id_prenotazione is NULL and PR.giorno >= curdate() order by PR.id, TV.nome;
 		try {
 			ResultSet rs = statement.executeQuery(query);
 		
@@ -372,7 +372,7 @@ public class GestoreDatabase {
 					 			+ "and V.id_prenotazione is NULL "
 					 			+ "and M.codice = '" + codiceMedico + "' "
 					 			+ "and PR.giorno <= curdate() "
-			 		 	+ "order by TV.nome";
+			 		 	+ "order PR.id, by TV.nome";
 		
 		try {
 			ResultSet rs = statement.executeQuery(query);
@@ -429,8 +429,8 @@ public class GestoreDatabase {
 					 + "join pazienti P on PR.codice_fiscale_paziente = P.codice_fiscale "
 					 + "left join fatture F on V.id = F.id_visita "
 					 + "where PR.codice_fiscale_paziente = '" + codiceFiscalePaziente + "' "
-					 + "order by TV.nome";
-//		select * from visite V join prenotazioni PR on V.id_prenotazione = PR.id join tipologie_visite TV on PR.id_tipologia_visita = TV.id join tipologie_visite_specializzazioni TVS on TV.id = TVS.id_tipologia_visita join medici M on PR.codice_medico = M.codice join pazienti P on PR.codice_fiscale_paziente = P.codice_fiscale left join fatture F on V.id = F.id_visita where PR.codice_fiscale_paziente = '' order by TV.nome;
+					 + "order V.id, by TV.nome";
+//		select * from visite V join prenotazioni PR on V.id_prenotazione = PR.id join tipologie_visite TV on PR.id_tipologia_visita = TV.id join tipologie_visite_specializzazioni TVS on TV.id = TVS.id_tipologia_visita join medici M on PR.codice_medico = M.codice join pazienti P on PR.codice_fiscale_paziente = P.codice_fiscale left join fatture F on V.id = F.id_visita where PR.codice_fiscale_paziente = '' order by V.id, TV.nome;
 		try {
 			ResultSet rs = statement.executeQuery(query);
 			
@@ -482,8 +482,8 @@ public class GestoreDatabase {
 					 + "where PR.codice_fiscale_paziente = '" + codiceFiscalePaziente + "' "
 					 		+ "and F.id_visita is NULL "
 							+ "and M.codice = '" + codiceMedico + "' "
-					 + "order by TV.nome";
-//		select * from visite V join prenotazioni PR on V.id_prenotazione = PR.id join tipologie_visite TV on PR.id_tipologia_visita = TV.id join tipologie_visite_specializzazioni TVS on TV.id = TVS.id_tipologia_visita join medici M on PR.codice_medico = M.codice join pazienti P on PR.codice_fiscale_paziente = P.codice_fiscale left join fatture F on V.id = F.id_visita where PR.codice_fiscale_paziente = '' and F.id_visita is NULL and M.codice = '' order by TV.nome;
+					 + "order V.id, by TV.nome";
+//		select * from visite V join prenotazioni PR on V.id_prenotazione = PR.id join tipologie_visite TV on PR.id_tipologia_visita = TV.id join tipologie_visite_specializzazioni TVS on TV.id = TVS.id_tipologia_visita join medici M on PR.codice_medico = M.codice join pazienti P on PR.codice_fiscale_paziente = P.codice_fiscale left join fatture F on V.id = F.id_visita where PR.codice_fiscale_paziente = '' and F.id_visita is NULL and M.codice = '' order by V.id, TV.nome;
 		try {
 			ResultSet rs = statement.executeQuery(query);
 			
@@ -535,8 +535,8 @@ public class GestoreDatabase {
 					 	+ "left join pagamenti PA on F.id = PA.id_fattura "
 					 	+ "where F.codice_fiscale_paziente = '" + codiceFiscalePaziente + "' "
 					 			+ "and PA.id_fattura is NULL "
-			 		 	+ "order by TV.nome";
-//		select * from fatture F join visite V on F.id_visita = V.id join prenotazioni PR on V.id_prenotazione = PR.id join tipologie_visite TV on PR.id_tipologia_visita = TV.id join tipologie_visite_specializzazioni TVS on TV.id = TVS.id_tipologia_visita join medici M on PR.codice_medico = M.codice join pazienti P on PR.codice_fiscale_paziente = P.codice_fiscale left join pagamenti PA on F.id = PA.id_fattura where F.codice_fiscale_paziente = 'CF1' order by TV.nome;
+			 		 	+ "order F.id, by TV.nome";
+//		select * from fatture F join visite V on F.id_visita = V.id join prenotazioni PR on V.id_prenotazione = PR.id join tipologie_visite TV on PR.id_tipologia_visita = TV.id join tipologie_visite_specializzazioni TVS on TV.id = TVS.id_tipologia_visita join medici M on PR.codice_medico = M.codice join pazienti P on PR.codice_fiscale_paziente = P.codice_fiscale left join pagamenti PA on F.id = PA.id_fattura where F.codice_fiscale_paziente = 'CF1' order by F.id, TV.nome;
 			try {
 			ResultSet rs = statement.executeQuery(query);
 			
@@ -583,7 +583,7 @@ public class GestoreDatabase {
 					 	+ "join tipologie_visite_specializzazioni TVS on TV.id = TVS.id_tipologia_visita "
 					 	+ "join medici M on PR.codice_medico = M.codice "
 					 	+ "join pazienti P on PR.codice_fiscale_paziente = P.codice_fiscale "
-			 		 	+ "order by TV.nome";
+			 		 	+ "order PA.id, by TV.nome";
 
 		try {
 			ResultSet rs = statement.executeQuery(query);
@@ -1096,7 +1096,7 @@ public class GestoreDatabase {
  */
 	
 	/*
-	 * 		SD Prenota Visita 	WORKING IN PROGRESS 	DA TESTARE
+	 * 		SD Prenota Visita 	WORKING IN PROGRESS  [NOT USED]	DA TESTARE
 	 */
 	@SuppressWarnings("deprecation")
 	public CalendarioDisponibilita getCalendarioDisponibilita(int codiceMedico) {
@@ -1149,8 +1149,8 @@ public class GestoreDatabase {
 					 	+ "join pazienti P on PR.codice_fiscale_paziente = P.codice_fiscale "
 					 	+ "where PR.codice_medico = '" + codiceMedico + "' and TV.nome = '" + nomeTipologiaVisita + "' "
 					 	+ "and PR.giorno > curdate() "
-			 		 	+ "order by TV.nome";
-//		select * from prenotazioni PR join tipologie_visite TV on PR.id_tipologia_visita = TV.id join tipologie_visite_specializzazioni TVS on TV.id = TVS.id_tipologia_visita join medici M on PR.codice_medico = M.codice join pazienti P on PR.codice_fiscale_paziente = P.codice_fiscale where PR.codice_medico = '' and TV.nome = '' order by TV.nome;
+			 		 	+ "order PR.id, by TV.nome";
+//		select * from prenotazioni PR join tipologie_visite TV on PR.id_tipologia_visita = TV.id join tipologie_visite_specializzazioni TVS on TV.id = TVS.id_tipologia_visita join medici M on PR.codice_medico = M.codice join pazienti P on PR.codice_fiscale_paziente = P.codice_fiscale where PR.codice_medico = '' and TV.nome = '' order by PR.id, TV.nome;
 		try {
 			ResultSet rs = statement.executeQuery(query);
 		
