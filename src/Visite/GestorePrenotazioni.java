@@ -76,9 +76,11 @@ public class GestorePrenotazioni {
 			// quindi per ogni disponibilità nel calendario controllo se in quel giorno il numero di pren. è == al maxNumVisite
 			ArrayList<DisponibilitaGiornaliera> disponibilitaFiltrate = new ArrayList<>(calendarioDisponibilita.getOrari());
 			
-			for (DisponibilitaGiornaliera disponibilita: disponibilitaFiltrate)
+			for (DisponibilitaGiornaliera disponibilita: disponibilitaFiltrate) {
+				System.out.println(getNumberOfPrenotationsInThisDay(prenotazioniPerMedicoETipologiaVisita, disponibilita.getGiorno()) + "  -  " + disponibilita.getMaxNumVisite());
 				if (getNumberOfPrenotationsInThisDay(prenotazioniPerMedicoETipologiaVisita, disponibilita.getGiorno()) == disponibilita.getMaxNumVisite())
 					disponibilitaFiltrate.remove(disponibilita);
+			}
 			
 			calendarioDisponibilita.setOrari(disponibilitaFiltrate);
 		}
@@ -89,7 +91,7 @@ public class GestorePrenotazioni {
 	// usato solo dal metodo getCalendarioDisponibilitaFiltered
 	private int getNumberOfPrenotationsInThisDay(ArrayList<Prenotazione> prenotazioni, Date giorno) {
 		int numberOfPrenotationsInThisDay = 0;
-		
+				
 		for (Prenotazione prenotazione: prenotazioni)
 			if (prenotazione.getGiorno().equals(giorno));
 				numberOfPrenotationsInThisDay++;
