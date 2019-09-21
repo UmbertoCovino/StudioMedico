@@ -1149,7 +1149,7 @@ public class GestoreDatabase {
 					 	+ "join pazienti P on PR.codice_fiscale_paziente = P.codice_fiscale "
 					 	+ "where PR.codice_medico = '" + codiceMedico + "' and TV.nome = '" + nomeTipologiaVisita + "' "
 					 	+ "and PR.giorno > curdate() "
-			 		 	+ "order PR.id, by TV.nome";
+			 		 	+ "order by PR.id, TV.nome";
 //		select * from prenotazioni PR join tipologie_visite TV on PR.id_tipologia_visita = TV.id join tipologie_visite_specializzazioni TVS on TV.id = TVS.id_tipologia_visita join medici M on PR.codice_medico = M.codice join pazienti P on PR.codice_fiscale_paziente = P.codice_fiscale where PR.codice_medico = '' and TV.nome = '' order by PR.id, TV.nome;
 		try {
 			ResultSet rs = statement.executeQuery(query);
