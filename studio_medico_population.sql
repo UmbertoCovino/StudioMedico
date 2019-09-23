@@ -3,7 +3,7 @@ values ('admin', 'admin', 'admin@sm.com', 'admin');
 
 insert into pazienti
 values ('CRTMRC96T27F839K', 'Marco', 'Cortese', 'mc@sm.com', 'mc'),
-	   ('VRDMRA76L08A783M', 'Mario', 'Verdi', 'mb@sm.com', 'mb'),
+	   ('VRDMRA76L08A783M', 'Mario', 'Verdi', 'mv@sm.com', 'mb'),
 	   ('CVNMRT96A18A783J', 'Umberto', 'Covino', 'uc@sm.com', 'uc');
 
 insert into specializzazioni

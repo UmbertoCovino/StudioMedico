@@ -69,7 +69,7 @@ public class FormRegistrazionePaziente extends Frame {
 			public void actionPerformed(ActionEvent e) {
 				if (dataIsValid()) {
 					if (JOptionPane.showConfirmDialog(thisFrame,
-		            		"Confermi i dati immessi?",
+		            		"Confermi i dati immessi per la registrazione?",
 		            		"Attenzione", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
 						try {
 							GUIControllerUtenti.getInstance().notifyData(nomeTextField.getText().trim(),
