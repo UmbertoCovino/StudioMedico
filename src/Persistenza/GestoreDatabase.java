@@ -1110,7 +1110,7 @@ public class GestoreDatabase {
 					 + "join medici M on CD.codice_medico = M.codice "
 					 + "where codice_medico = '" + codiceMedico + "' "
 					 + "and D.giorno > curdate() "
-					 + "order by CD.giorno";
+					 + "order by D.giorno";
 //		select * from calendario_disponibilita CD join disponibilita D on CD.id = D.id_calendario_disponibilita join medici M on CD.codice_medico = M.codice where codice_medico = '';
 		try {
 			ResultSet rs = statement.executeQuery(query);
