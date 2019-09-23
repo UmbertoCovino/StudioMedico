@@ -1,3 +1,5 @@
+drop database studio_medico;
+
 create database studio_medico;
 
 use studio_medico

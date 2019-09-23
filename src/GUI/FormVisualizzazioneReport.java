@@ -58,6 +58,12 @@ public class FormVisualizzazioneReport extends Frame {
 		// per resizare le colonne
 		resizeColumnWidth(reportRigheTable);
 	}
+	
+	public FormVisualizzazioneReport(Report report, String nomeMedico) {
+		this(report);
+		
+		reportLabel.setText(reportLabel.getText() + " (" + nomeMedico + ")");
+	}
 
 	private void buildTable(Report report) {
 		reportRigheTable.setDefaultEditor(Object.class, null);

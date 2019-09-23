@@ -3,6 +3,7 @@ values ('admin', 'admin', 'admin@sm.com', 'admin');
 
 insert into pazienti
 values ('CRTMRC96T27F839K', 'Marco', 'Cortese', 'mc@sm.com', 'mc'),
+	   ('VRDMRA76L08A783M', 'Mario', 'Verdi', 'mb@sm.com', 'mb'),
 	   ('CVNMRT96A18A783J', 'Umberto', 'Covino', 'uc@sm.com', 'uc');
 
 insert into specializzazioni
@@ -56,14 +57,30 @@ values (1, 'cardiologo'),
 
 insert into prenotazioni (giorno, ora, id_tipologia_visita, codice_medico, codice_fiscale_paziente)
 values ('2019-05-05', '17:30', 1, 1, 'CVNMRT96A18A783J'),
+	   ('2019-05-15', '18:30', 1, 2, 'CRTMRC96T27F839K'),
+	   ('2019-05-16', '18:30', 2, 3, 'CRTMRC96T27F839K'),
+	   ('2019-05-17', '18:30', 3, 4, 'VRDMRA76L08A783M'),
+	   ('2019-05-18', '18:30', 1, 1, 'CVNMRT96A18A783J'),
+	   ('2019-05-19', '18:30', 4, 2, 'VRDMRA76L08A783M'),
 	   -- qui le prenotazioni odierne (CAMBIARE GIORNO E MESE SE NECESSARIO)
 	   ('2019-09-23', '17:30', 1, 1, 'CVNMRT96A18A783J');
 
 insert into visite (diagnosi, terapia, id_prenotazione)
-values ('Elettrocardiogramma negativo', 'Nessuna', 1);
+values ('Elettrocardiogramma negativo.', 'Nessuna.', 1),
+	   ('Il paziente soffre lievemente di fibrillazione.', 'Una pillola di X quando necessario.', 2),
+	   ('Il paziente aveva una carie che è stata curata.', 'Nessuna', 3),
+	   ('Nessun problema da riportare', 'Nessuna.', 4),
+	   ('Elettrocardiogramma negativo', 'Nessuna.', 5),
+	   ('Il paziente a volte soffre di tachicardia.', 'Evitare l''assunzione di caffeina. Una pillola di X lontano dai pasti per le prossime 2 settimane.', 6);
 
 insert into fatture (importo, id_visita, codice_fiscale_paziente)
-values ('60.00', 1, 'CVNMRT96A18A783J');
+values ('55.00', 1, 'CVNMRT96A18A783J'),
+       ('90.00', 2, 'CRTMRC96T27F839K'),
+       ('45.00', 3, 'CRTMRC96T27F839K'),
+       ('78.00', 4, 'VRDMRA76L08A783M'),
+       ('110.00', 5, 'CVNMRT96A18A783J');
 
 insert into pagamenti (data, metodo_pagamento, id_fattura)
-values ('2019-05-15', 'Bonifico bancario', 1);
+values ('2019-05-05', 'Bonifico bancario', 1),
+	   ('2019-05-15', 'Carta di credito', 2),
+	   ('2019-05-16', 'Assegno', 3);

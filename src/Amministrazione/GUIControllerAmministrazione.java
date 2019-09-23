@@ -29,6 +29,10 @@ public class GUIControllerAmministrazione {
 		new FormVisualizzazioneReport(report);
 	}
 
+	public void createFormVisualizzazioneReport(Report report, String nomeMedico) {
+		new FormVisualizzazioneReport(report, nomeMedico);
+	}
+
 	public void createReport(String tipologia) {
 		this.createFormVisualizzazioneReport(gestoreAmministrazione.createReport(tipologia));
 	}
@@ -38,6 +42,6 @@ public class GUIControllerAmministrazione {
 	}
 
 	public void createReport(String tipologia, Medico medico) {
-		this.createFormVisualizzazioneReport(gestoreAmministrazione.createReport(tipologia, medico));
+		this.createFormVisualizzazioneReport(gestoreAmministrazione.createReport(tipologia, medico), medico.getNome() + " " + medico.getCognome());
 	}
 }
