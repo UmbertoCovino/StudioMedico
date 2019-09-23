@@ -196,11 +196,15 @@ public abstract class Frame extends JFrame {
 	        if (width > 300)
 	            width = 300;
 	        
-	        columnModel.getColumn(column).setPreferredWidth(width + width);
+	        columnModel.getColumn(column).setPreferredWidth(width);
 	    }
+	}
+	
+	public void resizeColumnWidth(JTable table, int extraWidth) {
+	    resizeColumnWidth(table);
 	    
-	    setMinimumSize(new Dimension(getWidth() + 50, getHeight()));
-		setSize(new Dimension(getWidth() + 50, getHeight()));
+	    setMinimumSize(new Dimension(getWidth() + extraWidth, getHeight()));
+		setSize(new Dimension(getWidth() + extraWidth, getHeight()));
 	}
 
 	protected abstract void addingEventHandlers();
