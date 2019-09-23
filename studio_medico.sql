@@ -8,7 +8,7 @@ create table proprietari (
 	id int(10) primary key auto_increment,
 	nome varchar(80) not null,
 	cognome varchar(80) not null,
-	email varchar(80) not null,
+	email varchar(80) unique not null,
 	password varchar(20) not null
 );
 
@@ -16,7 +16,7 @@ create table pazienti (
 	codice_fiscale varchar(16) primary key,
 	nome varchar(80) not null,
 	cognome varchar(80) not null,
-	email varchar(80) not null,
+	email varchar(80) unique not null,
 	password varchar(20) not null
 );
 
@@ -28,7 +28,7 @@ create table medici (
 	codice int(10) primary key auto_increment,
 	nome varchar(80) not null,
 	cognome varchar(80) not null,
-	email varchar(80) not null,
+	email varchar(80) unique not null,
 	password varchar(20) not null,
 	nome_specializzazione varchar(80) not null,
 	foreign key (nome_specializzazione) references specializzazioni(nome)
