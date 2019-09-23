@@ -1098,7 +1098,7 @@ public class GestoreDatabase {
  */
 	
 	/*
-	 * 		SD Prenota Visita 	WORKING IN PROGRESS  [NOT USED]	DA TESTARE
+	 * 		SD Prenota Visita 	WORKING IN PROGRESS DA TESTARE
 	 */
 	@SuppressWarnings("deprecation")
 	public CalendarioDisponibilita getCalendarioDisponibilita(int codiceMedico) {
@@ -1109,7 +1109,8 @@ public class GestoreDatabase {
 					 + "join disponibilita D on CD.id = D.id_calendario_disponibilita "
 					 + "join medici M on CD.codice_medico = M.codice "
 					 + "where codice_medico = '" + codiceMedico + "' "
-					 + "and D.giorno > curdate()";
+					 + "and D.giorno > curdate() "
+					 + "order by CD.giorno";
 //		select * from calendario_disponibilita CD join disponibilita D on CD.id = D.id_calendario_disponibilita join medici M on CD.codice_medico = M.codice where codice_medico = '';
 		try {
 			ResultSet rs = statement.executeQuery(query);
