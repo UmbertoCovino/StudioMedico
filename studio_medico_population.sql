@@ -37,9 +37,9 @@ values ('Elettrocardiogramma', '50.00', '5.00', '5.00'),
 
 insert into tipologie_visite_specializzazioni
 values (1, 'cardiologo'),
-	   (1, 'dentista'),
 	   (2, 'dentista'),
 	   (3, 'ortopedico'),
+	   (3, 'dentista'),
 	   (4, 'cardiologo');
 
 insert into prenotazioni (giorno, ora, id_tipologia_visita, codice_medico, codice_fiscale_paziente)
