@@ -57,10 +57,14 @@ public class FormPagamento extends Frame {
 		confirmButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (dataIsValid()) {
-					GUIControllerVisite.getInstance().notifyData(((String) metodoPagamentoComboBox.getSelectedItem()).trim());
+					if (JOptionPane.showConfirmDialog(thisFrame,
+		            		"Confermi la registrazione dell'avvenuto pagamento della fattura?",
+		            		"Attenzione", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+						GUIControllerVisite.getInstance().notifyData(((String) metodoPagamentoComboBox.getSelectedItem()).trim());
 	
-					JOptionPane.showMessageDialog(thisFrame, "Il pagamento è stato registrato con successo!", "Pagamento registrato", JOptionPane.INFORMATION_MESSAGE);
-					closeFrame();
+						JOptionPane.showMessageDialog(thisFrame, "Il pagamento è stato registrato con successo!", "Pagamento registrato", JOptionPane.INFORMATION_MESSAGE);
+						closeFrame();
+					}
 				}
 			}
 		});

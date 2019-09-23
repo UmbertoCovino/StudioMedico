@@ -126,10 +126,14 @@ public class ListaPrenotazioni extends Frame {
 			
 			confirmButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					GUIControllerPrenotazioni.getInstance().deletePrenotazione(prenotazioni.get(prenotazioniTable.getValueAt(prenotazioniTable.getSelectedRow(), 0)).getId());
-
-					JOptionPane.showMessageDialog(thisFrame, "La prenotazione è stata cancellata con successo!", "Prenotazione cancellata", JOptionPane.INFORMATION_MESSAGE);
-					closeFrame();
+					if (JOptionPane.showConfirmDialog(thisFrame,
+		            		"Sei sicuro di voler eliminare la prenotazione alla visita?",
+		            		"Attenzione", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+						GUIControllerPrenotazioni.getInstance().deletePrenotazione(prenotazioni.get(prenotazioniTable.getValueAt(prenotazioniTable.getSelectedRow(), 0)).getId());
+	
+						JOptionPane.showMessageDialog(thisFrame, "La prenotazione è stata cancellata con successo!", "Prenotazione cancellata", JOptionPane.INFORMATION_MESSAGE);
+						closeFrame();
+					}
 				}
 			});
 		} else if (operationType == REGISTER_VISIT_OPERATION) {
@@ -139,7 +143,7 @@ public class ListaPrenotazioni extends Frame {
 			confirmButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					GUIControllerPrenotazioni.getInstance().createFormRisultatoVisita(getParentFrame(), prenotazioni.get(prenotazioniTable.getValueAt(prenotazioniTable.getSelectedRow(), 0)));
-
+	
 					closeFrameWithoutVisualizeParent();
 				}
 			});

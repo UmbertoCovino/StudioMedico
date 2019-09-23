@@ -193,14 +193,18 @@ public class FormPrenotazioneVisita extends Frame {
 		confirmButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (dataIsValid()) {
-					GUIControllerPrenotazioni.getInstance().notifyData(
-							((DisponibilitaGiornaliera) calendarioComboBox.getSelectedItem()).getGiorno(),
-							(Date) orarioComboBox.getSelectedItem(),
-							(TipologiaVisita) tipologiaVisitaComboBox.getSelectedItem(),
-							(Medico) medicoComboBox.getSelectedItem());
+					if (JOptionPane.showConfirmDialog(thisFrame,
+		            		"Confermi la prenotazione alla visita?",
+		            		"Attenzione", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+						GUIControllerPrenotazioni.getInstance().notifyData(
+								((DisponibilitaGiornaliera) calendarioComboBox.getSelectedItem()).getGiorno(),
+								(Date) orarioComboBox.getSelectedItem(),
+								(TipologiaVisita) tipologiaVisitaComboBox.getSelectedItem(),
+								(Medico) medicoComboBox.getSelectedItem());
 
-					JOptionPane.showMessageDialog(thisFrame, "La prenotazione è stata aggiunta con successo!", "Prenotazione aggiunta", JOptionPane.INFORMATION_MESSAGE);
-					closeFrame();
+						JOptionPane.showMessageDialog(thisFrame, "La prenotazione è stata aggiunta con successo!", "Prenotazione aggiunta", JOptionPane.INFORMATION_MESSAGE);
+						closeFrame();
+		            }
 				}
 			}
 		});

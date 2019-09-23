@@ -216,15 +216,19 @@ public class FormModificaPrenotazione extends Frame {
 		confirmButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (dataIsValid()) {
-					GUIControllerPrenotazioni.getInstance().notifyData(
-							prenotazioneId,
-							((DisponibilitaGiornaliera) calendarioComboBox.getSelectedItem()).getGiorno(),
-							(Date) orarioComboBox.getSelectedItem(),
-							(TipologiaVisita) tipologiaVisitaComboBox.getSelectedItem(),
-							(Medico) medicoComboBox.getSelectedItem());
-
-					JOptionPane.showMessageDialog(thisFrame, "La prenotazione è stata modificata con successo!", "Prenotazione modificata", JOptionPane.INFORMATION_MESSAGE);
-					closeFrame();
+					if (JOptionPane.showConfirmDialog(thisFrame,
+		            		"Confermi la modifica della prenotazione?",
+		            		"Attenzione", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+						GUIControllerPrenotazioni.getInstance().notifyData(
+								prenotazioneId,
+								((DisponibilitaGiornaliera) calendarioComboBox.getSelectedItem()).getGiorno(),
+								(Date) orarioComboBox.getSelectedItem(),
+								(TipologiaVisita) tipologiaVisitaComboBox.getSelectedItem(),
+								(Medico) medicoComboBox.getSelectedItem());
+	
+						JOptionPane.showMessageDialog(thisFrame, "La prenotazione è stata modificata con successo!", "Prenotazione modificata", JOptionPane.INFORMATION_MESSAGE);
+						closeFrame();
+					}
 				}
 			}
 		});

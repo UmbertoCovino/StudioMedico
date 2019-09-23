@@ -63,10 +63,14 @@ public class FormRisultatoVisita extends Frame {
 		confirmButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (dataIsValid()) {
-					GUIControllerPrenotazioni.getInstance().notifyData(prenotazione, diagnosiTextArea.getText().trim(), terapiaTextArea.getText().trim());
+					if (JOptionPane.showConfirmDialog(thisFrame,
+		            		"Confermi la registrazione della visita?",
+		            		"Attenzione", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+						GUIControllerPrenotazioni.getInstance().notifyData(prenotazione, diagnosiTextArea.getText().trim(), terapiaTextArea.getText().trim());
 
-					JOptionPane.showMessageDialog(thisFrame, "Il risultato della visita è stato registrato con successo!", "Risultato visita registrato", JOptionPane.INFORMATION_MESSAGE);
-					closeFrame();
+						JOptionPane.showMessageDialog(thisFrame, "Il risultato della visita è stato registrato con successo!", "Risultato visita registrato", JOptionPane.INFORMATION_MESSAGE);
+						closeFrame();
+					}
 				}
 			}
 		});

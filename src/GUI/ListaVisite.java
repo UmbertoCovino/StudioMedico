@@ -10,6 +10,7 @@ import java.util.TreeMap;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -123,9 +124,13 @@ public class ListaVisite extends Frame {
 			
 			confirmButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					GUIControllerVisite.getInstance().printFattura(getParentFrame(), visite.get(visiteTable.getValueAt(visiteTable.getSelectedRow(), 0)));
-
-					closeFrame();
+					if (JOptionPane.showConfirmDialog(thisFrame,
+		            		"Confermi di voler generare la fattura della visita?",
+		            		"Attenzione", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+						GUIControllerVisite.getInstance().printFattura(getParentFrame(), visite.get(visiteTable.getValueAt(visiteTable.getSelectedRow(), 0)));
+	
+						closeFrame();
+					}
 				}
 			});
 		}
