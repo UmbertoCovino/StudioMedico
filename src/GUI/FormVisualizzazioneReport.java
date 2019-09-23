@@ -106,18 +106,19 @@ public class FormVisualizzazioneReport extends Frame {
 		} else if (report instanceof ReportMedici) {
 			ArrayList<RigaMedici> risultato = ((ReportMedici) report).getRisultato();
 			
+			tableModel.addColumn("Id");
 			tableModel.addColumn("Nome");
 			tableModel.addColumn("Cognome");
 			tableModel.addColumn("Email");
-			tableModel.addColumn("Codice");
 			tableModel.addColumn("Specializzazione");
 			tableModel.addColumn("Numero visite");
 			
 			for (RigaMedici riga: risultato) {
-				tableModel.addRow(new Object[]{riga.getNome(),
+				tableModel.addRow(new Object[]{
+						riga.getCodice(),
+						riga.getNome(),
 						riga.getCognome(),
 						riga.getEmail(),
-						riga.getCodice(),
 						riga.getNomeSpecializzazione(),
 						riga.getNumeroVisite()});
 			}
