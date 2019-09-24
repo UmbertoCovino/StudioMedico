@@ -75,10 +75,10 @@ values ('Elettrocardiogramma negativo.', 'Nessuna.', 1),
 
 insert into fatture (importo, id_visita, codice_fiscale_paziente)
 values ('55.00', 1, 'CVNMRT96A18A783J'),
-       ('90.00', 2, 'CRTMRC96T27F839K'),
-       ('45.00', 3, 'CRTMRC96T27F839K'),
-       ('78.00', 4, 'VRDMRA76L08A783M'),
-       ('110.00', 5, 'CVNMRT96A18A783J');
+       ('100.00', 2, 'CRTMRC96T27F839K'),
+       ('78.00', 3, 'CRTMRC96T27F839K'),
+       ('100.00', 4, 'VRDMRA76L08A783M'),
+       ('55.00', 5, 'CVNMRT96A18A783J');
 
 insert into pagamenti (data, metodo_pagamento, id_fattura)
 values ('2019-05-05', 'Bonifico bancario', 1),

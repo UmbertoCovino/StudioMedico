@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import Utenti.GUIControllerUtenti;
 import Utenti.Paziente;
 import Visite.GUIControllerPrenotazioni;
 import Visite.GUIControllerVisite;
@@ -25,6 +26,7 @@ public class FramePaziente extends Frame {
 	private JButton modificaPrenotazioneVisitaButton;
 	private JButton eliminaPrenotazioneVisitaButton;
 	private JButton visualizzaStoricoVisiteButton;
+	private JButton logoutButton;
 
 	public FramePaziente(Paziente paziente) {
 		super("Area paziente", true);
@@ -40,6 +42,7 @@ public class FramePaziente extends Frame {
 		modificaPrenotazioneVisitaButton = new JButton("Modifica prenotazione visita");
 		eliminaPrenotazioneVisitaButton = new JButton("Elimina prenotazione visita");
 		visualizzaStoricoVisiteButton = new JButton("Visualizza storico visite");
+		logoutButton = new JButton("Logout");
 		
 		// aggiunta event handlers
 		addingEventHandlers();
@@ -78,6 +81,13 @@ public class FramePaziente extends Frame {
 				GUIControllerVisite.getInstance().createListaStoricoVisite(thisFrame, paziente.getCodiceFiscale(), ListaVisite.STORICO_VISITE_OPERATION);
 			}
 		});
+		
+		logoutButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GUIControllerUtenti.getInstance().createFrameLogin();
+				closeFrame();
+			}
+		});
 	}
 
 	@Override
@@ -97,6 +107,7 @@ public class FramePaziente extends Frame {
 	   			.addComponent(modificaPrenotazioneVisitaButton)
 	   			.addComponent(eliminaPrenotazioneVisitaButton)
 	   			.addComponent(visualizzaStoricoVisiteButton)
+	   			.addComponent(logoutButton)
 		);
 		
 		layout.setVerticalGroup(
@@ -107,6 +118,7 @@ public class FramePaziente extends Frame {
 	   			.addComponent(modificaPrenotazioneVisitaButton)
 	   			.addComponent(eliminaPrenotazioneVisitaButton)
 	   			.addComponent(visualizzaStoricoVisiteButton)
+	   			.addComponent(logoutButton)
 		);
 	}
 }

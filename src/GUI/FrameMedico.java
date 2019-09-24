@@ -29,6 +29,7 @@ public class FrameMedico extends Frame {
 	private JButton registraVisitaButton;
 	private JButton generaFatturaButton;
 	private JButton registraPagamentoVisitaButton;
+	private JButton logoutButton;
 
 	public FrameMedico(Medico medico) {
 		super("Area medico", true);
@@ -44,6 +45,7 @@ public class FrameMedico extends Frame {
 		registraVisitaButton = new JButton("Registra visita");
 		generaFatturaButton = new JButton("Genera fattura");
 		registraPagamentoVisitaButton = new JButton("Registra pagamento visita");
+		logoutButton = new JButton("Logout");
 		
 		pazienteLabel = new JLabel();
 		pazienteLabel.setFont(pazienteLabel.getFont().deriveFont(pazienteLabel.getFont().getStyle() & ~Font.BOLD));
@@ -94,6 +96,13 @@ public class FrameMedico extends Frame {
 				GUIControllerVisite.getInstance().createListaFatture(thisFrame, paziente.getCodiceFiscale(), medico.getCodice());
 			}
 		});
+		
+		logoutButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GUIControllerUtenti.getInstance().createFrameLogin();
+				closeFrame();
+			}
+		});
 	}
 	
 	public void setPazienteFound(Paziente paziente) {
@@ -135,6 +144,7 @@ public class FrameMedico extends Frame {
 	   			.addComponent(registraVisitaButton)
 	   			.addComponent(generaFatturaButton)
 	   			.addComponent(registraPagamentoVisitaButton)
+	   			.addComponent(logoutButton)
 		);
 		
 		layout.setVerticalGroup(
@@ -149,6 +159,7 @@ public class FrameMedico extends Frame {
 	   			.addComponent(registraVisitaButton)
 	   			.addComponent(generaFatturaButton)
 	   			.addComponent(registraPagamentoVisitaButton)
+	   			.addComponent(logoutButton)
 		);
 	}
 }

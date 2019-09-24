@@ -7,6 +7,7 @@ import javax.swing.GroupLayout;
 import javax.swing.JButton;
 
 import Amministrazione.GUIControllerAmministrazione;
+import Utenti.GUIControllerUtenti;
 import Utenti.Utente;
 
 @SuppressWarnings("serial")
@@ -15,6 +16,7 @@ public class FrameProprietario extends Frame {
 	private Utente proprietario;
 	
 	private JButton creaReportButton;
+	private JButton logoutButton;
 
 	public FrameProprietario(Utente proprietario) {
 		super("Area proprietario", true);
@@ -25,6 +27,7 @@ public class FrameProprietario extends Frame {
 		
 		// dichiarazione elementi
 		creaReportButton = new JButton("Crea report");
+		logoutButton = new JButton("Logout");
 		
 		// aggiunta event handlers
 		addingEventHandlers();
@@ -45,6 +48,13 @@ public class FrameProprietario extends Frame {
 				GUIControllerAmministrazione.getInstance().createFormCreazioneReport(thisFrame);
 			}
 		});
+		
+		logoutButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GUIControllerUtenti.getInstance().createFrameLogin();
+				closeFrame();
+			}
+		});
 	}
 
 	@Override
@@ -60,6 +70,7 @@ public class FrameProprietario extends Frame {
 					.addGap(0, 0, Short.MAX_VALUE)
 					.addComponent(creaReportButton)
 					.addGap(0, 0, Short.MAX_VALUE))
+	   			.addComponent(logoutButton)
 		);
 		
 		layout.setVerticalGroup(
@@ -68,6 +79,7 @@ public class FrameProprietario extends Frame {
 					.addGap(0)
 					.addComponent(creaReportButton)
 					.addGap(0))
+	   			.addComponent(logoutButton)
 		);
 	}
 }
