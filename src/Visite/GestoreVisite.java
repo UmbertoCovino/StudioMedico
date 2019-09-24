@@ -43,8 +43,8 @@ public class GestoreVisite {
 		GUIControllerVisite.getInstance().visualizzaFattura(fattura);
 	}
 
-	public ArrayList<Fattura> getFatture(String codiceFiscalePaziente) {
-		return gestoreDB.getFatture(codiceFiscalePaziente);
+	public ArrayList<Fattura> getFatture(String codiceFiscalePaziente, int codiceMedico) {
+		return gestoreDB.getFatture(codiceFiscalePaziente, codiceMedico);
 	}
 
 	public void createPagamento(Fattura fattura, String metodoPagamento, Date dataPagamento) {

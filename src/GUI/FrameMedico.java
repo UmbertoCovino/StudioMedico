@@ -91,7 +91,7 @@ public class FrameMedico extends Frame {
 		
 		registraPagamentoVisitaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				GUIControllerVisite.getInstance().createListaFatture(thisFrame, paziente.getCodiceFiscale());
+				GUIControllerVisite.getInstance().createListaFatture(thisFrame, paziente.getCodiceFiscale(), medico.getCodice());
 			}
 		});
 	}

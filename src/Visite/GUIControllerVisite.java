@@ -50,8 +50,8 @@ public class GUIControllerVisite {
 		new FormVisualizzazioneFattura(parentFrame, fattura);
 	}
 
-	public void createListaFatture(Frame parentFrame, String codiceFiscalePaziente) {
-		ArrayList<Fattura> fatture = gestoreVisite.getFatture(codiceFiscalePaziente);
+	public void createListaFatture(Frame parentFrame, String codiceFiscalePaziente, int codiceMedico) {
+		ArrayList<Fattura> fatture = gestoreVisite.getFatture(codiceFiscalePaziente, codiceMedico);
 		new ListaFatture(parentFrame, fatture);
 	}
 

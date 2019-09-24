@@ -523,7 +523,7 @@ public class GestoreDatabase {
 	/*
 	 * 		SD Paga visita		TEST OK
 	 */
-	public ArrayList<Fattura> getFatture(String codiceFiscalePaziente) {
+	public ArrayList<Fattura> getFatture(String codiceFiscalePaziente, int codiceMedico) {
 		ArrayList<Fattura> fatture = new ArrayList<Fattura>();
 		
 		String query = "select * "
@@ -536,6 +536,7 @@ public class GestoreDatabase {
 					 	+ "join pazienti P on PR.codice_fiscale_paziente = P.codice_fiscale "
 					 	+ "left join pagamenti PA on F.id = PA.id_fattura "
 					 	+ "where F.codice_fiscale_paziente = '" + codiceFiscalePaziente + "' "
+					 			+ "and M.codice = '" + codiceMedico + "' "
 					 			+ "and PA.id_fattura is NULL "
 			 		 	+ "order by F.id, TV.nome";
 //		select * from fatture F join visite V on F.id_visita = V.id join prenotazioni PR on V.id_prenotazione = PR.id join tipologie_visite TV on PR.id_tipologia_visita = TV.id join tipologie_visite_specializzazioni TVS on TV.id = TVS.id_tipologia_visita join medici M on PR.codice_medico = M.codice join pazienti P on PR.codice_fiscale_paziente = P.codice_fiscale left join pagamenti PA on F.id = PA.id_fattura where F.codice_fiscale_paziente = 'CF1' order by F.id, TV.nome;
