@@ -132,9 +132,11 @@ public class FormVisualizzazioneFattura extends Frame {
 
 	        @Override
 	        public void windowGainedFocus(WindowEvent e) {
-				parentFrame.toBack();
-				parentFrame.removeWindowFocusListener(this);
+				parentFrame.toFront();
+				thisFrame.toFront();
+				thisFrame.requestFocus();
 				thisFrame.showFrame();
+				parentFrame.removeWindowFocusListener(this);
 	        }
 	    });
 	}

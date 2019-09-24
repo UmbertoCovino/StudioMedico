@@ -56,7 +56,7 @@ public class FormVisualizzazioneReport extends Frame {
 		showFrame();
 		
 		// per resizare le colonne
-		resizeColumnWidth(reportRigheTable, 50);
+		resizeColumnWidth(reportRigheTable);
 	}
 	
 	public FormVisualizzazioneReport(Report report, String nomeMedico) {

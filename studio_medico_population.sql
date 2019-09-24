@@ -65,6 +65,7 @@ values ('2019-05-05', '17:30', 1, 1, 'CVNMRT96A18A783J'),
 	   -- qui le prenotazioni odierne (CAMBIARE GIORNO E MESE SE NECESSARIO)
 	   ('2019-09-23', '17:30', 1, 1, 'CVNMRT96A18A783J');
 
+-- da qui in poi volendo non aggiungerle o non aggiungerle tutte, così hai già pronti dei possibili casi di test
 insert into visite (diagnosi, terapia, id_prenotazione)
 values ('Elettrocardiogramma negativo.', 'Nessuna.', 1),
 	   ('Il paziente soffre lievemente di fibrillazione.', 'Una pillola di X quando necessario.', 2),

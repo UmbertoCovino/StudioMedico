@@ -198,12 +198,10 @@ public abstract class Frame extends JFrame {
 	        
 	        columnModel.getColumn(column).setPreferredWidth(width);
 	    }
-	}
-	
-	public void resizeColumnWidth(JTable table, int extraWidth) {
-	    resizeColumnWidth(table);
 	    
-	    setMinimumSize(new Dimension(getWidth() + extraWidth, getHeight()));
+	    int extraWidth = 50;
+	    
+		setMinimumSize(new Dimension(getWidth() + extraWidth, getHeight()));
 		setSize(new Dimension(getWidth() + extraWidth, getHeight()));
 	}
 
