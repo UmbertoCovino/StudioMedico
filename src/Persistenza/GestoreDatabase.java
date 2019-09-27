@@ -539,7 +539,7 @@ public class GestoreDatabase {
 					 			+ "and M.codice = '" + codiceMedico + "' "
 					 			+ "and PA.id_fattura is NULL "
 			 		 	+ "order by F.id, TV.nome";
-//		select * from fatture F join visite V on F.id_visita = V.id join prenotazioni PR on V.id_prenotazione = PR.id join tipologie_visite TV on PR.id_tipologia_visita = TV.id join tipologie_visite_specializzazioni TVS on TV.id = TVS.id_tipologia_visita join medici M on PR.codice_medico = M.codice join pazienti P on PR.codice_fiscale_paziente = P.codice_fiscale left join pagamenti PA on F.id = PA.id_fattura where F.codice_fiscale_paziente = 'CF1' order by F.id, TV.nome;
+//		select * from fatture F join visite V on F.id_visita = V.id join prenotazioni PR on V.id_prenotazione = PR.id join tipologie_visite TV on PR.id_tipologia_visita = TV.id join tipologie_visite_specializzazioni TVS on TV.id = TVS.id_tipologia_visita join medici M on PR.codice_medico = M.codice join pazienti P on PR.codice_fiscale_paziente = P.codice_fiscale left join pagamenti PA on F.id = PA.id_fattura where F.codice_fiscale_paziente = 'VRDMRA76L08A783M' and M.codice = '4' and PA.id_fattura is NULL order by F.id, TV.nome;
 			try {
 			ResultSet rs = statement.executeQuery(query);
 			
