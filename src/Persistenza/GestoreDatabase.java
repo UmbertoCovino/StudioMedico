@@ -699,10 +699,10 @@ public class GestoreDatabase {
 	public Report getReportMedici() {
 		ReportMedici report = null;
 		
-		String query = "select M.nome as nome, M.cognome as cognome, M.email as email, M.codice as codice, M.nome_specializzazione as nome_specializzazione, count(*) as num_visite "
+		String query = "select M.nome as nome, M.cognome as cognome, M.email as email, M.codice as codice, M.nome_specializzazione as nome_specializzazione, count(V.id) as num_visite "
 						+ "from visite V "
 						+ "join prenotazioni PR on V.id_prenotazione = PR.id "
-						+ "join medici M on PR.codice_medico = M.codice "
+						+ "right join medici M on PR.codice_medico = M.codice "
 						+ "group by M.email";
 		
 		try {
@@ -725,10 +725,10 @@ public class GestoreDatabase {
 	public Report getReportTipologieVisite() {
 		ReportTipoVisite report = null;
 		
-		String query = "select TV.nome as nome, TV.prezzo_fisso as prezzo_fisso, TV.costo_manodopera as costo_manodopera, TV.costo_esercizio as costo_esercizio, count(*) as num_visite "
+		String query = "select TV.nome as nome, TV.prezzo_fisso as prezzo_fisso, TV.costo_manodopera as costo_manodopera, TV.costo_esercizio as costo_esercizio, count(V.id) as num_visite "
 				+ "from visite V "
 				+ "join prenotazioni PR on V.id_prenotazione = PR.id "
-				+ "join tipologie_visite TV on PR.id_tipologia_visita = TV.id "
+				+ "right join tipologie_visite TV on PR.id_tipologia_visita = TV.id "
 				+ "group by TV.nome";
 		
 		try {
